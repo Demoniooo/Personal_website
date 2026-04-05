@@ -42,17 +42,17 @@ export default function Navigation() {
             {['about', 'education', 'experience', 'skills'].map((item) => (
               <a 
                 key={item}
-                className={`font-serif text-lg tracking-tight pb-1 transition-all ${
+                className={`font-serif text-lg tracking-tight transition-all ${
                   activeSection === item 
-                    ? 'text-[#745a27] font-semibold border-b-2 border-[#745a27]' 
-                    : 'text-[#010a27] dark:text-[#f9f9f9] font-normal border-b-2 border-transparent hover:text-[#745a27]'
+                    ? 'text-[#745a27] font-bold underline underline-offset-[8px] decoration-2 decoration-[#745a27]' 
+                    : 'text-[#010a27] dark:text-[#f9f9f9] font-normal hover:text-[#745a27]'
                 }`} 
                 href={`#${item}`}
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </a>
             ))}
-            <a className="text-[#010a27] dark:text-[#f9f9f9] font-normal hover:text-[#745a27] transition-colors font-serif text-lg tracking-tight" href="/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+            <a className="text-[#010a27] dark:text-[#f9f9f9] font-normal hover:text-[#745a27] transition-all font-serif text-lg tracking-tight" href="/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
             <button onClick={handleCopy} className="bg-primary text-on-primary px-6 py-2 rounded-lg font-label text-sm uppercase tracking-widest hover:bg-primary-container transition-all text-center min-w-[160px]">
               {copied ? "Email Copied!" : "Contact Me"}
             </button>
