@@ -10,7 +10,7 @@ export default function Navigation() {
             <a className="text-[#010a27] dark:text-[#f9f9f9] font-normal hover:text-[#745a27] transition-colors font-serif text-lg tracking-tight" href="#education">Education</a>
             <a className="text-[#010a27] dark:text-[#f9f9f9] font-normal hover:text-[#745a27] transition-colors font-serif text-lg tracking-tight" href="#skills">Skills</a>
             <a className="text-[#010a27] dark:text-[#f9f9f9] font-normal hover:text-[#745a27] transition-colors font-serif text-lg tracking-tight" href="/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
-            <button className="bg-primary text-on-primary px-6 py-2 rounded-lg font-label text-sm uppercase tracking-widest hover:bg-primary-container transition-all">Contact Me</button>
+            <a href="mailto:hl6593@nyu.edu" className="bg-primary text-on-primary px-6 py-2 rounded-lg font-label text-sm uppercase tracking-widest hover:bg-primary-container transition-all text-center">Contact Me</a>
           </div>
         </div>
       </nav>

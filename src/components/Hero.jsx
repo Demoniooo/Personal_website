@@ -44,9 +44,9 @@ export default function Hero() {
           <a href="/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener noreferrer" className="bg-secondary text-on-primary px-8 py-4 rounded font-label text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2">
             View Resume (PDF) <span className="material-symbols-outlined text-sm">arrow_outward</span>
           </a>
-          <button className="border border-outline-variant/30 text-on-primary px-8 py-4 rounded font-label text-xs uppercase tracking-widest hover:bg-white/5 transition-all">
+          <a href="mailto:hl6593@nyu.edu" className="inline-flex items-center justify-center border border-outline-variant/30 text-on-primary px-8 py-4 rounded font-label text-xs uppercase tracking-widest hover:bg-white/5 transition-all">
             Contact Me
-          </button>
+          </a>
         </div>
       </div>
     </section>
