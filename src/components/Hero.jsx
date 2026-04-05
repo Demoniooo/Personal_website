@@ -1,4 +1,15 @@
+import { useState } from 'react';
+
 export default function Hero() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText("hl6593@nyu.edu");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <section className="relative min-h-[819px] flex items-center overflow-hidden bg-primary-container">
       {/* Background Imagery */}
@@ -44,9 +55,9 @@ export default function Hero() {
           <a href="/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener noreferrer" className="bg-secondary text-on-primary px-8 py-4 rounded font-label text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2">
             View Resume (PDF) <span className="material-symbols-outlined text-sm">arrow_outward</span>
           </a>
-          <a href="mailto:hl6593@nyu.edu" className="inline-flex items-center justify-center border border-outline-variant/30 text-on-primary px-8 py-4 rounded font-label text-xs uppercase tracking-widest hover:bg-white/5 transition-all">
-            Contact Me
-          </a>
+          <button onClick={handleCopy} className="inline-flex items-center justify-center border border-outline-variant/30 text-on-primary px-8 py-4 rounded font-label text-xs uppercase tracking-widest hover:bg-white/5 transition-all min-w-[160px]">
+            {copied ? "Email Copied!" : "Contact Me"}
+          </button>
         </div>
       </div>
     </section>
