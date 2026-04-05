@@ -6,7 +6,7 @@ export default function Footer() {
           © 2024 Haolin (Alex) Liu. All Rights Reserved. Built with Precision.
         </span>
         <div className="flex gap-12">
-          <a className="font-mono text-[10px] uppercase tracking-widest text-primary hover:text-[#745a27] underline decoration-dotted" href="#">LinkedIn</a>
+          <a className="font-mono text-[10px] uppercase tracking-widest text-primary hover:text-[#745a27] underline decoration-dotted" href="https://www.linkedin.com/in/haolin-liu-b73799299/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a className="font-mono text-[10px] uppercase tracking-widest text-primary hover:text-[#745a27] underline decoration-dotted" href="#">GitHub</a>
         </div>
       </div>
