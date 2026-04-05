@@ -17,14 +17,11 @@ export default function Navigation() {
       {/* Ticker Header Signature */}
       <div className="mt-[88px] h-8 bg-primary-container flex items-center px-12 overflow-hidden">
         <div className="flex gap-12 whitespace-nowrap">
-          <span className="font-label text-[10px] text-tertiary-fixed-dim uppercase tracking-[0.2em] flex items-center">
-            <span className="mr-2">●</span> LIVE_DATA_FEED: VOL_SURFACE_CALCULATION_INITIATED
+          <span className="font-label text-[10px] text-tertiary-fixed-dim uppercase tracking-[0.3em] flex items-center">
+            <span className="mr-2">●</span> TRAJECTORY: TIANJIN — SEATTLE — NEW YORK CITY
           </span>
-          <span className="font-label text-[10px] text-tertiary-fixed-dim uppercase tracking-[0.2em] flex items-center opacity-50">
-            NYU TANDON // QUANTITATIVE RISK ANALYSIS // 2024.12
-          </span>
-          <span className="font-label text-[10px] text-tertiary-fixed-dim uppercase tracking-[0.2em] flex items-center">
-            <span className="mr-2">●</span> FX_AMBIGUITY_INDEX: STABLE
+          <span className="font-label text-[10px] text-tertiary-fixed-dim uppercase tracking-[0.3em] flex items-center opacity-50">
+            GLOBAL_STATE // ONLINE
           </span>
         </div>
       </div>
