@@ -66,7 +66,6 @@ export default function Skills() {
             <div className="bg-secondary w-full" style={{ height: "80%" }}></div>
             <div className="bg-secondary w-full" style={{ height: "55%" }}></div>
           </div>
-          <div className="mt-2 font-label text-[10px] text-outline text-right uppercase">Competency Distribution Matrix v2.1</div>
         </div>
       </div>
     </section>
