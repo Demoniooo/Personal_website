@@ -3,7 +3,7 @@ export default function Skills() {
     <section className="bg-surface py-32 px-12" id="skills">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16">
         <div className="md:col-span-4">
-          <span className="font-label text-xs text-secondary uppercase tracking-[0.4em] block mb-4">03. Competencies</span>
+          <span className="font-label text-xs text-secondary uppercase tracking-[0.4em] block mb-4">04. Competencies</span>
           <h2 className="font-headline text-5xl font-bold text-primary mb-12">Technological <br/>Stack</h2>
           {/* Skill Layers */}
           <div className="space-y-8">
