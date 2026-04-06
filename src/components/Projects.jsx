@@ -11,17 +11,17 @@ const projects = [
     files: [
       {
         label: "Report (PDF)",
-        href: "/6083%20Proj/report.pdf",
+        href: "/6083-proj/report.pdf",
         icon: "description",
       },
       {
         label: "Presentation",
-        href: "/6083%20Proj/Comparing%20IV%20termstructure%20from%20Black%20Scholes%20and%20Volatility%20sumulations%20using%20GARCH(1%2C1)%20(1).pptx",
+        href: "/6083-proj/Comparing%20IV%20termstructure%20from%20Black%20Scholes%20and%20Volatility%20sumulations%20using%20GARCH(1%2C1)%20(1).pptx",
         icon: "present_to_all",
       },
       {
         label: "Final Project Deck",
-        href: "/6083%20Proj/FRM_Final%20project.pptx",
+        href: "/6083-proj/FRM_Final%20project.pptx",
         icon: "slideshow",
       },
     ],
@@ -38,17 +38,17 @@ const projects = [
     files: [
       {
         label: "Final Paper (PDF)",
-        href: "/6123%20Proj/FRM_Final%20Paper%20(2).pdf",
+        href: "/6123-proj/FRM_Final%20Paper%20(2).pdf",
         icon: "description",
       },
       {
         label: "Project Report",
-        href: "/6123%20Proj/FRM_Project_Report.pdf",
+        href: "/6123-proj/FRM_Project_Report.pdf",
         icon: "summarize",
       },
       {
         label: "Presentation",
-        href: "/6123%20Proj/FRM_Final%20project.pptx",
+        href: "/6123-proj/FRM_Final%20project.pptx",
         icon: "present_to_all",
       },
     ],
@@ -65,12 +65,12 @@ const projects = [
     files: [
       {
         label: "Project Report",
-        href: "/intern%20proj/interprpject.pdf",
+        href: "/intern-proj/interprpject.pdf",
         icon: "description",
       },
       {
         label: "Jupyter Notebook",
-        href: "/intern%20proj/interprpject_extracted.ipynb",
+        href: "/intern-proj/interprpject_extracted.ipynb",
         icon: "code",
       },
     ],
