@@ -54,14 +54,14 @@ const projects = [
     tags: ["Python", "Data Analysis", "Quantitative Research", "Thesis"],
     title: "Quantitative Research — Internship Project",
     description:
-      "Applied quantitative research project completed during an industry internship. Involved data pipeline construction, statistical modeling, and analytical reporting; full write-up available as an HTML thesis document.",
+      "Applied quantitative research project completed during an industry internship. Involved data pipeline construction, statistical modeling, and analytical reporting; full write-up available as a PDF thesis.",
     insight:
       '"Real-world data is messy — robust preprocessing and feature engineering proved as critical as model selection in driving analytical accuracy."',
     files: [
       {
-        label: "Chinese Thesis (HTML)",
-        href: "/intern-proj/chinese_thesis.html",
-        icon: "article",
+        label: "Thesis (PDF)",
+        href: "/intern-proj/us_market_thesis.pdf",
+        icon: "description",
       },
     ],
   },
