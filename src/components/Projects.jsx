@@ -1,68 +1,182 @@
+const projects = [
+  {
+    id: "01",
+    course: "FRE 6083",
+    tags: ["GARCH(1,1)", "Black-Scholes", "Monte Carlo", "Python"],
+    title: "GARCH Option Pricing & Implied Volatility Term Structure",
+    description:
+      "A rigorous examination of S&P 500 option pricing comparing implied volatility term structures derived from classical Black-Scholes and GARCH(1,1) volatility simulations. Constructed 3D implied volatility surfaces and found BS overpriced deep OTM calls by up to 8.6%.",
+    insight:
+      '"GARCH(1,1) better captures volatility clustering and produces more realistic IV surfaces than the constant-vol Black-Scholes assumption."',
+    files: [
+      {
+        label: "Report (PDF)",
+        href: "/6083%20Proj/report.pdf",
+        icon: "description",
+      },
+      {
+        label: "Presentation",
+        href: "/6083%20Proj/Comparing%20IV%20termstructure%20from%20Black%20Scholes%20and%20Volatility%20sumulations%20using%20GARCH(1%2C1)%20(1).pptx",
+        icon: "present_to_all",
+      },
+      {
+        label: "Final Project Deck",
+        href: "/6083%20Proj/FRM_Final%20project.pptx",
+        icon: "slideshow",
+      },
+    ],
+  },
+  {
+    id: "02",
+    course: "FRE 6123",
+    tags: ["VaR", "CVaR", "Stress Testing", "Risk Management"],
+    title: "Financial Risk Management — FRM Final Project",
+    description:
+      "Comprehensive financial risk management analysis covering Value-at-Risk estimation, CVaR, stress testing, and regulatory capital frameworks. Developed quantitative models to assess and mitigate market, credit, and operational risk exposures.",
+    insight:
+      '"Stress testing under historical and Monte Carlo scenarios reveals tail-risk exposures invisible to standard VaR at the 95% confidence level."',
+    files: [
+      {
+        label: "Final Paper (PDF)",
+        href: "/6123%20Proj/FRM_Final%20Paper%20(2).pdf",
+        icon: "description",
+      },
+      {
+        label: "Project Report",
+        href: "/6123%20Proj/FRM_Project_Report.pdf",
+        icon: "summarize",
+      },
+      {
+        label: "Presentation",
+        href: "/6123%20Proj/FRM_Final%20project.pptx",
+        icon: "present_to_all",
+      },
+    ],
+  },
+  {
+    id: "03",
+    course: "Internship",
+    tags: ["Python", "Jupyter", "Data Analysis", "Quantitative Research"],
+    title: "Quantitative Research — Internship Project",
+    description:
+      "Applied quantitative research project completed during an industry internship. Involved data pipeline construction, statistical modeling, and analytical reporting using Python and Jupyter Notebooks.",
+    insight:
+      '"Real-world data is messy — robust preprocessing and feature engineering proved as critical as model selection in driving analytical accuracy."',
+    files: [
+      {
+        label: "Project Report",
+        href: "/intern%20proj/interprpject.pdf",
+        icon: "description",
+      },
+      {
+        label: "Jupyter Notebook",
+        href: "/intern%20proj/interprpject_extracted.ipynb",
+        icon: "code",
+      },
+    ],
+  },
+];
+
 export default function Projects() {
   return (
-    <section className="bg-surface-container-low py-32 px-12 relative overflow-hidden" id="projects">
+    <section
+      className="bg-surface-container-low py-32 px-12 relative overflow-hidden"
+      id="projects"
+    >
       <div className="absolute inset-0 grid-pattern pointer-events-none"></div>
       <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header */}
         <div className="flex justify-between items-end mb-24">
           <div className="space-y-4">
-            <span className="font-label text-xs text-secondary uppercase tracking-[0.4em]">02. Selected Records</span>
-            <h2 className="font-headline text-5xl font-bold text-primary">Quantitative Analysis</h2>
+            <span className="font-label text-xs text-secondary uppercase tracking-[0.4em]">
+              02. Selected Records
+            </span>
+            <h2 className="font-headline text-5xl font-bold text-primary">
+              Quantitative Analysis
+            </h2>
           </div>
           <div className="hidden md:block font-label text-xs text-outline tracking-widest uppercase">
             Scroll to Explore Project Archives
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          {/* Project 1: GARCH */}
-          <div className="bg-surface-container-lowest p-12 relative group overflow-hidden border border-outline-variant/10 md:col-span-12">
-            <div className="absolute top-0 right-0 p-8">
-              <span className="font-label text-4xl text-outline-variant/20">01</span>
-            </div>
-            <div className="flex flex-wrap gap-2 mb-8">
-              <span className="px-3 py-1 bg-tertiary-container text-tertiary-fixed-dim font-label text-[10px] uppercase tracking-tighter">GARCH(1,1)</span>
-              <span className="px-3 py-1 bg-tertiary-container text-tertiary-fixed-dim font-label text-[10px] uppercase tracking-tighter">Monte Carlo</span>
-              <span className="px-3 py-1 bg-tertiary-container text-tertiary-fixed-dim font-label text-[10px] uppercase tracking-tighter">Python</span>
-            </div>
-            <h3 className="font-headline text-3xl font-bold mb-6 text-primary group-hover:text-secondary transition-colors cursor-pointer">GARCH Option Pricing &amp; Implied Volatility</h3>
-            <p className="font-body text-on-surface-variant mb-12 max-w-xl">
-              A rigorous examination of S&amp;P 500 option pricing using GARCH models to address the volatility clustering neglected by standard Black-Scholes.
-            </p>
-            <div className="bg-surface-container-low p-6 border-l-2 border-secondary mb-8">
-              <span className="font-label text-[10px] text-secondary uppercase block mb-2">Key Research Insight</span>
-              <p className="font-label text-sm text-primary font-medium italic">"Constructed 3D implied volatility surface, found BS model overpriced deep OTM calls by up to 8.6%."</p>
-            </div>
-            <a className="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest font-bold text-primary hover:text-secondary transition-all" href="#">
-              Repository Archive <span className="material-symbols-outlined text-sm">database</span>
-            </a>
-          </div>
-          
-          {/* Project 2: FX Ambiguity */}
-          <div className="md:col-span-12 bg-surface-container-lowest p-12 flex flex-col md:flex-row gap-12 items-center border border-outline-variant/10">
-            <div className="md:w-1/2">
-              <img 
-                className="w-full h-64 object-cover rounded opacity-80 grayscale hover:grayscale-0 transition-all duration-700" 
-                alt="Clean, minimalist data visualization showing currency fluctuations and ambiguity index overlays" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw_rrb-wiaOlLMV_RRd9WClxC5spQ9WdzoDuqU1ZFXx267Wun3aDlNr810ybOJnIDxA18xlFlhe0Dl1RV1yDBWUg-59GQLZEnL0Wd2v4UMnBBc5FXkpi4H8ET6Z0pVM71QF-CyPXZx4wN3fLEUUj0hl9BOc53XFyYVnqeKhANc39A3As0VFjvF0V4p9XCe0WgQg8f8-n-lpWcLbDyGyRHH_Og8RyrN3HxFVvHgrm1whjk_Mulsr3CpYsMwaHnNIralSVtCK29sx-U"
-              />
-            </div>
-            <div className="md:w-1/2 space-y-6">
-              <div className="flex gap-2">
-                <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">OLS Regression</span>
-                <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">IMF COFER</span>
-                <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">Asano(2025)</span>
+
+        {/* Project Cards */}
+        <div className="flex flex-col gap-8">
+          {projects.map((project, index) => (
+            <div
+              key={project.id}
+              className={`bg-surface-container-lowest border border-outline-variant/10 relative group overflow-hidden ${
+                index === 1
+                  ? "flex flex-col md:flex-row gap-0"
+                  : ""
+              }`}
+            >
+              {/* Large project number watermark */}
+              <div className="absolute top-0 right-0 p-8 pointer-events-none">
+                <span className="font-label text-6xl text-outline-variant/10 select-none">
+                  {project.id}
+                </span>
               </div>
-              <h3 className="font-headline text-3xl font-bold text-primary">FX Ambiguity &amp; Safe-Haven Reserve Allocation</h3>
-              <p className="font-body text-on-surface-variant">
-                Investigation into central bank behaviors during periods of high monetary uncertainty.
-              </p>
-              <div className="p-6 bg-surface-container border-l-2 border-primary">
-                <p className="font-label text-sm italic">
-                  "Built quarterly FX Ambiguity Index; found central banks did not increase safe-haven holdings during high ambiguity (r = -0.36)."
+
+              <div className="p-10 md:p-12 flex-1">
+                {/* Course badge + tags */}
+                <div className="flex flex-wrap gap-2 mb-8">
+                  <span className="px-3 py-1 bg-primary text-on-primary font-label text-[10px] uppercase tracking-tighter">
+                    {project.course}
+                  </span>
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-tertiary-container text-tertiary-fixed-dim font-label text-[10px] uppercase tracking-tighter"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Title */}
+                <h3 className="font-headline text-2xl md:text-3xl font-bold mb-6 text-primary group-hover:text-secondary transition-colors">
+                  {project.title}
+                </h3>
+
+                {/* Description */}
+                <p className="font-body text-on-surface-variant mb-8 max-w-2xl leading-relaxed">
+                  {project.description}
                 </p>
+
+                {/* Key insight */}
+                <div className="bg-surface-container-low p-5 border-l-2 border-secondary mb-10">
+                  <span className="font-label text-[10px] text-secondary uppercase block mb-2 tracking-widest">
+                    Key Insight
+                  </span>
+                  <p className="font-label text-sm text-primary font-medium italic">
+                    {project.insight}
+                  </p>
+                </div>
+
+                {/* File links */}
+                <div className="flex flex-wrap gap-3">
+                  {project.files.map((file) => (
+                    <a
+                      key={file.label}
+                      href={file.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-label text-xs uppercase tracking-widest font-bold text-primary border border-outline-variant/30 px-5 py-3 hover:bg-primary hover:text-on-primary transition-all duration-200"
+                    >
+                      <span className="material-symbols-outlined text-sm">
+                        {file.icon}
+                      </span>
+                      {file.label}
+                      <span className="material-symbols-outlined text-xs opacity-60">
+                        open_in_new
+                      </span>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

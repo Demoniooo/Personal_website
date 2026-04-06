@@ -6,7 +6,7 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about', 'education', 'experience', 'skills'];
+      const sections = ['about', 'education', 'experience', 'skills', 'projects'];
       const scrollPosition = window.scrollY + 200; // offset for nav header height
       
       for (const section of sections) {
@@ -39,7 +39,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center max-w-7xl mx-auto px-12 py-6">
           <span className="font-serif text-xl font-bold tracking-tighter text-[#010a27] dark:text-[#f9f9f9]">HAOLIN LIU</span>
           <div className="hidden md:flex items-center gap-10">
-            {['about', 'education', 'experience', 'skills'].map((item) => (
+            {['about', 'education', 'experience', 'skills', 'projects'].map((item) => (
               <a 
                 key={item}
                 className={`font-serif text-lg tracking-tight transition-all ${
