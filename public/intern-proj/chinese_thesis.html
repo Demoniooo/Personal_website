@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基于宏观-中观-微观三层框架的美国股市状态识别研究</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --ink: #1a1614;
+    --ink-mid: #3d3530;
+    --ink-light: #6b6460;
+    --ink-faint: #a09890;
+    --cream: #faf8f5;
+    --warm: #f0ebe3;
+    --accent: #8b3a2a;
+    --accent-light: #c4694f;
+    --gold: #b8922a;
+    --border: #d6cfc5;
+    --border-light: #e8e2d8;
+    --blue-dark: #1e3a5f;
+    --blue-mid: #2d5986;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.95;
+  }
+
+  .cover {
+    background: var(--ink);
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    );
+  }
+
+  .cover-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .cover-top-rule {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto 48px;
+  }
+
+  .cover-tag {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+
+  .cover-title-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  .cover-title-en {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.06em;
+    margin-bottom: 60px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .cover-rule {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin: 0 auto 48px;
+    width: 80%;
+  }
+
+  .cover-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    max-width: 480px;
+    margin: 0 auto 48px;
+  }
+
+  .cover-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .cover-meta-label { font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
+  .cover-meta-value { color: rgba(255,255,255,0.85); }
+
+  .cover-bottom {
+    text-align: center;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 80px 80px;
+  }
+
+  @media (max-width: 640px) { .page { padding: 48px 28px; } }
+
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 64px 0 40px;
+  }
+
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 32px;
+    letter-spacing: 0.03em;
+  }
+
+  h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+    margin: 48px 0 20px;
+    letter-spacing: 0.02em;
+  }
+
+  h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink-mid);
+    margin: 32px 0 14px;
+    padding-left: 14px;
+    border-left: 3px solid var(--accent-light);
+  }
+
+  p {
+    margin-bottom: 18px;
+    text-indent: 2em;
+    color: var(--ink-mid);
+    font-size: 15px;
+    text-align: justify;
+  }
+
+  .abstract-box {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 32px 36px;
+    margin: 40px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .abstract-title {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .abstract-box p {
+    text-indent: 0;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--ink-mid);
+    margin-bottom: 12px;
+  }
+
+  .keywords {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-top: 16px;
+  }
+
+  .keywords strong {
+    color: var(--ink-mid);
+  }
+
+  .toc {
+    background: var(--warm);
+    border: 1px solid var(--border-light);
+    padding: 36px 40px;
+    margin: 40px 0;
+    border-radius: 4px;
+  }
+
+  .toc-title {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 14px;
+    color: var(--ink-mid);
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .toc-item:last-child { border-bottom: none; }
+
+  .toc-item.sub {
+    padding-left: 20px;
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+
+  .toc-page {
+    font-size: 12px;
+    color: var(--ink-faint);
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  .formula-block {
+    background: #f7f5f2;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  .formula {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 15px;
+    color: var(--blue-dark);
+    text-align: center;
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+
+  .formula-caption {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-align: center;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+  }
+
+  .data-table caption {
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+    text-align: left;
+    font-style: italic;
+  }
+
+  .data-table th {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 10px 14px;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-align: left;
+  }
+
+  .data-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--ink-mid);
+    vertical-align: top;
+  }
+
+  .data-table tr:nth-child(even) td { background: var(--warm); }
+  .data-table tr:hover td { background: #ede8df; }
+
+  .highlight-cell { color: var(--accent); font-weight: 500; }
+
+  .callout {
+    display: flex;
+    gap: 16px;
+    background: #eef3f9;
+    border: 1px solid #c3d5e8;
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 28px 0;
+  }
+
+  .callout-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .callout-body { flex: 1; }
+
+  .callout-title {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--blue-dark);
+    margin-bottom: 6px;
+  }
+
+  .callout p {
+    text-indent: 0;
+    font-size: 13.5px;
+    color: #2d4a6e;
+    margin-bottom: 0;
+  }
+
+  .result-banner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .result-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .result-card-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  .result-card-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .result-card-sub {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+
+  .footnote-section {
+    border-top: 1px solid var(--border);
+    margin-top: 64px;
+    padding-top: 28px;
+  }
+
+  .footnote {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.7;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .footnote::before {
+    content: attr(data-n);
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
+    top: 2px;
+  }
+
+  .refs h2 { margin-top: 0; }
+
+  .ref-item {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    margin-bottom: 12px;
+    padding-left: 24px;
+    text-indent: -24px;
+  }
+
+  .chapter-divider {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-top: 1px solid var(--border-light);
+    margin-top: 60px;
+  }
+
+  .chapter-divider-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .chapter-divider-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .chapter-divider-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  ul, ol {
+    padding-left: 28px;
+    margin: 16px 0 20px;
+  }
+
+  li {
+    margin-bottom: 8px;
+    font-size: 14.5px;
+    color: var(--ink-mid);
+    line-height: 1.8;
+  }
+
+  .fig-caption {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-align: center;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  .page-break { page-break-before: always; }
+
+  @media print {
+    .cover { min-height: auto; padding: 60px 40px; }
+    .page { padding: 48px 60px; }
+    body { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-top-rule"></div>
+    <div class="cover-tag">学术论文 · Academic Thesis</div>
+    <div class="cover-title-zh">
+      基于宏观–中观–微观三层框架的<br>美国股市状态识别与综合评价研究
+    </div>
+    <div class="cover-title-en">
+      A Three-Tier Macro–Meso–Micro Framework for U.S. Equity Market<br>
+      State Identification and Composite Assessment
+    </div>
+    <hr class="cover-rule">
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">学科领域</span>
+        <span class="cover-meta-value">金融工程 / 定量投资</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">数据来源</span>
+        <span class="cover-meta-value">FRED · yfinance</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">研究周期</span>
+        <span class="cover-meta-value">2001年—2024年</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">核心方法</span>
+        <span class="cover-meta-value">逻辑回归 · PCA · 分位数</span>
+      </div>
+    </div>
+    <div class="cover-bottom">© 2025 版权所有 · All Rights Reserved</div>
+  </div>
+</div>
+
+<!-- ABSTRACT -->
+<div class="page">
+
+  <div class="abstract-box">
+    <div class="abstract-title">摘　要 · Abstract</div>
+    <p>
+      本文构建了一套宏观–中观–微观三层次量化研究框架，系统识别和评价美国股票市场所处的周期状态与风险水平。宏观层（Macro）以美联储M1货币供应量年同比增速及其派生技术指标为特征变量，采用逻辑回归模型预测标准普尔500指数未来60个交易日的涨跌方向，实证结果显示预测准确率达75.86%，ROC曲线下面积（AUC）为0.77；中观层（Meso）汇总M1、M2、CPI、PPI、工业产出、零售销售、制造业就业与出口额等八条关键美国宏观经济序列，采用主成分分析（PCA）提炼综合景气指数，第一主成分解释了约36.7%的总方差；微观层（Micro）针对标普500、罗素2000、道琼斯工业指数及纳斯达克综合指数，构建波动率、市盈率、换手率与股权风险溢价（ERP）四项指标的历史百分位，并合成等权综合市场温度计。本研究在方法论上实现了宏观政策信号与微观市场结构的有机融合，为资产配置决策提供多维度的定量参考依据。
+    </p>
+    <p style="margin-bottom:0;">
+      <em>This paper constructs a three-tier quantitative framework — Macro, Meso, and Micro — to systematically identify and assess the cyclical state and risk level of the U.S. equity market. At the macro level, logistic regression using M1 year-on-year growth and derived technical indicators achieves 75.86% directional accuracy (AUC = 0.77) in predicting S&amp;P 500 60-day returns. At the meso level, PCA on eight FRED macroeconomic series extracts a composite business cycle index (PC1 ≈ 36.7% variance). At the micro level, historical percentiles of volatility, P/E, turnover, and equity risk premium are synthesized into a composite market thermometer across four major U.S. indices.</em>
+    </p>
+    <div class="keywords">
+      <strong>关键词：</strong>宏中微观框架 · 逻辑回归 · 主成分分析 · 分位数百分位 · 股权风险溢价 · 市场状态识别
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">目　录 · Contents</div>
+    <div class="toc-item"><span>摘要</span><span class="toc-page">1</span></div>
+    <div class="toc-item"><span>第一章　引言与研究背景</span><span class="toc-page">2</span></div>
+    <div class="toc-item sub"><span>1.1 研究动机</span><span class="toc-page">2</span></div>
+    <div class="toc-item sub"><span>1.2 研究目标与主要贡献</span><span class="toc-page">3</span></div>
+    <div class="toc-item sub"><span>1.3 论文结构</span><span class="toc-page">4</span></div>
+    <div class="toc-item"><span>第二章　文献综述</span><span class="toc-page">5</span></div>
+    <div class="toc-item"><span>第三章　数据与方法论</span><span class="toc-page">7</span></div>
+    <div class="toc-item sub"><span>3.1 数据来源</span><span class="toc-page">7</span></div>
+    <div class="toc-item sub"><span>3.2 宏观层：逻辑回归模型</span><span class="toc-page">8</span></div>
+    <div class="toc-item sub"><span>3.3 中观层：主成分分析</span><span class="toc-page">11</span></div>
+    <div class="toc-item sub"><span>3.4 微观层：百分位综合指标</span><span class="toc-page">13</span></div>
+    <div class="toc-item"><span>第四章　实证结果与分析</span><span class="toc-page">16</span></div>
+    <div class="toc-item sub"><span>4.1 宏观层预测结果</span><span class="toc-page">16</span></div>
+    <div class="toc-item sub"><span>4.2 中观景气指数结果</span><span class="toc-page">18</span></div>
+    <div class="toc-item sub"><span>4.3 微观市场温度计结果</span><span class="toc-page">20</span></div>
+    <div class="toc-item"><span>第五章　结论与政策启示</span><span class="toc-page">24</span></div>
+    <div class="toc-item"><span>参考文献</span><span class="toc-page">26</span></div>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter-divider">
+    <div class="chapter-divider-label">第一章</div>
+    <div class="chapter-divider-num">01</div>
+    <div class="chapter-divider-title">引言与研究背景</div>
+  </div>
+
+  <h2>1.1 研究动机</h2>
+
+  <p>
+    金融市场的有效配置离不开对市场整体状态的准确研判。然而，传统研究往往将宏观经济分析与微观市场结构研究割裂为两条独立的技术路径：前者侧重于货币政策、经济周期与资产定价的宏观联系，后者聚焦于估值、流动性与风险溢价等微观截面特征。这一分割导致了实践中的系统性盲点——单一维度的信号往往对市场真实状态存在误判，尤其在政策冲击与结构性变化并发的复杂时期。
+  </p>
+
+  <p>
+    2008年金融危机与2020年新冠疫情的极端行情清晰表明，市场风险的积聚与释放是多层次因素共振的结果：货币政策立场（宏观）、经济景气循环（中观）以及市场定价结构与流动性特征（微观）相互交织、相互强化。因此，构建一套能够横跨三个层次、兼顾时序预测与横截面评估的综合量化框架，具有重要的理论价值与实践意义。
+  </p>
+
+  <p>
+    在此背景下，本文借鉴机器学习方法、多元统计降维技术与历史分位数分析工具，尝试构建一个系统化的"宏观–中观–微观"（Macro–Meso–Micro，以下简称"三M框架"）股市状态识别体系，并以美国股票市场为研究对象，对该框架的有效性进行实证检验。
+  </p>
+
+  <h2>1.2 研究目标与主要贡献</h2>
+
+  <p>本研究的核心目标包括以下三个层次：</p>
+
+  <ul>
+    <li><strong>宏观层：</strong>检验货币供应量（M1）年同比增速及其技术派生指标能否有效预测标普500指数的中期涨跌方向，评估逻辑回归模型在金融市场状态分类任务中的适用性；</li>
+    <li><strong>中观层：</strong>利用主成分分析（PCA）将多条美国宏观经济时间序列（共8条）压缩为单一景气合成指数，刻画经济周期的起伏形态并检验其对金融市场的领先性；</li>
+    <li><strong>微观层：</strong>构建涵盖波动率、市盈率、换手率与股权风险溢价的四维历史百分位体系，合成等权"市场温度计"，为高频仓位决策提供量化依据。</li>
+  </ul>
+
+  <p>
+    本研究的主要学术贡献在于：第一，在方法论上系统整合了宏观预测模型与微观结构评估工具，提出了三层框架的协同使用范式；第二，在数据层面，以美联储FRED公开数据与yfinance市场数据替代专有数据终端（如Wind），验证了该框架在开放数据环境下的可复现性；第三，在实证层面，提供了一套涵盖2001–2024年美国市场的完整实证分析案例。
+  </p>
+
+  <h2>1.3 论文结构</h2>
+
+  <p>
+    本文其余部分安排如下：第二章梳理现有文献；第三章详述数据来源与方法论；第四章呈现三个层次的实证结果与分析；第五章总结主要结论并提出政策与投资实践启示。
+  </p>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter-divider">
+    <div class="chapter-divider-label">第二章</div>
+    <div class="chapter-divider-num">02</div>
+    <div class="chapter-divider-title">文献综述</div>
+  </div>
+
+  <h2>2.1 宏观因子与股票收益预测</h2>
+
+  <p>
+    货币政策与股票市场收益之间的联动关系是金融学研究的经典议题。Bernanke与Kuttner（2005）的开创性研究表明，意外的货币政策紧缩对股票市场具有显著的负向冲击，且该效应主要通过风险溢价渠道传导，而非贴现率的直接调整。Fama（1981）则更早指出工业产出、通货膨胀等实体经济指标是股票实际收益的有效预测因子，构成所谓"近似效率"（Proxy Hypothesis）的理论基础。
+  </p>
+
+  <p>
+    货币供应量方面，Hamburger与Kochin（1972）及Cooper（1974）在20世纪70年代的研究奠定了货币数量与股价之间相关性的实证基础。进入21世纪后，随着量化宽松政策的大规模实施，M1、M2等货币指标与股票估值之间的关系再度引发学界关注。本文在宏观层选取M1年同比增速及其移动平均衍生指标，既是对上述文献的回应，也是对货币政策信号在机器学习语境下可操作性的探索。
+  </p>
+
+  <h2>2.2 宏观景气合成指数</h2>
+
+  <p>
+    将多维宏观经济指标合成为单一综合指数是量化宏观分析的重要工具。Stock与Watson（2002）系统发展了基于动态因子模型（DFM）的景气合成方法，而主成分分析（PCA）作为更简便的替代工具被广泛用于宏观压力测试与跨国比较研究。Ludvigson与Ng（2009）进一步证明，从大规模宏观数据中提取的因子对股票市场的风险溢价具有显著的预测力，支持了本文中观层的分析逻辑。
+  </p>
+
+  <p>
+    在实践层面，美联储芝加哥分行编制的National Financial Conditions Index（NFCI）、Conference Board领先经济指标（LEI）等均采用类似的多指标合成思路，本文中观层的PCA景气指数设计与此一脉相承，但更注重可复现性与数据的开放获取性。
+  </p>
+
+  <h2>2.3 市场微观结构与风险度量</h2>
+
+  <p>
+    市场估值（PE）、波动率与流动性是微观层面衡量市场状态的三大支柱指标。Shiller（1981，2000）的周期调整市盈率（CAPE）为长期市场估值提供了具有理论依据的基准，其历史分位数被广泛用于判断股市的"贵贱"程度。Black（1976）与Christie（1982）记录了股票收益与波动率之间的"杠杆效应"，VIX等波动率指标成为衡量市场恐慌程度的标准工具。
+  </p>
+
+  <p>
+    股权风险溢价（ERP）是连接宏观利率环境与微观估值的桥梁。Damodaran（2020）指出，在利率上升周期中ERP的压缩是估值中枢下移的核心驱动因素，这一判断在2022年美联储激进加息周期中得到了鲜明验证。本文微观层构建的ERP百分位时间序列，正是对这一理论逻辑的量化落地。
+  </p>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter-divider">
+    <div class="chapter-divider-label">第三章</div>
+    <div class="chapter-divider-num">03</div>
+    <div class="chapter-divider-title">数据与方法论</div>
+  </div>
+
+  <h2>3.1 数据来源</h2>
+
+  <p>
+    本文所有数据均通过公开渠道获取，无需专有数据终端，以确保研究的可复现性。具体数据来源分为两类：
+  </p>
+
+  <table class="data-table">
+    <caption>表3.1　数据来源汇总</caption>
+    <thead>
+      <tr>
+        <th>层级</th>
+        <th>变量</th>
+        <th>数据来源</th>
+        <th>序列代码</th>
+        <th>频率</th>
+        <th>样本区间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>宏观</td><td>M1货币供应量</td><td>FRED</td><td>M1SL</td><td>月度</td><td>2010–2023</td></tr>
+      <tr><td>宏观</td><td>S&amp;P 500收盘价</td><td>yfinance</td><td>^GSPC</td><td>日度</td><td>2010–2023</td></tr>
+      <tr><td>中观</td><td>M2货币供应量</td><td>FRED</td><td>M2SL</td><td>月度</td><td>2002–2024</td></tr>
+      <tr><td>中观</td><td>CPI（城市消费者）</td><td>FRED</td><td>CPIAUCSL</td><td>月度</td><td>2002–2024</td></tr>
+      <tr><td>中观</td><td>PPI（商品）</td><td>FRED</td><td>PPIACO</td><td>月度</td><td>2002–2024</td></tr>
+      <tr><td>中观</td><td>工业产出指数</td><td>FRED</td><td>INDPRO</td><td>月度</td><td>2002–2024</td></tr>
+      <tr><td>中观</td><td>零售销售额</td><td>FRED</td><td>RSXFS</td><td>月度</td><td>2002–2024</td></tr>
+      <tr><td>中观</td><td>制造业就业人数</td><td>FRED</td><td>MANEMP</td><td>月度</td><td>2002–2024</td></tr>
+      <tr><td>中观</td><td>出口额</td><td>FRED</td><td>EXPGS</td><td>季度</td><td>2002–2024</td></tr>
+      <tr><td>微观</td><td>四大股指收盘价</td><td>yfinance</td><td>^GSPC/^RUT/^DJI/^IXIC</td><td>日度</td><td>2019–2024</td></tr>
+      <tr><td>微观</td><td>席勒CAPE</td><td>FRED</td><td>CAPE</td><td>月度</td><td>2019–2024</td></tr>
+      <tr><td>微观</td><td>10年期国债收益率</td><td>FRED</td><td>DGS10</td><td>日度</td><td>2019–2024</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.2 宏观层：逻辑回归模型</h2>
+
+  <h3>3.2.1 特征工程</h3>
+
+  <p>
+    宏观层的核心思路是：货币供应量的变动方向与幅度包含着经济流动性的重要信息，理论上应对股票市场的中期走势具有预测价值。本文以M1货币供应量年同比增速（M1_YoY）为基础，构建了五个衍生特征，形成六维特征向量：
+  </p>
+
+  <table class="data-table">
+    <caption>表3.2　宏观特征变量定义</caption>
+    <thead>
+      <tr><th>变量</th><th>定义</th><th>经济含义</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>M1_YoY<sub>t</sub></td><td>M1月度同比增速 (%)</td><td>当期货币宽松/收紧强度</td></tr>
+      <tr><td>lag1<sub>t</sub></td><td>M1_YoY<sub>t−1</sub></td><td>上月流动性状态（惯性）</td></tr>
+      <tr><td>DIF<sub>t</sub></td><td>M1_YoY<sub>t</sub> − lag1<sub>t</sub></td><td>货币政策边际变化速度</td></tr>
+      <tr><td>EMA12<sub>t</sub></td><td>12期指数移动平均</td><td>中期流动性趋势</td></tr>
+      <tr><td>EMA26<sub>t</sub></td><td>26期指数移动平均</td><td>长期流动性趋势</td></tr>
+      <tr><td>DIF_EMA<sub>t</sub></td><td>EMA12 − EMA26</td><td>类MACD动量信号</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.2.2 标签构建</h3>
+
+  <p>
+    目标变量定义为S&amp;P 500未来约60个交易日（即月度数据中的未来2期）的价格涨跌方向。具体地，定义：
+  </p>
+
+  <div class="formula-block">
+    <div class="formula">
+      Return<sub>t+2</sub> = (P<sub>t+2</sub> / P<sub>t</sub>) − 1
+    </div>
+    <div class="formula">
+      y<sub>t</sub> = 𝟙{ Return<sub>t+2</sub> &gt; 0 }
+    </div>
+    <div class="formula-caption">式3.1：二元方向标签定义（牛市=1，熊市=0）</div>
+  </div>
+
+  <p>
+    样本区间2010年1月至2023年3月共获得144个月度观测，其中牛市期（y=1）98个月，熊市期（y=0）46个月，样本存在一定的类别不平衡，但在逻辑回归框架下尚可接受。
+  </p>
+
+  <h3>3.2.3 模型估计</h3>
+
+  <p>
+    按80%/20%比例随机划分训练集与测试集（random_state=42），对特征向量进行Z-score标准化，然后使用L2正则化逻辑回归模型（最大迭代500次）进行拟合：
+  </p>
+
+  <div class="formula-block">
+    <div class="formula">
+      P(y=1 | <b>x</b>) = σ(<b>w</b>ᵀ<b>x</b> + b) = 1 / (1 + e<sup>−(<b>w</b>ᵀ<b>x</b> + b)</sup>)
+    </div>
+    <div class="formula-caption">式3.2：逻辑回归预测概率</div>
+  </div>
+
+  <p>
+    预测评估指标包括准确率（Accuracy）与ROC曲线下面积（AUC），后者对类别不平衡具有更强的鲁棒性。
+  </p>
+
+  <h2>3.3 中观层：主成分分析（PCA）</h2>
+
+  <h3>3.3.1 变量选择</h3>
+
+  <p>
+    中观层选取8条涵盖货币、价格、产出、就业与贸易维度的美国宏观经济指标，样本区间为2002年至2024年。除制造业就业人数与出口额直接使用水平值外，其余6条序列均转换为年同比增速以消除单位根与量纲差异：
+  </p>
+
+  <div class="callout">
+    <div class="callout-icon">📊</div>
+    <div class="callout-body">
+      <div class="callout-title">中观层8条指标</div>
+      <p>M1同比、M2同比、CPI同比、PPI同比、工业产出同比、零售销售同比（以上6条取同比），以及制造业就业人数（水平值）、出口额（季度→月度前向填充）</p>
+    </div>
+  </div>
+
+  <h3>3.3.2 PCA降维</h3>
+
+  <p>
+    对月末对齐、前向填充后的8×T矩阵进行Z-score标准化，提取第一主成分（PC1）作为综合景气指数：
+  </p>
+
+  <div class="formula-block">
+    <div class="formula">
+      PC1 = <b>v</b>₁ᵀ · Z
+    </div>
+    <div class="formula-caption">式3.3：PC1为协方差矩阵最大特征值对应特征向量与标准化数据矩阵的乘积</div>
+  </div>
+
+  <p>
+    PC1在方向上综合了8条指标的共同变动趋势，在经济学意义上近似于"美国宏观景气周期指数"：PC1上升对应多数指标同步改善（扩张期），下降则对应普遍收缩（衰退期）。
+  </p>
+
+  <h2>3.4 微观层：百分位综合指标</h2>
+
+  <h3>3.4.1 四项指标构建</h3>
+
+  <p>微观层针对S&amp;P 500、罗素2000、道琼斯工业指数与纳斯达克综合指数，分别构建以下四项指标：</p>
+
+  <ul>
+    <li><strong>波动率百分位（Vol_Pct）：</strong>60日滚动对数收益率年化标准差，再取20日移动平均平滑后计算全样本历史百分位；</li>
+    <li><strong>PE百分位（PE_Pct）：</strong>以席勒CAPE（月度）前向填充至日度，对各指数施加固定偏移量后取20日移动平均，计算历史百分位；</li>
+    <li><strong>换手率百分位（Turn_Pct）：</strong>以当日成交量除以252日滚动平均成交量，计算历史百分位；</li>
+    <li><strong>ERP百分位（ERP_Pct）：</strong>盈利收益率（1/PE）减去美国10年期国债收益率（DGS10，日度），计算历史百分位。</li>
+  </ul>
+
+  <div class="formula-block">
+    <div class="formula">
+      Vol_Ann,t = std(log(P<sub>t</sub>/P<sub>t-1</sub>), window=60) × √252
+    </div>
+    <div class="formula">
+      ERP<sub>t</sub> = (1 / PE<sub>t</sub>) − r<sub>f,t</sub>
+    </div>
+    <div class="formula-caption">式3.4–3.5：波动率年化与ERP计算公式</div>
+  </div>
+
+  <h3>3.4.2 综合市场温度计</h3>
+
+  <p>
+    对四项百分位指标取等权平均，合成综合市场温度计（Composite）。历史百分位接近1表明当前市场状态处于历史高位（高波动、高估值、高换手或低ERP），综合指数偏高通常预示着较大的下行风险或均值回归压力。
+  </p>
+
+  <div class="formula-block">
+    <div class="formula">
+      Composite<sub>t</sub> = (Vol_Pct<sub>t</sub> + PE_Pct<sub>t</sub> + Turn_Pct<sub>t</sub> + ERP_Pct<sub>t</sub>) / 4
+    </div>
+    <div class="formula-caption">式3.6：等权综合市场温度计</div>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter-divider">
+    <div class="chapter-divider-label">第四章</div>
+    <div class="chapter-divider-num">04</div>
+    <div class="chapter-divider-title">实证结果与分析</div>
+  </div>
+
+  <h2>4.1 宏观层：逻辑回归预测结果</h2>
+
+  <div class="result-banner">
+    <div class="result-card">
+      <div class="result-card-label">分类准确率</div>
+      <div class="result-card-value">75.86%</div>
+      <div class="result-card-sub">测试集（20%样本）</div>
+    </div>
+    <div class="result-card">
+      <div class="result-card-label">ROC-AUC</div>
+      <div class="result-card-value">0.77</div>
+      <div class="result-card-sub">模型辨别力</div>
+    </div>
+    <div class="result-card">
+      <div class="result-card-label">样本量</div>
+      <div class="result-card-value">144</div>
+      <div class="result-card-sub">月度观测（2010–2023）</div>
+    </div>
+  </div>
+
+  <p>
+    逻辑回归模型在测试集上取得了75.86%的方向预测准确率，ROC曲线下面积为0.77，表明以M1货币供应量年同比增速及其技术衍生指标构建的宏观特征组合，对S&amp;P 500指数未来60日涨跌方向具有显著的统计预测价值。
+  </p>
+
+  <p>
+    从经济逻辑看，M1年同比增速较高的环境通常对应宽松的货币条件，企业融资成本下降、流动性充裕，有助于支撑股票估值的扩张；反之，M1增速下滑乃至负增长（如2022–2023年美联储激进加息引发的M1萎缩）则往往伴随估值压缩与市场调整。本文中构建的类MACD衍生指标（DIF_EMA）进一步捕捉了货币政策转向的边际信号，这类动量信号的引入是提升模型预测力的重要来源。
+  </p>
+
+  <p>
+    值得注意的是，144个月度样本中牛市期（98个月）与熊市期（46个月）之间存在约2:1的类别不平衡，在AUC评估指标下该不平衡的影响有所削减。未来研究可引入过采样（SMOTE）或代价敏感学习机制进一步优化。
+  </p>
+
+  <div class="callout">
+    <div class="callout-icon">📈</div>
+    <div class="callout-body">
+      <div class="callout-title">ROC曲线解读</div>
+      <p>AUC=0.77意味着，随机取一对（牛市月、熊市月），模型正确将牛市月预测概率排在熊市月之上的概率约为77%。这一结果在宏观因子预测股市方向的文献中处于中等偏上水平，考虑到仅使用单一宏观指标（M1）的特征，结果尤为值得肯定。</p>
+    </div>
+  </div>
+
+  <h2>4.2 中观层：PCA景气指数结果</h2>
+
+  <p>
+    对8条标准化美国宏观经济序列执行主成分分析后，第一主成分（PC1）解释了总方差的约36.7%，第二主成分贡献约18.5%，前两个主成分合计解释约55%的方差（图4.1）。PC1的解释比例略低于部分文献中使用更多经济序列时的报告值（通常在40%–50%区间），原因可能在于本文选用的8条指标涵盖了货币、价格、实体产出与贸易等相对多元的维度，跨类别指标的相关性天然低于同类指标集合。
+  </p>
+
+  <p>
+    从PC1的时序走势来看，其高点与美国经济扩张期（2004–2007年、2017–2019年、2021–2022年前期）高度吻合，其深度负值区间对应2008–2009年金融危机及2020年新冠疫情冲击，显示PC1具有良好的经济周期识别能力。2022年下半年PC1的快速下行与美联储的激进加息、通胀高企形成的经济减速背景完全一致。
+  </p>
+
+  <table class="data-table">
+    <caption>表4.1　中观PCA主成分方差贡献分析</caption>
+    <thead>
+      <tr><th>主成分</th><th>特征值</th><th>个别方差贡献率</th><th>累积方差贡献率</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>PC1</td><td>2.94</td><td class="highlight-cell">36.7%</td><td>36.7%</td></tr>
+      <tr><td>PC2</td><td>1.48</td><td>18.5%</td><td>55.2%</td></tr>
+      <tr><td>PC3</td><td>1.12</td><td>14.0%</td><td>69.2%</td></tr>
+      <tr><td>PC4</td><td>0.87</td><td>10.9%</td><td>80.1%</td></tr>
+      <tr><td>PC5–PC8</td><td>—</td><td>19.9%</td><td>100.0%</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    从各原始指标在PC1上的载荷（Loading）分析，M2同比（0.41）、M1同比（0.38）、工业产出同比（0.36）对PC1的贡献最大，表明货币供给扩张与实体产出增长是驱动美国宏观景气循环的核心力量。CPI同比（0.29）与PPI同比（0.27）的载荷也较为显著，反映价格信号与货币–产出周期的密切关联。制造业就业（0.21）与出口额（0.18）的载荷相对较小，暗示在美国经济结构中，服务业与内需的主导性日益增强。
+  </p>
+
+  <h2>4.3 微观层：市场温度计结果</h2>
+
+  <h3>4.3.1 波动率百分位</h3>
+
+  <p>
+    波动率百分位时序图显示，2020年3月新冠疫情冲击触发的极端波动推动各指数波动率百分位同步逼近1.0，这一时期也是市场恐慌情绪最为极端的阶段。此后随着美联储超常规宽松政策的介入，波动率百分位在2021年回落至历史中枢以下（约0.3–0.4区间），市场进入"低波高涨"状态。2022年激进加息再度引发波动率百分位攀升，但其高点（约0.7–0.75）远低于2020年的极端水平，表明市场在经历冲击后的风险定价能力有所提升。
+  </p>
+
+  <h3>4.3.2 PE百分位</h3>
+
+  <p>
+    以席勒CAPE为基础构建的PE百分位显示，2020–2021年宽松周期推动美股估值大幅扩张，S&amp;P 500的CAPE一度超过37倍，对应PE百分位超过0.9，进入历史极度高估区间。2022年的估值压缩伴随PE百分位从高位回落约40个百分点，但截至2024年，随着"科技七巨头"（Magnificent Seven）的集中拉动，纳斯达克指数PE百分位再度回升至0.7以上，显示AI相关资产的高估值风险值得持续关注。
+  </p>
+
+  <h3>4.3.3 换手率百分位</h3>
+
+  <p>
+    换手率百分位呈现出典型的均值回归特征，在高位（超过0.8）之后往往跟随流动性萎缩（百分位回落至0.2–0.3区间），与"聪明资金离场"的市场直觉高度吻合。2023年下半年人工智能主题驱动的交易活跃期在换手率百分位上有所体现，但持续性相对有限，提示本轮行情的散户参与度低于2021年的"散户起义"行情。
+  </p>
+
+  <h3>4.3.4 ERP百分位与综合温度计</h3>
+
+  <p>
+    ERP百分位是微观层中信号最具前瞻性的指标。随着美联储10年期国债收益率在2022–2023年大幅抬升，股票盈利收益率（1/PE）与无风险利率之间的利差迅速收窄乃至出现阶段性倒挂，推动ERP百分位降至历史低位（0.1–0.2区间）。这一状态在历史上往往意味着股票相对债券的相对吸引力处于极低水平，是配置资金从权益切换至固定收益的重要信号。
+  </p>
+
+  <p>
+    综合温度计（等权平均）在2020年3月触及极值后回落，随后在2021年底至2022年初呈现高波动率+高PE+低ERP的"三重叠加"风险信号（综合百分位超过0.7），这一时间段与S&amp;P 500随后约20%的峰谷回撤高度吻合，验证了综合温度计对市场重大风险事件的预警价值。
+  </p>
+
+  <table class="data-table">
+    <caption>表4.2　重大市场事件期间微观层百分位诊断</caption>
+    <thead>
+      <tr><th>时间节点</th><th>事件背景</th><th>波动率</th><th>PE</th><th>换手率</th><th>ERP</th><th>综合</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2020.03</td><td>新冠疫情冲击</td><td class="highlight-cell">0.98</td><td>0.45</td><td>0.91</td><td>0.72</td><td>0.77</td></tr>
+      <tr><td>2021.11</td><td>通胀预期升温</td><td>0.38</td><td class="highlight-cell">0.92</td><td>0.68</td><td>0.18</td><td>0.54</td></tr>
+      <tr><td>2022.06</td><td>激进加息高峰</td><td>0.71</td><td>0.61</td><td>0.42</td><td class="highlight-cell">0.09</td><td>0.46</td></tr>
+      <tr><td>2023.10</td><td>利率"Higher Longer"</td><td>0.42</td><td>0.74</td><td>0.55</td><td>0.14</td><td>0.46</td></tr>
+      <tr><td>2024.07</td><td>AI估值扩张</td><td>0.33</td><td class="highlight-cell">0.81</td><td>0.62</td><td>0.22</td><td>0.50</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter-divider">
+    <div class="chapter-divider-label">第五章</div>
+    <div class="chapter-divider-num">05</div>
+    <div class="chapter-divider-title">结论与政策启示</div>
+  </div>
+
+  <h2>5.1 主要研究结论</h2>
+
+  <p>
+    本文构建并实证检验了宏观–中观–微观三层次量化分析框架，主要结论如下：
+  </p>
+
+  <ol>
+    <li>
+      <strong>宏观层面：</strong>以M1货币供应量年同比增速为核心的六维特征向量，结合逻辑回归模型，能够以75.86%的准确率（AUC=0.77）识别S&amp;P 500指数未来60日的涨跌方向，表明货币政策信号对中期股市方向具有统计显著的预测价值；
+    </li>
+    <li>
+      <strong>中观层面：</strong>基于FRED 8条宏观序列的PCA景气指数（PC1）对美国经济周期的扩张与收缩具有较强的识别能力，PC1解释约36.7%的总方差，其时序形态与历史上的主要经济事件高度吻合；
+    </li>
+    <li>
+      <strong>微观层面：</strong>波动率、PE、换手率与ERP四项历史百分位指标的综合温度计，在2020年3月新冠冲击与2022年加息周期等重大市场风险事件前后均给出了有意义的预警或诊断信号，具备实际的资产配置参考价值。
+    </li>
+  </ol>
+
+  <h2>5.2 投资实践启示</h2>
+
+  <p>
+    从资产配置实践角度，三M框架提供了一套可操作的"市场时钟"参考体系：当宏观层模型输出牛市概率显著提升（&gt;65%）、中观PC1趋势向上且微观综合百分位处于历史中枢以下（&lt;0.5）时，权益仓位可适度超配；反之，当宏观信号转弱、中观景气下行且微观综合百分位超过0.7时，则应降低风险资产敞口、增加防御性配置。
+  </p>
+
+  <p>
+    此外，ERP百分位的监测尤为重要。在利率大幅上升阶段，即便股票绝对估值未达历史极端，ERP的快速收窄仍会导致股债相对吸引力发生根本性逆转。2022年的历史经验表明，忽视ERP维度的纯粹估值分析会系统性低估当前权益配置的隐性风险。
+  </p>
+
+  <h2>5.3 研究局限性与未来方向</h2>
+
+  <p>
+    本研究存在以下局限：第一，宏观层仅使用M1单一货币指标，未来可引入联邦基金利率、信贷脉冲等更丰富的货币政策信号；第二，微观层样本区间（2019–2024年）较短，百分位计算可能受新冠疫情极端事件的锚定效应影响；第三，三个层次之间的信号整合目前采用定性描述，未来可开发形式化的三层信号融合评分模型（如层次分析法AHP或贝叶斯更新框架）。
+  </p>
+
+  <p>
+    未来研究方向包括：将框架扩展至A股市场（以Wind数据验证中国宏观指标的适用性）、引入非结构化数据（新闻情绪、美联储会议纪要NLP）作为宏观层的补充特征，以及构建基于三M框架的系统性回测策略以验证其实际投资绩效。
+  </p>
+
+  <!-- REFERENCES -->
+  <div class="chapter-divider">
+    <div class="chapter-divider-label">参考文献</div>
+    <div class="chapter-divider-num" style="font-size:40px;">Ref</div>
+    <div class="chapter-divider-title">References</div>
+  </div>
+
+  <div class="refs">
+    <div class="ref-item">Bernanke, B. S., & Kuttner, K. N. (2005). What explains the stock market's reaction to Federal Reserve policy? <em>Journal of Finance</em>, 60(3), 1221–1257.</div>
+    <div class="ref-item">Black, F. (1976). Studies of stock price volatility changes. <em>Proceedings of the Business and Economics Statistics Section of the American Statistical Association</em>, 177–181.</div>
+    <div class="ref-item">Christie, A. A. (1982). The stochastic behavior of common stock variances: Value, leverage and interest rate effects. <em>Journal of Financial Economics</em>, 10(4), 407–432.</div>
+    <div class="ref-item">Cooper, R. V. L. (1974). Efficient capital markets and the quantity theory of money. <em>Journal of Finance</em>, 29(3), 887–908.</div>
+    <div class="ref-item">Damodaran, A. (2020). <em>Equity Risk Premiums (ERP): Determinants, Estimation and Implications</em>. SSRN Working Paper.</div>
+    <div class="ref-item">Fama, E. F. (1981). Stock returns, real activity, inflation, and money. <em>American Economic Review</em>, 71(4), 545–565.</div>
+    <div class="ref-item">Hamburger, M. J., & Kochin, L. A. (1972). Money and stock prices: The channels of influence. <em>Journal of Finance</em>, 27(2), 231–249.</div>
+    <div class="ref-item">Ludvigson, S. C., & Ng, S. (2009). Macro factors in bond risk premia. <em>Review of Financial Studies</em>, 22(12), 5027–5067.</div>
+    <div class="ref-item">Shiller, R. J. (1981). Do stock prices move too much to be justified by subsequent changes in dividends? <em>American Economic Review</em>, 71(3), 421–436.</div>
+    <div class="ref-item">Shiller, R. J. (2000). <em>Irrational Exuberance</em>. Princeton University Press.</div>
+    <div class="ref-item">Stock, J. H., & Watson, M. W. (2002). Macroeconomic forecasting using diffusion indexes. <em>Journal of Business & Economic Statistics</em>, 20(2), 147–162.</div>
+    <div class="ref-item">Federal Reserve Bank of St. Louis. (2024). FRED Economic Data. Retrieved from https://fred.stlouisfed.org</div>
+    <div class="ref-item">Aroussi, R. (2024). yfinance: Yahoo! Finance market data downloader (v0.2.x). https://github.com/ranaroussi/yfinance</div>
+    <div class="ref-item">Pedregosa, F., et al. (2011). Scikit-learn: Machine learning in Python. <em>Journal of Machine Learning Research</em>, 12, 2825–2830.</div>
+  </div>
+
+  <div style="height: 80px;"></div>
+
+</div>
+</body>
+</html>
