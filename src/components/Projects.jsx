@@ -75,6 +75,23 @@ const projects = [
       },
     ],
   },
+  {
+    id: "04",
+    course: "Health Analytics",
+    tags: ["React", "Firebase", "Polynomial Regression", "Public Health"],
+    title: "Health: Drug Overdose in USA",
+    description:
+      "Interactive dashboard on U.S. drug overdose mortality using aggregate public data. Examines death-rate trends by age (2000–2018), including the sharp rise after 2013; defines a government-style concern metric to rank overdose types (e.g. synthetic opioids and heroin in 2018); and forecasts rates by demographic with cross-validated polynomial regression versus simpler linear models.",
+    insight:
+      '"Trends and forecasts converge on young and middle-aged adults bearing the heaviest burden—targeted prevention, treatment access, and education matter as much as the models."',
+    files: [
+      {
+        label: "Live App",
+        href: "https://coconut-analysis-68819.web.app/",
+        icon: "language",
+      },
+    ],
+  },
 ];
 
 export default function Projects() {
