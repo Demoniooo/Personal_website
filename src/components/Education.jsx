@@ -23,7 +23,7 @@ export default function Education() {
              <div className="bg-surface-container-lowest p-10 md:p-14 border border-outline-variant/10 shadow-[0_8px_32px_rgba(1,10,39,0.04)] transition-all group-hover:shadow-[0_16px_48px_rgba(1,10,39,0.06)] relative overflow-hidden">
                 <div className="flex flex-wrap items-center gap-3 mb-6">
                   <span className="px-3 py-1 bg-tertiary-container text-tertiary-fixed-dim font-label text-[10px] uppercase tracking-tighter">● ACTIVE_ALUMNI</span>
-                  <span className="font-label text-sm text-outline-variant font-bold tracking-widest ml-auto">2022 — 2024</span>
+                  <span className="font-label text-sm text-outline-variant font-bold tracking-widest ml-auto">2025 — 2027</span>
                 </div>
                 
                 <h3 className="font-headline text-3xl md:text-4xl font-bold mb-2 text-primary group-hover:text-secondary transition-colors">New York University (NYU Tandon)</h3>
