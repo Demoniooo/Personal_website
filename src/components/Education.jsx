@@ -54,7 +54,7 @@ export default function Education() {
              <div className="bg-surface-container-lowest/70 p-10 md:p-14 border border-outline-variant/10 relative overflow-hidden transition-all group-hover:bg-surface-container-lowest">
                 <div className="flex flex-wrap items-center gap-3 mb-6">
                   <span className="font-label text-[10px] uppercase tracking-tighter text-outline px-3 py-1 border border-outline-variant/30">○ ARCHIVED_RECORD</span>
-                  <span className="font-label text-sm text-outline-variant font-bold tracking-widest ml-auto">2018 — 2022</span>
+                  <span className="font-label text-sm text-outline-variant font-bold tracking-widest ml-auto">2021 — 2025</span>
                 </div>
                 
                 <h3 className="font-headline text-3xl md:text-4xl font-bold mb-2 text-primary group-hover:text-secondary transition-colors">University of Washington</h3>
