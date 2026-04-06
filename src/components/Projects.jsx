@@ -19,11 +19,6 @@ const projects = [
         href: "/6083-proj/Comparing%20IV%20termstructure%20from%20Black%20Scholes%20and%20Volatility%20sumulations%20using%20GARCH(1%2C1)%20(1).pptx",
         icon: "present_to_all",
       },
-      {
-        label: "Final Project Deck",
-        href: "/6083-proj/FRM_Final%20project.pptx",
-        icon: "slideshow",
-      },
     ],
   },
   {
