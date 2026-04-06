@@ -40,15 +40,9 @@ export default function Hero() {
           <span className="block mt-4 font-label text-sm tracking-widest text-on-primary opacity-60">NYU Tandon School of Engineering / University of Washington</span>
         </p>
         
-        <div className="flex flex-col md:flex-row gap-6 mt-4 font-label text-sm text-on-primary/80">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-secondary text-base">mail</span>
-            <span>hl6593@nyu.edu</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-secondary text-base">call</span>
-            <span>(206) 532-7879</span>
-          </div>
+        <div className="flex items-center gap-2 mt-4 font-label text-sm text-on-primary/80">
+          <span className="material-symbols-outlined text-secondary text-base">mail</span>
+          <span>hl6593@nyu.edu</span>
         </div>
         
         <div className="flex gap-4 mt-8">
