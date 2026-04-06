@@ -11,7 +11,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[819px] flex items-center overflow-hidden bg-primary">
+    <section className="relative min-h-[819px] flex items-center overflow-hidden" style={{ backgroundColor: '#192340' }}>
       
       <div className="relative max-w-7xl mx-auto px-12 py-24 flex flex-col items-start gap-8 z-10 w-full">
         <div className="space-y-2">
