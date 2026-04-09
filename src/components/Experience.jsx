@@ -5,7 +5,7 @@ export default function Experience() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex justify-between items-end mb-24">
           <div className="space-y-4">
-            <span className="font-label text-xs text-secondary uppercase tracking-[0.4em]">03. Professional Trajectory</span>
+            <span className="font-label text-xs text-secondary uppercase tracking-[0.4em]">04. Professional Trajectory</span>
             <h2 className="font-headline text-5xl font-bold text-primary">Industry Experience</h2>
           </div>
           <div className="hidden md:block font-label text-xs text-outline tracking-widest uppercase">

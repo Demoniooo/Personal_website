@@ -7,7 +7,7 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about', 'education', 'experience', 'skills', 'projects'];
+      const sections = ['about', 'education', 'projects', 'experience', 'skills'];
       const scrollPosition = window.scrollY + 200; // offset for nav header height
       
       for (const section of sections) {
@@ -42,7 +42,7 @@ export default function Navigation() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const navItems = ['about', 'education', 'experience', 'skills', 'projects'];
+  const navItems = ['about', 'education', 'projects', 'experience', 'skills'];
 
   return (
     <>

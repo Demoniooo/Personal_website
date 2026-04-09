@@ -96,10 +96,10 @@ export default function Projects() {
         <div className="flex justify-between items-end mb-24">
           <div className="space-y-4">
             <span className="font-label text-xs text-secondary uppercase tracking-[0.4em]">
-              05. Selected Records
+              03. Selected Records
             </span>
             <h2 className="font-headline text-5xl font-bold text-primary">
-              Quantitative Analysis
+              Academic Projects
             </h2>
           </div>
           <div className="hidden md:block font-label text-xs text-outline tracking-widest uppercase">
