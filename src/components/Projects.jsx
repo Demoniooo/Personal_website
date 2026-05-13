@@ -87,6 +87,23 @@ const projects = [
       },
     ],
   },
+  {
+    id: "05",
+    course: "FRE 7773",
+    tags: ["Isolation Forest", "LOB Data", "Anomaly Detection", "Kaggle"],
+    title: "Market Manipulation Detection in Limit Order Book Data",
+    description:
+      "An anomaly-detection pipeline for suspicious trading behavior in millisecond-level limit order book data. Engineered 76 session-aware features across returns, order flow, event density, time gaps, and sequence structure, then trained an Isolation Forest on normal samples to flag manipulative patterns such as spoofing, layering, and quote stuffing.",
+    insight:
+      '"Session-aware feature engineering mattered more than model complexity: grouping by Date + ExternalSymbol helped the Isolation Forest reach a Kaggle score of 0.97223 while surfacing realistic anomalies in names like MSFT and INTC."',
+    files: [
+      {
+        label: "Report (PDF)",
+        href: "/7773-proj/7773-report.pdf",
+        icon: "description",
+      },
+    ],
+  },
 ];
 
 export default function Projects() {
