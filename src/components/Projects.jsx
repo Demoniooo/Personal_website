@@ -120,8 +120,8 @@ const projects = [
         icon: "code",
       },
       {
-        label: "Comparison Report",
-        href: "/treasury-ai-proj/treasury-ai-comparison-report.docx",
+        label: "Comparison Report (PDF)",
+        href: "/treasury-ai-proj/treasury-ai-comparison-report.pdf",
         icon: "description",
       },
     ],
