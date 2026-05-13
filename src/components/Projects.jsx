@@ -1,6 +1,28 @@
 const projects = [
   {
     id: "01",
+    course: "FRE 6883",
+    tags: ["C++", "Event Study", "Bootstrap", "CAAR", "EOD API"],
+    title: "Earnings Event Study & CAAR Analysis",
+    description:
+      "A sector-neutral event study evaluating how quarterly earnings announcements affect Russell 3000 stock price movements. Built Beat, Meet, and Miss groups from earnings surprise, retrieved adjusted close prices through the EOD Historical Data API, computed AAR and CAAR with bootstrap sampling, and visualized expected CAAR paths with gnuplot.",
+    insight:
+      '"Earnings surprises produced clearly separated post-announcement CAAR paths, with Beat stocks showing positive momentum and Miss stocks experiencing the strongest negative abnormal returns."',
+    files: [
+      {
+        label: "Final Project (PDF)",
+        href: "/6883-proj/fre6883-final-project.pdf",
+        icon: "description",
+      },
+      {
+        label: "GitHub Repo",
+        href: "https://github.com/FRE6883/fre6883-teamproject-fre6883_team2",
+        icon: "code",
+      },
+    ],
+  },
+  {
+    id: "02",
     course: "FRE 6083",
     tags: ["GARCH(1,1)", "Black-Scholes", "Monte Carlo", "Python"],
     title: "GARCH Option Pricing & Implied Volatility Term Structure",
@@ -22,7 +44,7 @@ const projects = [
     ],
   },
   {
-    id: "02",
+    id: "03",
     course: "FRE 6123",
     tags: ["VaR", "CVaR", "Stress Testing", "Risk Management"],
     title: "Financial Risk Management — FRM Final Project",
@@ -49,7 +71,7 @@ const projects = [
     ],
   },
   {
-    id: "03",
+    id: "04",
     course: "Internship",
     tags: ["Python", "Data Analysis", "Quantitative Research", "Thesis"],
     title: "Quantitative Research — Internship Project",
@@ -62,23 +84,6 @@ const projects = [
         label: "Thesis (PDF)",
         href: "/intern-proj/us_market_thesis.pdf",
         icon: "description",
-      },
-    ],
-  },
-  {
-    id: "04",
-    course: "Health Analytics",
-    tags: ["React", "Firebase", "Polynomial Regression", "Public Health"],
-    title: "Health: Drug Overdose in USA",
-    description:
-      "Interactive dashboard on U.S. drug overdose mortality using aggregate public data. Examines death-rate trends by age (2000–2018), including the sharp rise after 2013; defines a government-style concern metric to rank overdose types (e.g. synthetic opioids and heroin in 2018); and forecasts rates by demographic with cross-validated polynomial regression versus simpler linear models.",
-    insight:
-      '"Trends and forecasts converge on young and middle-aged adults bearing the heaviest burden—targeted prevention, treatment access, and education matter as much as the models."',
-    files: [
-      {
-        label: "Live App",
-        href: "https://coconut-analysis-68819.web.app/",
-        icon: "language",
       },
     ],
   },
@@ -109,11 +114,11 @@ export default function Projects() {
 
         {/* Project Cards */}
         <div className="flex flex-col gap-8">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <div
               key={project.id}
               className={`bg-surface-container-lowest border border-outline-variant/10 relative group overflow-hidden ${
-                index === 1
+                project.course === "FRE 6123"
                   ? "flex flex-col md:flex-row gap-0"
                   : ""
               }`}
