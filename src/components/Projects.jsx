@@ -124,16 +124,6 @@ const projects = [
         href: "/treasury-ai-proj/treasury-ai-comparison-report.docx",
         icon: "description",
       },
-      {
-        label: "GPT-5.5 Draft",
-        href: "/treasury-ai-proj/gpt55-treasury-draft.py",
-        icon: "terminal",
-      },
-      {
-        label: "Claude Draft",
-        href: "/treasury-ai-proj/claude-opus-treasury-draft.py",
-        icon: "terminal",
-      },
     ],
   },
 ];
