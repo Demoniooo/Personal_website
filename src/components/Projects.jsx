@@ -104,6 +104,38 @@ const projects = [
       },
     ],
   },
+  {
+    id: "06",
+    course: "Fixed Income Analytics",
+    tags: ["Python", "Treasury Bonds", "YTM", "PV01", "AI Validation"],
+    title: "AI-Assisted Treasury Bond Analytics Validation",
+    description:
+      "A Python implementation and review study for U.S. Treasury note and bond analytics. Compared GPT-5.5 and Claude Opus 4.7 drafts against fixed-income pricing requirements, then built a corrected USTreasurySecurity class covering 32nds quote parsing, actual/actual accrued interest, dirty price, Newton-solved YTM, PV01, duration, and convexity.",
+    insight:
+      '"Agreement between two AI-generated implementations was not proof of correctness: both drafts matched standard tests but shared a high-impact 100-24++ quote-parsing bug that only specification-level validation caught."',
+    files: [
+      {
+        label: "Corrected Code",
+        href: "/treasury-ai-proj/treasury-security-corrected.py",
+        icon: "code",
+      },
+      {
+        label: "Comparison Report",
+        href: "/treasury-ai-proj/treasury-ai-comparison-report.docx",
+        icon: "description",
+      },
+      {
+        label: "GPT-5.5 Draft",
+        href: "/treasury-ai-proj/gpt55-treasury-draft.py",
+        icon: "terminal",
+      },
+      {
+        label: "Claude Draft",
+        href: "/treasury-ai-proj/claude-opus-treasury-draft.py",
+        icon: "terminal",
+      },
+    ],
+  },
 ];
 
 export default function Projects() {
