@@ -71,15 +71,6 @@ const projects = [
       { label: 'Code', href: '/treasury-ai-proj/treasury-security-corrected.py' },
     ],
   },
-  {
-    id: 'P.07',
-    course: 'Research',
-    tags: 'FX · OLS · COFER',
-    title: 'FX Ambiguity & Safe-Haven Reserves',
-    description:
-      'Quarterly FX ambiguity index from 9 currency pairs (Asano 2025) merged with IMF COFER data; OLS on 37 quarters finds r = −0.36 — central banks don\'t chase safe havens under ambiguity.',
-    files: [],
-  },
 ];
 
 export default function Projects() {
