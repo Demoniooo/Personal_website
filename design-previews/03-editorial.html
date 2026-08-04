@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haolin Liu — The Quarterly Review</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --paper: #F7F2E9; --ink: #1C1810; --faded: #6E6455; --rule: #1C1810; --accent: #8C2F1B; --paper2: #EFE8DA; }
+  body { font-family: Georgia, "Times New Roman", serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .page { max-width: 1080px; margin: 0 auto; padding: 0 44px; }
+
+  /* Masthead */
+  .mast { text-align: center; padding: 40px 0 26px; border-bottom: 4px double var(--rule); }
+  .mast .date-row { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-family: "Helvetica Neue", sans-serif; color: var(--faded); margin-bottom: 22px; }
+  .mast h1 { font-size: clamp(46px, 8vw, 96px); font-weight: 400; letter-spacing: 0.01em; line-height: 1; }
+  .mast h1 .cn { font-size: 0.32em; color: var(--faded); font-family: "Songti SC", "SimSun", serif; letter-spacing: 0.3em; vertical-align: middle; }
+  .mast .motto { font-style: italic; font-size: 15px; color: var(--faded); margin-top: 14px; }
+  .mast .nav { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--rule); display: flex; justify-content: center; gap: 34px; font-family: "Helvetica Neue", sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+  .mast .nav a { color: var(--ink); }
+  .mast .nav a:hover { color: var(--accent); text-decoration: none; }
+
+  /* Lead story */
+  .lead { display: grid; grid-template-columns: 2.1fr 1fr; gap: 44px; padding: 44px 0; border-bottom: 1px solid var(--rule); }
+  .lead h2 { font-size: clamp(30px, 4.6vw, 52px); font-weight: 400; line-height: 1.12; letter-spacing: -0.01em; margin-bottom: 20px; }
+  .lead .dek { font-style: italic; font-size: 19px; color: var(--faded); line-height: 1.5; margin-bottom: 26px; }
+  .lead .body-text { font-size: 16.5px; column-gap: 30px; }
+  .lead .body-text p { margin-bottom: 14px; text-align: justify; hyphens: auto; }
+  .dropcap::first-letter { float: left; font-size: 74px; line-height: 0.82; padding: 6px 10px 0 0; color: var(--accent); }
+  .sidebox { border-left: 1px solid var(--rule); padding-left: 34px; }
+  .sidebox h3 { font-family: "Helvetica Neue", sans-serif; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 18px; color: var(--accent); }
+  .fact { padding: 13px 0; border-bottom: 1px dotted #B9AE9C; }
+  .fact:last-child { border-bottom: 0; }
+  .fact b { display: block; font-size: 16px; font-weight: 700; }
+  .fact span { font-size: 13px; color: var(--faded); font-style: italic; }
+  .sidebox .cta { display: inline-block; margin-top: 20px; font-family: "Helvetica Neue", sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid var(--ink); color: var(--ink); padding: 12px 20px; }
+  .sidebox .cta:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+
+  /* Section headers */
+  .sec-rule { display: flex; align-items: center; gap: 18px; margin: 50px 0 30px; }
+  .sec-rule .line { flex: 1; border-top: 1px solid var(--rule); position: relative; top: 2px; }
+  .sec-rule h2 { font-size: 13px; font-family: "Helvetica Neue", sans-serif; letter-spacing: 0.3em; text-transform: uppercase; white-space: nowrap; }
+  .sec-rule .no { color: var(--accent); }
+
+  /* Columns of articles (projects) */
+  .col3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-bottom: 1px solid var(--rule); }
+  .article { padding: 6px 28px 34px; border-right: 1px dotted #B9AE9C; }
+  .article:nth-child(3n) { border-right: 0; }
+  .article:nth-child(-n+3) { border-bottom: 1px dotted #B9AE9C; padding-top: 0; padding-bottom: 28px; }
+  .article:nth-child(n+4) { padding-top: 28px; }
+  .article:first-child, .article:nth-child(3n+1) { padding-left: 0; }
+  .article .cat { font-family: "Helvetica Neue", sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 10px; }
+  .article h3 { font-size: 21px; font-weight: 700; line-height: 1.22; margin-bottom: 10px; }
+  .article h3 a { color: var(--ink); }
+  .article h3 a:hover { color: var(--accent); text-decoration: none; }
+  .article p { font-size: 13.5px; color: #3E3629; line-height: 1.62; text-align: justify; hyphens: auto; }
+  .article .refs { margin-top: 12px; font-size: 12px; font-style: italic; }
+  .article .refs a { margin-right: 12px; }
+
+  /* Experience — obituary/notice style rows */
+  .notice { display: grid; grid-template-columns: 210px 1fr; gap: 34px; padding: 26px 0; border-bottom: 1px dotted #B9AE9C; }
+  .notice:last-of-type { border-bottom: 1px solid var(--rule); }
+  .notice .when { font-family: "Helvetica Neue", sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faded); padding-top: 6px; }
+  .notice .when b { display: block; color: var(--ink); font-size: 12px; margin-bottom: 4px; }
+  .notice h3 { font-size: 24px; font-weight: 400; }
+  .notice h4 { font-size: 14px; font-style: italic; color: var(--faded); font-weight: 400; margin: 4px 0 12px; }
+  .notice p { font-size: 14.5px; max-width: 68ch; text-align: justify; hyphens: auto; }
+  .notice p + p { margin-top: 8px; }
+
+  /* Education + skills two-column */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 54px; padding-bottom: 10px; }
+  .edu-item { margin-bottom: 26px; }
+  .edu-item h3 { font-size: 22px; font-weight: 400; }
+  .edu-item .yrs { font-family: "Helvetica Neue", sans-serif; font-size: 11px; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; }
+  .edu-item h4 { font-style: italic; font-weight: 400; font-size: 15px; color: var(--faded); margin: 4px 0 10px; }
+  .edu-item p { font-size: 13.5px; color: #3E3629; }
+  .skill-line { padding: 12px 0; border-bottom: 1px dotted #B9AE9C; display: flex; justify-content: space-between; align-items: baseline; }
+  .skill-line b { font-size: 17px; font-weight: 700; }
+  .skill-line span { font-family: "Helvetica Neue", sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faded); }
+  .skill-note { margin-top: 16px; font-style: italic; font-size: 14px; color: var(--faded); }
+
+  /* Colophon */
+  .colophon { border-top: 4px double var(--rule); margin-top: 54px; padding: 36px 0 60px; text-align: center; }
+  .colophon .contact { font-size: clamp(24px, 3.6vw, 40px); }
+  .colophon .contact a { border-bottom: 1px solid var(--accent); }
+  .colophon .contact a:hover { text-decoration: none; }
+  .colophon .fine { margin-top: 18px; font-family: "Helvetica Neue", sans-serif; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--faded); }
+
+  @media (max-width: 900px) {
+    .lead { grid-template-columns: 1fr; }
+    .sidebox { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 26px; }
+    .col3 { grid-template-columns: 1fr; }
+    .article { border-right: 0 !important; border-bottom: 1px dotted #B9AE9C; padding: 22px 0 !important; }
+    .notice { grid-template-columns: 1fr; gap: 8px; }
+    .duo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mast"><div class="page">
+  <div class="date-row"><span>New York Edition</span><span>Est. 2003 · Beijing — Seattle — New York</span><span>Vol. XXIII · 2026</span></div>
+  <h1>Haolin Alex Liu <span class="cn">刘昊霖</span></h1>
+  <p class="motto">A Quarterly Review of Quantitative Finance, Data Science &amp; Risk</p>
+  <nav class="nav">
+    <a href="#profile">Profile</a><a href="#research">Research</a><a href="#dispatches">Dispatches</a><a href="#record">Record</a><a href="mailto:hl6593@nyu.edu">Correspondence</a>
+  </nav>
+</div></header>
+
+<main class="page">
+
+  <section class="lead" id="profile">
+    <div>
+      <h2>On Computing for Insight: Notes from a Quantitative Education</h2>
+      <p class="dek">"The purpose of computing is insight, not numbers." — Richard Hamming. A profile of the author, in his own words.</p>
+      <div class="body-text">
+        <p class="dropcap">I am a Quantitative Finance graduate student at NYU Tandon with a background in Computational Finance and Risk Management (Data Science) from the University of Washington. My expertise lies in derivative pricing, stochastic modeling, and the application of machine learning within high-frequency financial contexts.</p>
+        <p>The work collected in this edition — from GARCH-simulated volatility surfaces to anomaly detection in millisecond order-book data — reflects a single preoccupation: building robust models that account for market ambiguity and tail-risk volatility.</p>
+      </div>
+    </div>
+    <aside class="sidebox">
+      <h3>At a Glance</h3>
+      <div class="fact"><b>NYU Tandon</b><span>M.S. Financial Engineering, 2025–2027</span></div>
+      <div class="fact"><b>Univ. of Washington</b><span>B.S. Computational Finance &amp; Risk Mgmt, 2021–2025</span></div>
+      <div class="fact"><b>hl6593@nyu.edu</b><span>New York, N.Y.</span></div>
+      <a class="cta" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank">Curriculum Vitae →</a>
+    </aside>
+  </section>
+
+  <div class="sec-rule" id="research"><h2><span class="no">§ I.</span> Selected Research &amp; Projects</h2><div class="line"></div></div>
+
+  <section class="col3">
+    <article class="article">
+      <span class="cat">FRE 6883 · C++</span>
+      <h3><a href="../public/6883-proj/fre6883-final-project.pdf" target="_blank">Earnings Announcements and the Anatomy of Abnormal Returns</a></h3>
+      <p>A sector-neutral event study of quarterly earnings across the Russell 3000. Beat, Meet, and Miss cohorts are drawn from earnings surprise; AAR and CAAR paths are estimated with bootstrap sampling against the EOD Historical Data API.</p>
+      <div class="refs"><a href="../public/6883-proj/fre6883-final-project.pdf" target="_blank">Paper</a><a href="https://github.com/FRE6883/fre6883-teamproject-fre6883_team2" target="_blank">Repository</a></div>
+    </article>
+    <article class="article">
+      <span class="cat">FRE 6083 · Stochastic Modeling</span>
+      <h3><a href="../public/6083-proj/report.pdf" target="_blank">Two Views of Volatility: Black-Scholes Against GARCH(1,1)</a></h3>
+      <p>Implied-volatility term structures for S&amp;P 500 options, derived classically and by GARCH simulation. Three-dimensional surfaces reveal Black-Scholes overpricing deep out-of-the-money calls by as much as 8.6 percent.</p>
+      <div class="refs"><a href="../public/6083-proj/report.pdf" target="_blank">Report</a></div>
+    </article>
+    <article class="article">
+      <span class="cat">FRE 6123 · Risk</span>
+      <h3><a href="../public/6123-proj/FRM_Final%20Paper%20(2).pdf" target="_blank">Measures of Ruin: VaR, CVaR, and the Discipline of Stress</a></h3>
+      <p>A comprehensive treatment of Value-at-Risk estimation, conditional VaR, stress testing, and regulatory capital frameworks spanning market, credit, and operational exposures.</p>
+      <div class="refs"><a href="../public/6123-proj/FRM_Final%20Paper%20(2).pdf" target="_blank">Paper</a><a href="../public/6123-proj/FRM_Project_Report.pdf" target="_blank">Report</a></div>
+    </article>
+    <article class="article">
+      <span class="cat">FRE 7773 · Machine Learning</span>
+      <h3><a href="../public/7773-proj/7773-report.pdf" target="_blank">Spoofing, Layering, and the Forest That Finds Them</a></h3>
+      <p>Seventy-six session-aware features over millisecond limit-order-book data feed an Isolation Forest trained on normal sessions, flagging manipulative patterns from spoofing to quote stuffing.</p>
+      <div class="refs"><a href="../public/7773-proj/7773-report.pdf" target="_blank">Report</a></div>
+    </article>
+    <article class="article">
+      <span class="cat">Fixed Income · AI Review</span>
+      <h3><a href="../public/treasury-ai-proj/treasury-ai-comparison-report.pdf" target="_blank">Correcting the Machines: Treasury Analytics Under Review</a></h3>
+      <p>Large-language-model drafts are audited against fixed-income pricing requirements; the corrected implementation covers 32nds quote parsing, actual/actual accrual, Newton-solved yield, PV01, duration, and convexity.</p>
+      <div class="refs"><a href="../public/treasury-ai-proj/treasury-ai-comparison-report.pdf" target="_blank">Report</a><a href="../public/treasury-ai-proj/treasury-security-corrected.py" target="_blank">Code</a></div>
+    </article>
+    <article class="article">
+      <span class="cat">Research · FX</span>
+      <h3>Ambiguity Abroad: Do Central Banks Seek Safe Havens?</h3>
+      <p>A quarterly FX ambiguity index built from nine major currency pairs, merged with IMF COFER reserve data. Regression over 37 quarters finds a weak negative relation (r = −0.36): reserve managers, unlike private carry traders, do not flee to USD and CHF when ambiguity rises.</p>
+      <div class="refs"><i style="color:var(--faded)">Manuscript in preparation</i></div>
+    </article>
+  </section>
+
+  <div class="sec-rule" id="dispatches"><h2><span class="no">§ II.</span> Dispatches from Industry</h2><div class="line"></div></div>
+
+  <section>
+    <div class="notice">
+      <div class="when"><b>China Securities Co. (CSC)</b>Beijing · Jul—Sep 2026</div>
+      <div>
+        <h3>FinTech Intern, Information Technology</h3>
+        <h4>Anti-money-laundering meets the language model</h4>
+        <p>Owned end-to-end backend development of an AI-assisted narrative generation feature for the firm's AML system, in Java, Spring Boot, MyBatis, and MySQL. Designed a submit, async-invoke, and poll API chain that joins thirteen customer profile fields from warehouse parameter tables with relationship managers' due-diligence inputs, calling the firm's internal LLM platform to draft customer due-diligence narratives.</p>
+      </div>
+    </div>
+    <div class="notice">
+      <div class="when"><b>Donghai Securities</b>Beijing · Jun—Aug 2024</div>
+      <div>
+        <h3>Investment Department Intern</h3>
+        <h4>Ten years of the CSI All Share, read by regression</h4>
+        <p>Performed market analysis from macro, meso, and micro perspectives; applied logistic regression to forecast CSI All Share Index trends over a decade of data, outperforming baseline benchmarks in classifying rising against falling curves.</p>
+      </div>
+    </div>
+    <div class="notice">
+      <div class="when"><b>Green Fund</b>Tianjin · Jun—Sep 2023</div>
+      <div>
+        <h3>Summer Intern, Investment Department</h3>
+        <h4>Five years of Chinese bond funds, tallied</h4>
+        <p>Collected and analyzed yield data for mid- and long-term bond funds spanning five years, finding a cumulative yield of 19.4 percent and an annual compound rate of 3.8 percent.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-rule" id="record"><h2><span class="no">§ III.</span> The Academic Record</h2><div class="line"></div></div>
+
+  <section class="duo">
+    <div>
+      <div class="edu-item">
+        <span class="yrs">2025 — 2027</span>
+        <h3>New York University, Tandon</h3>
+        <h4>Master of Science in Financial Engineering</h4>
+        <p>Quantitative Methods in Finance · Derivative Securities · Financial Risk Management · Financial Econometrics · Machine Learning in Financial Engineering · Financial Computing in C++</p>
+      </div>
+      <div class="edu-item">
+        <span class="yrs">2021 — 2025</span>
+        <h3>University of Washington</h3>
+        <h4>B.S., Computational Finance &amp; Risk Management</h4>
+        <p>Time Series Analysis · Linear Algebra · Statistical Inference · Real Analysis</p>
+      </div>
+    </div>
+    <div>
+      <div class="skill-line"><b>Python &amp; Pandas</b><span>Expert</span></div>
+      <div class="skill-line"><b>Java</b><span>Expert</span></div>
+      <div class="skill-line"><b>C++ &amp; SQL</b><span>Proficient</span></div>
+      <div class="skill-line"><b>R &amp; Matlab</b><span>Proficient</span></div>
+      <p class="skill-note">With the standard scientific apparatus: NumPy, SciPy, Statsmodels, Matplotlib, and Scikit-learn.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon"><div class="page">
+  <p class="contact">Correspondence: <a href="mailto:hl6593@nyu.edu">hl6593@nyu.edu</a></p>
+  <p class="fine">© 2026 Haolin (Alex) Liu · Printed in New York · All Rights Reserved</p>
+</div></footer>
+
+</body>
+</html>

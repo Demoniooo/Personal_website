@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Previews — 5 种风格</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; background: #101216; color: #E8ECF4; min-height: 100vh; padding: 60px 30px; }
+  .head { max-width: 1000px; margin: 0 auto 44px; }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+  .head p { color: #8B93A7; margin-top: 10px; font-size: 15px; }
+  .grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  a.tile { display: block; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); text-decoration: none; color: inherit; transition: transform .2s, border-color .2s; }
+  a.tile:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.35); }
+  .thumb { height: 150px; display: flex; align-items: center; justify-content: center; font-weight: 900; letter-spacing: -0.02em; }
+  .meta { padding: 18px 22px; background: #191C22; }
+  .meta b { font-size: 17px; display: block; }
+  .meta span { font-size: 13px; color: #8B93A7; display: block; margin-top: 5px; line-height: 1.5; }
+
+  .th1 { background: #fff; color: #0A0A0A; font-family: "Helvetica Neue", sans-serif; font-size: 34px; text-transform: uppercase; }
+  .th1 i { color: #E10600; font-style: normal; }
+  .th2 { background: #0B0E11; color: #FFB000; font-family: "SF Mono", Menlo, monospace; font-size: 20px; }
+  .th2::after { content: "_"; animation: bl 1s step-end infinite; } @keyframes bl { 50% { opacity: 0; } }
+  .th3 { background: #F7F2E9; color: #1C1810; font-family: Georgia, serif; font-size: 30px; font-weight: 400; font-style: italic; }
+  .th4 { background: #FFD93D; color: #111; font-size: 30px; text-transform: uppercase; }
+  .th4 i { font-style: normal; background: #FF6FB5; border: 3px solid #111; box-shadow: 4px 4px 0 #111; padding: 2px 12px; transform: rotate(-2deg); display: inline-block; }
+  .th5 { background: radial-gradient(circle at 30% 30%, #8B7CF7 0%, transparent 55%), radial-gradient(circle at 75% 70%, #3EDCC0 0%, transparent 55%), #07090F; color: #fff; font-size: 26px; }
+  .th5 i { font-style: normal; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(8px); border-radius: 14px; padding: 10px 22px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>个人网站 · 5 种风格预览</h1>
+    <p>点击任意卡片查看完整页面(所有版本都用你的真实简历内容,含 PDF 链接)。选中喜欢的告诉我,我再把它做成正式的 React 版本。</p>
+  </div>
+  <div class="grid">
+    <a class="tile" href="01-swiss.html">
+      <div class="thumb th1">Swiss<i>.</i></div>
+      <div class="meta"><b>01 · Swiss International 瑞士国际主义</b><span>白底大字排版、红色点缀、严格网格与分割线。经典、极简、专业感强。</span></div>
+    </a>
+    <a class="tile" href="02-terminal.html">
+      <div class="thumb th2">$ whoami</div>
+      <div class="meta"><b>02 · Quant Terminal 量化终端</b><span>Bloomberg 终端风:等宽字体、琥珀色状态栏、滚动 ticker、项目做成 order book 表格。最贴合量化身份。</span></div>
+    </a>
+    <a class="tile" href="03-editorial.html">
+      <div class="thumb th3">The Quarterly Review</div>
+      <div class="meta"><b>03 · Editorial 杂志报刊</b><span>米色纸感、衬线字体、报头 + 分栏 + 首字下沉,项目写成"文章标题"。优雅、学术、有叙事感。</span></div>
+    </a>
+    <a class="tile" href="04-brutalist.html">
+      <div class="thumb th4"><i>Bold!</i></div>
+      <div class="meta"><b>04 · Neo-Brutalism 新粗野主义</b><span>粗黑描边、硬阴影、高饱和色块、贴纸元素。年轻、大胆、记忆点最强。</span></div>
+    </a>
+    <a class="tile" href="05-aurora.html">
+      <div class="thumb th5"><i>Aurora Glass</i></div>
+      <div class="meta"><b>05 · Aurora Glass 极光玻璃</b><span>深色渐变光晕背景 + 毛玻璃卡片 + 渐变文字,带动效。现代 SaaS / 科技感。</span></div>
+    </a>
+  </div>
+</body>
+</html>

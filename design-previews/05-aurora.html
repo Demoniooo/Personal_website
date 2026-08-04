@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haolin Liu — Aurora Glass</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #07090F; --txt: #E8ECF4; --dim: #8B93A7; --card: rgba(255,255,255,0.045);
+    --stroke: rgba(255,255,255,0.10); --violet: #8B7CF7; --teal: #3EDCC0; --blue: #4DA3FF; --rose: #F472B6;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--txt); line-height: 1.6; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+
+  /* Aurora blobs */
+  .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; filter: blur(90px); opacity: .5; }
+  .blob { position: absolute; border-radius: 50%; }
+  .b1 { width: 560px; height: 560px; background: var(--violet); top: -180px; left: -120px; animation: drift1 22s ease-in-out infinite alternate; }
+  .b2 { width: 460px; height: 460px; background: var(--teal); top: 30%; right: -160px; animation: drift2 26s ease-in-out infinite alternate; }
+  .b3 { width: 500px; height: 500px; background: #274690; bottom: -200px; left: 30%; animation: drift1 30s ease-in-out infinite alternate-reverse; }
+  @keyframes drift1 { to { transform: translate(80px, 60px) scale(1.15); } }
+  @keyframes drift2 { to { transform: translate(-70px, -50px) scale(0.9); } }
+
+  .glass { background: var(--card); border: 1px solid var(--stroke); border-radius: 22px; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+
+  /* Nav */
+  .nav { position: sticky; top: 16px; z-index: 50; margin-top: 16px; }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; padding: 13px 24px; border-radius: 999px; }
+  .logo { font-weight: 700; letter-spacing: -0.01em; }
+  .logo i { font-style: normal; background: linear-gradient(120deg, var(--violet), var(--teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .nav nav { display: flex; gap: 4px; }
+  .nav nav a { font-size: 13px; color: var(--dim); padding: 8px 14px; border-radius: 999px; transition: all .2s; }
+  .nav nav a:hover { color: var(--txt); background: rgba(255,255,255,.07); }
+
+  /* Hero */
+  .hero { padding: 110px 0 80px; text-align: center; }
+  .avail { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--teal); border: 1px solid rgba(62,220,192,.3); background: rgba(62,220,192,.08); padding: 7px 16px; border-radius: 999px; margin-bottom: 30px; }
+  .avail .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 10px var(--teal); animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { opacity: .4; } }
+  .hero h1 { font-size: clamp(46px, 7.5vw, 88px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04; }
+  .hero h1 .grad { background: linear-gradient(120deg, var(--violet) 0%, var(--blue) 45%, var(--teal) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero .cn { display: block; font-size: clamp(15px, 2vw, 21px); font-weight: 500; color: var(--dim); letter-spacing: 0.5em; margin-top: 16px; font-family: "PingFang SC", sans-serif; }
+  .hero p.sub { max-width: 56ch; margin: 26px auto 0; color: var(--dim); font-size: 17.5px; }
+  .hero p.sub b { color: var(--txt); font-weight: 600; }
+  .cta-row { margin-top: 40px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta { padding: 15px 30px; border-radius: 999px; font-size: 14.5px; font-weight: 600; transition: all .2s; }
+  .cta.primary { background: linear-gradient(120deg, var(--violet), var(--blue)); box-shadow: 0 8px 30px rgba(139,124,247,.35); }
+  .cta.primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(139,124,247,.5); }
+  .cta.ghost { border: 1px solid var(--stroke); background: var(--card); backdrop-filter: blur(10px); }
+  .cta.ghost:hover { background: rgba(255,255,255,.09); }
+  .stats { display: flex; justify-content: center; gap: 54px; margin-top: 64px; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(120deg, var(--teal), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat span { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  /* Sections */
+  section { padding: 60px 0; }
+  .sec-head { text-align: center; margin-bottom: 44px; }
+  .sec-head .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.28em; color: var(--teal); display: block; margin-bottom: 12px; }
+  .sec-head h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.025em; }
+
+  /* About */
+  .about { padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .about .q { font-size: 22px; font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; }
+  .about .q .grad { background: linear-gradient(120deg, var(--rose), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .about .q small { display: block; margin-top: 10px; font-size: 13px; color: var(--dim); font-weight: 500; }
+  .about .bio { color: var(--dim); font-size: 15.5px; border-left: 1px solid var(--stroke); padding-left: 40px; }
+  .about .bio b { color: var(--txt); font-weight: 600; }
+
+  /* Timeline (experience) */
+  .tl { position: relative; max-width: 820px; margin: 0 auto; }
+  .tl::before { content: ""; position: absolute; left: 20px; top: 6px; bottom: 6px; width: 1px; background: linear-gradient(var(--violet), var(--teal)); opacity: .5; }
+  .tl-item { position: relative; padding-left: 64px; margin-bottom: 26px; }
+  .tl-dot { position: absolute; left: 12px; top: 26px; width: 17px; height: 17px; border-radius: 50%; background: var(--bg); border: 2px solid var(--violet); }
+  .tl-item.live .tl-dot { background: var(--teal); border-color: var(--teal); box-shadow: 0 0 14px rgba(62,220,192,.8); }
+  .tl-card { padding: 26px 30px; }
+  .tl-card .top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+  .tl-card h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.015em; }
+  .tl-card .when { font-size: 12.5px; color: var(--teal); font-weight: 600; }
+  .tl-card h4 { font-size: 14px; color: var(--dim); font-weight: 500; margin-bottom: 14px; }
+  .tl-card ul { list-style: none; }
+  .tl-card li { font-size: 14px; color: #B9C0D0; padding-left: 20px; position: relative; margin-bottom: 8px; }
+  .tl-card li::before { content: "▹"; position: absolute; left: 0; color: var(--violet); }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .tag { font-size: 11.5px; font-weight: 600; color: #C9CFF5; background: rgba(139,124,247,.12); border: 1px solid rgba(139,124,247,.25); padding: 4px 12px; border-radius: 999px; }
+  .tag.t { color: #A9F0E2; background: rgba(62,220,192,.1); border-color: rgba(62,220,192,.25); }
+
+  /* Projects */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .pcard { padding: 26px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform .25s, border-color .25s; }
+  .pcard::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--violet), transparent); opacity: 0; transition: opacity .25s; }
+  .pcard:hover { transform: translateY(-5px); border-color: rgba(139,124,247,.4); }
+  .pcard:hover::before { opacity: 1; }
+  .pcard .course { font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; font-weight: 700; background: linear-gradient(120deg, var(--violet), var(--teal)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 12px; }
+  .pcard h3 { font-size: 18.5px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.3; margin-bottom: 10px; }
+  .pcard p { font-size: 13.5px; color: var(--dim); flex: 1; }
+  .pcard .links { margin-top: 16px; display: flex; gap: 14px; }
+  .pcard .links a { font-size: 13px; font-weight: 600; color: var(--teal); }
+  .pcard .links a:hover { text-decoration: underline; }
+
+  /* Education & skills */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .edu-card, .skill-card { padding: 30px; }
+  .edu-card .yrs { font-size: 12.5px; color: var(--teal); font-weight: 600; }
+  .edu-card h3 { font-size: 21px; font-weight: 700; margin: 6px 0 2px; }
+  .edu-card h4 { font-size: 14px; color: var(--dim); font-weight: 500; margin-bottom: 16px; }
+  .skill-card h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--dim); margin: 18px 0 12px; }
+  .skill-card h3:first-child { margin-top: 0; }
+  .meter { margin-bottom: 13px; }
+  .meter .lbl { display: flex; justify-content: space-between; font-size: 13.5px; font-weight: 600; margin-bottom: 6px; }
+  .meter .lbl span { color: var(--dim); font-weight: 400; font-size: 12px; }
+  .meter .track { height: 6px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
+  .meter .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--violet), var(--teal)); }
+
+  /* Footer */
+  footer { padding: 80px 0 60px; text-align: center; }
+  .foot-glass { padding: 60px 40px; }
+  .foot-glass h2 { font-size: clamp(28px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; }
+  .foot-glass h2 .grad { background: linear-gradient(120deg, var(--violet), var(--blue), var(--teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .foot-glass p { color: var(--dim); margin-top: 12px; }
+  .fine { margin-top: 30px; font-size: 12.5px; color: var(--dim); }
+
+  @media (max-width: 940px) { .grid { grid-template-columns: 1fr 1fr; } .about { grid-template-columns: 1fr; } .about .bio { border-left: 0; padding-left: 0; border-top: 1px solid var(--stroke); padding-top: 26px; } }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .duo { grid-template-columns: 1fr; } .nav nav { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="aurora"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<div class="wrap">
+  <div class="nav glass nav-inner">
+    <span class="logo"><i>◆</i> Haolin Liu</span>
+    <nav><a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#education">Education</a><a href="mailto:hl6593@nyu.edu">Contact</a></nav>
+  </div>
+</div>
+
+<header class="hero"><div class="wrap">
+  <span class="avail"><span class="dot"></span> Open to quant &amp; fintech opportunities</span>
+  <h1>Haolin (Alex) Liu<br><span class="grad">Quantitative Finance</span></h1>
+  <span class="cn">刘 昊 霖</span>
+  <p class="sub">MSFE candidate at <b>NYU Tandon</b> · CFRM from <b>University of Washington</b>. Derivative pricing, stochastic modeling &amp; ML on high-frequency data — built for ambiguity and tail risk.</p>
+  <div class="cta-row">
+    <a class="cta primary" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank">View Resume →</a>
+    <a class="cta ghost" href="mailto:hl6593@nyu.edu">hl6593@nyu.edu</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>7</b><span>Quant Projects</span></div>
+    <div class="stat"><b>3</b><span>Internships</span></div>
+    <div class="stat"><b>76</b><span>LOB Features Engineered</span></div>
+    <div class="stat"><b>-8.6%</b><span>BS Mispricing Found</span></div>
+  </div>
+</div></header>
+
+<section id="about"><div class="wrap">
+  <div class="glass about">
+    <div class="q">"The purpose of computing is <span class="grad">insight</span>, not numbers."<small>— Richard Hamming</small></div>
+    <div class="bio">Quantitative Finance graduate student at <b>NYU Tandon</b>; B.S. in Computational Finance &amp; Risk Management (Data Science) from the <b>University of Washington</b>. Focused on <b>derivative pricing</b>, <b>stochastic modeling</b>, and <b>machine learning</b> in high-frequency financial contexts.</div>
+  </div>
+</div></section>
+
+<section id="experience"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Trajectory</span><h2>Industry Experience</h2></div>
+  <div class="tl">
+    <div class="tl-item live"><div class="tl-dot"></div>
+      <div class="glass tl-card">
+        <div class="top"><h3>China Securities Co., Ltd. (CSC)</h3><span class="when">Jul — Sep 2026</span></div>
+        <h4>FinTech Intern, Information Technology · Beijing</h4>
+        <ul>
+          <li>Owned end-to-end backend of an AI-assisted narrative generation feature for the firm's AML system (Java, Spring Boot, MyBatis, MySQL).</li>
+          <li>Designed a submit → async-invoke → poll API chain joining 13 warehouse profile fields with due-diligence inputs, calling the internal LLM agent platform.</li>
+        </ul>
+        <div class="tags"><span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag t">LLM Integration</span><span class="tag t">AML</span></div>
+      </div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="glass tl-card">
+        <div class="top"><h3>Donghai Securities</h3><span class="when">Jun — Aug 2024</span></div>
+        <h4>Investment Department Intern · Beijing</h4>
+        <ul>
+          <li>Macro / meso / micro market analysis; logistic regression forecasting CSI All Share trends on 10+ years of data, beating baseline benchmarks.</li>
+        </ul>
+        <div class="tags"><span class="tag">Logistic Regression</span><span class="tag">CSI Index</span></div>
+      </div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="glass tl-card">
+        <div class="top"><h3>Green Fund</h3><span class="when">Jun — Sep 2023</span></div>
+        <h4>Summer Intern, Investment Department · Tianjin</h4>
+        <ul>
+          <li>Analyzed 5-year yields of mid/long-term Chinese bond funds — 19.4% cumulative, 3.8% annual compound.</li>
+        </ul>
+        <div class="tags"><span class="tag">Fixed Income</span><span class="tag">Yield Curve</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="projects"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Selected Work</span><h2>Academic Projects</h2></div>
+  <div class="grid">
+    <div class="glass pcard"><span class="course">FRE 6883 · C++</span>
+      <h3>Earnings Event Study &amp; CAAR Analysis</h3>
+      <p>Sector-neutral event study of Russell 3000 earnings announcements — Beat/Meet/Miss cohorts, AAR &amp; CAAR with bootstrap sampling via the EOD API.</p>
+      <div class="links"><a href="../public/6883-proj/fre6883-final-project.pdf" target="_blank">Paper</a><a href="https://github.com/FRE6883/fre6883-teamproject-fre6883_team2" target="_blank">GitHub</a></div>
+    </div>
+    <div class="glass pcard"><span class="course">FRE 6083 · Python</span>
+      <h3>GARCH Option Pricing &amp; IV Term Structure</h3>
+      <p>BS vs GARCH(1,1) implied-vol term structures on S&amp;P 500 options; 3D surfaces reveal BS overpricing deep OTM calls by up to 8.6%.</p>
+      <div class="links"><a href="../public/6083-proj/report.pdf" target="_blank">Report</a></div>
+    </div>
+    <div class="glass pcard"><span class="course">FRE 6123 · Risk</span>
+      <h3>Financial Risk Management Final</h3>
+      <p>VaR &amp; CVaR estimation, stress testing, and regulatory capital frameworks across market, credit, and operational exposures.</p>
+      <div class="links"><a href="../public/6123-proj/FRM_Final%20Paper%20(2).pdf" target="_blank">Paper</a><a href="../public/6123-proj/FRM_Project_Report.pdf" target="_blank">Report</a></div>
+    </div>
+    <div class="glass pcard"><span class="course">Internship</span>
+      <h3>Quantitative Research — US Market Thesis</h3>
+      <p>Industry research: data pipeline construction, statistical modeling, and a full analytical write-up.</p>
+      <div class="links"><a href="../public/intern-proj/us_market_thesis.pdf" target="_blank">Thesis</a></div>
+    </div>
+    <div class="glass pcard"><span class="course">FRE 7773 · ML</span>
+      <h3>LOB Market Manipulation Detection</h3>
+      <p>76 session-aware features over millisecond limit-order-book data; Isolation Forest flags spoofing, layering, and quote stuffing.</p>
+      <div class="links"><a href="../public/7773-proj/7773-report.pdf" target="_blank">Report</a></div>
+    </div>
+    <div class="glass pcard"><span class="course">Fixed Income · AI</span>
+      <h3>Treasury Analytics AI Validation</h3>
+      <p>Audited LLM drafts against fixed-income specs; corrected USTreasurySecurity — 32nds quotes, act/act accrual, Newton YTM, PV01, convexity.</p>
+      <div class="links"><a href="../public/treasury-ai-proj/treasury-ai-comparison-report.pdf" target="_blank">Report</a><a href="../public/treasury-ai-proj/treasury-security-corrected.py" target="_blank">Code</a></div>
+    </div>
+    <div class="glass pcard" style="grid-column: 1 / -1;"><span class="course">Research · FX</span>
+      <h3>FX Ambiguity &amp; Safe-Haven Reserve Allocation</h3>
+      <p>Quarterly FX ambiguity index from 9 major pairs (Asano 2025) merged with IMF COFER reserves. OLS over 37 quarters finds r = −0.36 — central banks, unlike private carry traders, don't rotate into USD/CHF under elevated ambiguity.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="education"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Foundations</span><h2>Education &amp; Stack</h2></div>
+  <div class="duo">
+    <div>
+      <div class="glass edu-card" style="margin-bottom:22px">
+        <span class="yrs">2025 — 2027</span>
+        <h3>New York University, Tandon</h3>
+        <h4>M.S. Financial Engineering</h4>
+        <div class="tags"><span class="tag">Quant Methods</span><span class="tag">Derivative Securities</span><span class="tag">Risk Management</span><span class="tag">Econometrics</span><span class="tag">ML in FinEng</span><span class="tag">C++ Computing</span></div>
+      </div>
+      <div class="glass edu-card">
+        <span class="yrs">2021 — 2025</span>
+        <h3>University of Washington</h3>
+        <h4>B.S. Computational Finance &amp; Risk Management</h4>
+        <div class="tags"><span class="tag t">Time Series</span><span class="tag t">Linear Algebra</span><span class="tag t">Statistical Inference</span><span class="tag t">Real Analysis</span></div>
+      </div>
+    </div>
+    <div class="glass skill-card">
+      <h3>Expert</h3>
+      <div class="meter"><div class="lbl">Python &amp; Pandas</div><div class="track"><div class="fill" style="width:94%"></div></div></div>
+      <div class="meter"><div class="lbl">Java</div><div class="track"><div class="fill" style="width:88%"></div></div></div>
+      <h3>Proficient</h3>
+      <div class="meter"><div class="lbl">C++</div><div class="track"><div class="fill" style="width:74%"></div></div></div>
+      <div class="meter"><div class="lbl">SQL</div><div class="track"><div class="fill" style="width:72%"></div></div></div>
+      <div class="meter"><div class="lbl">R / Matlab</div><div class="track"><div class="fill" style="width:64%"></div></div></div>
+      <h3>Libraries</h3>
+      <div class="tags"><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">Statsmodels</span><span class="tag">Matplotlib</span><span class="tag">Scikit-learn</span></div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="glass foot-glass">
+    <h2>Let's model the <span class="grad">uncertain</span>.</h2>
+    <p>Reach me at <a href="mailto:hl6593@nyu.edu" style="color:var(--teal); font-weight:600">hl6593@nyu.edu</a></p>
+  </div>
+  <p class="fine">© 2026 Haolin (Alex) Liu · New York, NY</p>
+</div></footer>
+
+</body>
+</html>

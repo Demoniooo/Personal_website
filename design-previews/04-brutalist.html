@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAOLIN LIU — Neo-Brutalist</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #F5F0E6; --blk: #111111; --yellow: #FFD93D; --pink: #FF6FB5; --cyan: #6FE7DD; --green: #A6F548; --orange: #FF9F45; --violet: #B69CFF; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--blk); line-height: 1.5;
+    background-image: radial-gradient(#11111114 1.2px, transparent 1.2px); background-size: 22px 22px; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1150px; margin: 0 auto; padding: 0 28px; }
+  .card { background: #fff; border: 3px solid var(--blk); box-shadow: 8px 8px 0 var(--blk); }
+
+  /* Nav */
+  .nav { position: sticky; top: 14px; z-index: 90; margin: 18px auto 0; max-width: 1150px; padding: 0 28px; }
+  .nav-inner { background: #fff; border: 3px solid var(--blk); box-shadow: 6px 6px 0 var(--blk); display: flex; justify-content: space-between; align-items: center; padding: 12px 22px; }
+  .nav-inner .logo { font-weight: 900; font-size: 18px; letter-spacing: -0.02em; }
+  .nav-inner .logo i { font-style: normal; background: var(--yellow); border: 2px solid var(--blk); padding: 1px 7px; margin-right: 8px; }
+  .nav-inner nav { display: flex; gap: 6px; }
+  .nav-inner nav a { font-size: 12px; font-weight: 800; text-transform: uppercase; border: 2px solid transparent; padding: 7px 12px; }
+  .nav-inner nav a:hover { border-color: var(--blk); background: var(--cyan); box-shadow: 3px 3px 0 var(--blk); }
+
+  /* Hero */
+  .hero { padding: 74px 0 60px; }
+  .sticker { display: inline-block; background: var(--pink); border: 3px solid var(--blk); box-shadow: 5px 5px 0 var(--blk); font-weight: 900; font-size: 13px; text-transform: uppercase; padding: 8px 16px; transform: rotate(-3deg); margin-bottom: 26px; }
+  .hero h1 { font-size: clamp(54px, 9.5vw, 120px); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; }
+  .hero h1 .hl { background: var(--yellow); border: 3px solid var(--blk); box-shadow: 6px 6px 0 var(--blk); padding: 0 14px; display: inline-block; transform: rotate(-1.5deg); margin-top: 10px; }
+  .hero .cn { font-size: 0.35em; vertical-align: super; font-weight: 700; font-family: "PingFang SC", sans-serif; letter-spacing: 0.05em; }
+  .hero p.sub { font-size: 20px; font-weight: 600; max-width: 56ch; margin-top: 30px; }
+  .hero p.sub mark { background: var(--cyan); padding: 0 6px; border: 2px solid var(--blk); font-weight: 800; }
+  .btns { margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .bbtn { display: inline-block; font-weight: 900; text-transform: uppercase; font-size: 14px; border: 3px solid var(--blk); padding: 16px 28px; box-shadow: 6px 6px 0 var(--blk); transition: all .1s; background: var(--green); }
+  .bbtn.alt { background: #fff; }
+  .bbtn:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--blk); }
+  .bbtn:active { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--blk); }
+
+  /* Section titles */
+  section { padding: 46px 0; }
+  .sec-title { display: inline-block; font-size: clamp(26px, 4vw, 42px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; border: 3px solid var(--blk); box-shadow: 7px 7px 0 var(--blk); padding: 10px 24px; margin-bottom: 38px; transform: rotate(-1deg); }
+  .t-yellow { background: var(--yellow); } .t-pink { background: var(--pink); } .t-cyan { background: var(--cyan); } .t-green { background: var(--green); } .t-violet { background: var(--violet); } .t-orange { background: var(--orange); }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 34px; }
+  .quote-card { padding: 30px; font-size: 24px; font-weight: 800; line-height: 1.35; background: var(--violet); }
+  .quote-card small { display: block; margin-top: 14px; font-size: 13px; font-weight: 700; text-transform: uppercase; }
+  .bio-card { padding: 30px; font-size: 16px; font-weight: 500; }
+
+  /* Experience cards */
+  .exp-grid { display: grid; gap: 26px; }
+  .exp { display: grid; grid-template-columns: 150px 1fr; }
+  .exp .date-col { background: var(--blk); color: #fff; padding: 22px 16px; font-weight: 900; font-size: 15px; text-transform: uppercase; line-height: 1.4; display: flex; flex-direction: column; justify-content: space-between; }
+  .exp .date-col .loc { font-size: 11px; opacity: .7; font-weight: 700; }
+  .exp .body { padding: 24px 28px; }
+  .exp h3 { font-size: 24px; font-weight: 900; letter-spacing: -0.02em; }
+  .exp h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; margin: 6px 0 14px; color: #444; }
+  .exp ul { list-style: none; }
+  .exp li { font-size: 14.5px; font-weight: 500; margin-bottom: 8px; padding-left: 24px; position: relative; }
+  .exp li::before { content: "★"; position: absolute; left: 0; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .pill { font-size: 11px; font-weight: 800; text-transform: uppercase; border: 2px solid var(--blk); padding: 4px 10px; background: var(--bg); box-shadow: 3px 3px 0 var(--blk); }
+
+  /* Projects grid */
+  .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .proj { padding: 24px; display: flex; flex-direction: column; transition: transform .12s; }
+  .proj:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0 var(--blk); }
+  .proj .num { font-size: 38px; font-weight: 900; -webkit-text-stroke: 2px var(--blk); color: transparent; line-height: 1; }
+  .proj .badge { align-self: flex-start; font-size: 10px; font-weight: 900; text-transform: uppercase; border: 2px solid var(--blk); padding: 3px 9px; margin: 14px 0 10px; box-shadow: 3px 3px 0 var(--blk); }
+  .proj h3 { font-size: 19px; font-weight: 900; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .proj p { font-size: 13px; font-weight: 500; color: #333; flex: 1; }
+  .proj .links { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .proj .links a { font-size: 11px; font-weight: 900; text-transform: uppercase; border-bottom: 3px solid var(--blk); padding-bottom: 1px; }
+  .proj .links a:hover { background: var(--yellow); }
+  .p1 { background: #fff; } .p2 { background: var(--cyan); } .p3 { background: var(--yellow); }
+  .p4 { background: var(--pink); } .p5 { background: var(--green); } .p6 { background: var(--violet); } .p7 { background: var(--orange); }
+
+  /* Education & skills */
+  .duo { display: grid; grid-template-columns: 1.2fr 1fr; gap: 34px; align-items: start; }
+  .edu { padding: 26px; margin-bottom: 26px; }
+  .edu .yrs { display: inline-block; background: var(--blk); color: #fff; font-weight: 900; font-size: 12px; padding: 4px 12px; margin-bottom: 12px; }
+  .edu h3 { font-size: 24px; font-weight: 900; letter-spacing: -0.02em; }
+  .edu h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #444; margin: 4px 0 14px; }
+  .skills-card { padding: 26px; background: #fff; }
+  .skills-card h3 { font-size: 15px; font-weight: 900; text-transform: uppercase; margin-bottom: 14px; }
+  .skill-big { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+  .skill-big span { font-size: 17px; font-weight: 900; border: 3px solid var(--blk); padding: 10px 16px; box-shadow: 4px 4px 0 var(--blk); }
+  .skill-big span.y { background: var(--yellow); } .skill-big span.c { background: var(--cyan); } .skill-big span.p { background: var(--pink); }
+  .skill-big.small span { font-size: 13px; font-weight: 800; padding: 7px 12px; background: var(--bg); }
+  .lib { font-size: 13px; font-weight: 700; }
+
+  /* Footer */
+  footer { padding: 60px 0 80px; }
+  .foot-card { padding: 44px; text-align: center; background: var(--yellow); }
+  .foot-card h2 { font-size: clamp(30px, 5.5vw, 58px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05; }
+  .foot-card a.mail { display: inline-block; margin-top: 22px; font-size: clamp(16px, 2.6vw, 24px); font-weight: 900; background: #fff; border: 3px solid var(--blk); box-shadow: 6px 6px 0 var(--blk); padding: 14px 26px; }
+  .foot-card a.mail:hover { transform: translate(3px,3px); box-shadow: 3px 3px 0 var(--blk); }
+  .foot-fine { text-align: center; margin-top: 26px; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+
+  @media (max-width: 940px) {
+    .proj-grid { grid-template-columns: 1fr 1fr; }
+    .about-grid, .duo { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .proj-grid { grid-template-columns: 1fr; }
+    .exp { grid-template-columns: 1fr; }
+    .exp .date-col { flex-direction: row; gap: 14px; }
+    .nav-inner nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav"><div class="nav-inner">
+  <span class="logo"><i>HL</i>HAOLIN LIU</span>
+  <nav>
+    <a href="#about">About</a><a href="#experience">Work</a><a href="#projects">Projects</a><a href="#education">School</a><a href="#skills">Skills</a>
+  </nav>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <span class="sticker">★ Quant Finance @ NYU Tandon</span>
+  <h1>Haolin<br><span class="hl">(Alex) Liu</span> <span class="cn">刘昊霖</span></h1>
+  <p class="sub">I build <mark>quant models</mark> &amp; <mark>risk systems</mark> — derivative pricing, stochastic modeling, and ML on high-frequency financial data.</p>
+  <div class="btns">
+    <a class="bbtn" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank">Resume PDF ↗</a>
+    <a class="bbtn alt" href="mailto:hl6593@nyu.edu">Say Hi → hl6593@nyu.edu</a>
+  </div>
+</div></header>
+
+<section id="about"><div class="wrap">
+  <h2 class="sec-title t-violet">01 / About</h2>
+  <div class="about-grid">
+    <div class="card bio-card">
+      Quantitative Finance graduate student at <b>NYU Tandon</b>, with a B.S. in Computational Finance &amp; Risk Management (Data Science) from the <b>University of Washington</b>. I care about derivative pricing, stochastic modeling, and machine learning in high-frequency contexts — models that stay robust under market ambiguity and tail-risk volatility.
+    </div>
+    <div class="card quote-card">
+      "The purpose of computing is insight, not numbers."
+      <small>— Richard Hamming</small>
+    </div>
+  </div>
+</div></section>
+
+<section id="experience"><div class="wrap">
+  <h2 class="sec-title t-pink">02 / Experience</h2>
+  <div class="exp-grid">
+    <div class="card exp">
+      <div class="date-col"><span>Jul<br>—Sep<br>2026</span><span class="loc">Beijing, CN</span></div>
+      <div class="body">
+        <h3>China Securities Co. (CSC)</h3>
+        <h4>FinTech Intern · Information Technology</h4>
+        <ul>
+          <li>Owned end-to-end backend of an AI-assisted narrative feature for the firm's AML system — Java, Spring Boot, MyBatis, MySQL.</li>
+          <li>Built a submit / async-invoke / poll API chain joining 13 warehouse profile fields with due-diligence inputs, calling the internal LLM platform for CDD narratives.</li>
+        </ul>
+        <div class="pills"><span class="pill">Java</span><span class="pill">Spring Boot</span><span class="pill">MySQL</span><span class="pill">LLM</span><span class="pill">AML</span></div>
+      </div>
+    </div>
+    <div class="card exp">
+      <div class="date-col"><span>Jun<br>—Aug<br>2024</span><span class="loc">Beijing, CN</span></div>
+      <div class="body">
+        <h3>Donghai Securities</h3>
+        <h4>Investment Department Intern</h4>
+        <ul>
+          <li>Macro / meso / micro market analysis for the investment desk.</li>
+          <li>Logistic regression forecasting CSI All Share trends on 10+ years of data — beat baseline benchmarks on rise/fall calls.</li>
+        </ul>
+        <div class="pills"><span class="pill">Logistic Regression</span><span class="pill">CSI Index</span></div>
+      </div>
+    </div>
+    <div class="card exp">
+      <div class="date-col"><span>Jun<br>—Sep<br>2023</span><span class="loc">Tianjin, CN</span></div>
+      <div class="body">
+        <h3>Green Fund</h3>
+        <h4>Summer Intern · Investment Department</h4>
+        <ul>
+          <li>Analyzed 5 years of mid/long-term Chinese bond fund yields — 19.4% cumulative, 3.8% annual compound.</li>
+        </ul>
+        <div class="pills"><span class="pill">Fixed Income</span><span class="pill">Yield Curve</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="projects"><div class="wrap">
+  <h2 class="sec-title t-cyan">03 / Projects</h2>
+  <div class="proj-grid">
+    <div class="card proj p1">
+      <span class="num">01</span><span class="badge" style="background:var(--yellow)">FRE 6883</span>
+      <h3>Earnings Event Study &amp; CAAR</h3>
+      <p>Sector-neutral event study on Russell 3000 earnings — Beat/Meet/Miss cohorts, AAR &amp; CAAR with bootstrap sampling, EOD API, C++.</p>
+      <div class="links"><a href="../public/6883-proj/fre6883-final-project.pdf" target="_blank">PDF</a><a href="https://github.com/FRE6883/fre6883-teamproject-fre6883_team2" target="_blank">GitHub</a></div>
+    </div>
+    <div class="card proj p2">
+      <span class="num">02</span><span class="badge" style="background:#fff">FRE 6083</span>
+      <h3>GARCH vs Black-Scholes IV</h3>
+      <p>Implied-vol term structures from BS vs GARCH(1,1) simulation on SPX options. 3D surfaces show BS overpricing deep OTM calls up to 8.6%.</p>
+      <div class="links"><a href="../public/6083-proj/report.pdf" target="_blank">Report</a></div>
+    </div>
+    <div class="card proj p3">
+      <span class="num">03</span><span class="badge" style="background:#fff">FRE 6123</span>
+      <h3>FRM Final — Risk Toolkit</h3>
+      <p>VaR &amp; CVaR estimation, stress testing, regulatory capital — across market, credit, and operational risk.</p>
+      <div class="links"><a href="../public/6123-proj/FRM_Final%20Paper%20(2).pdf" target="_blank">Paper</a><a href="../public/6123-proj/FRM_Project_Report.pdf" target="_blank">Report</a></div>
+    </div>
+    <div class="card proj p4">
+      <span class="num">04</span><span class="badge" style="background:#fff">Internship</span>
+      <h3>US Market Thesis</h3>
+      <p>Industry research project: data pipeline construction, statistical modeling, and a full written thesis.</p>
+      <div class="links"><a href="../public/intern-proj/us_market_thesis.pdf" target="_blank">Thesis</a></div>
+    </div>
+    <div class="card proj p5">
+      <span class="num">05</span><span class="badge" style="background:#fff">FRE 7773</span>
+      <h3>LOB Manipulation Detection</h3>
+      <p>76 session-aware features on millisecond order-book data; Isolation Forest catches spoofing, layering &amp; quote stuffing.</p>
+      <div class="links"><a href="../public/7773-proj/7773-report.pdf" target="_blank">Report</a></div>
+    </div>
+    <div class="card proj p6">
+      <span class="num">06</span><span class="badge" style="background:#fff">Fixed Income</span>
+      <h3>Treasury AI Validation</h3>
+      <p>Audited GPT-5.5 &amp; Claude drafts vs fixed-income specs; corrected class covers 32nds quotes, act/act accrual, Newton YTM, PV01, convexity.</p>
+      <div class="links"><a href="../public/treasury-ai-proj/treasury-ai-comparison-report.pdf" target="_blank">Report</a><a href="../public/treasury-ai-proj/treasury-security-corrected.py" target="_blank">Code</a></div>
+    </div>
+    <div class="card proj p7">
+      <span class="num">07</span><span class="badge" style="background:#fff">Research</span>
+      <h3>FX Ambiguity &amp; Safe Havens</h3>
+      <p>Quarterly FX ambiguity index (9 pairs, Asano 2025) × IMF COFER reserves; OLS on 37 quarters → r = −0.36. Central banks don't panic-buy safe havens.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="education"><div class="wrap">
+  <h2 class="sec-title t-green">04 / Education</h2>
+  <div class="duo">
+    <div>
+      <div class="card edu">
+        <span class="yrs">2025 — 2027</span>
+        <h3>NYU Tandon</h3>
+        <h4>M.S. Financial Engineering</h4>
+        <div class="pills"><span class="pill">Quant Methods</span><span class="pill">Derivatives</span><span class="pill">Risk Mgmt</span><span class="pill">Econometrics</span><span class="pill">ML in FinEng</span><span class="pill">C++</span></div>
+      </div>
+      <div class="card edu">
+        <span class="yrs">2021 — 2025</span>
+        <h3>University of Washington</h3>
+        <h4>B.S. Computational Finance &amp; Risk Management</h4>
+        <div class="pills"><span class="pill">Time Series</span><span class="pill">Linear Algebra</span><span class="pill">Stat Inference</span><span class="pill">Real Analysis</span></div>
+      </div>
+    </div>
+    <div class="card skills-card" id="skills">
+      <h3>⚡ Expert</h3>
+      <div class="skill-big"><span class="y">Python</span><span class="c">Pandas</span><span class="p">Java</span></div>
+      <h3>🔧 Proficient</h3>
+      <div class="skill-big small"><span>C++</span><span>SQL</span><span>R</span><span>Matlab</span></div>
+      <h3>📚 Libraries</h3>
+      <p class="lib">NumPy · SciPy · Statsmodels · Matplotlib · Scikit-learn</p>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="card foot-card">
+    <h2>Let's build<br>something rigorous.</h2>
+    <a class="mail" href="mailto:hl6593@nyu.edu">hl6593@nyu.edu ✉</a>
+  </div>
+  <p class="foot-fine">© 2026 Haolin (Alex) Liu · New York · No gradients were harmed</p>
+</div></footer>
+
+</body>
+</html>
