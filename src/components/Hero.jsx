@@ -43,7 +43,17 @@ export default function Hero() {
             rel="noopener noreferrer"
             className="border-2 border-ink bg-ink text-white text-center px-8 py-4 text-xs font-bold uppercase tracking-[0.14em] transition-colors hover:bg-scarlet hover:border-scarlet"
           >
-            View Resume ↗
+            View Resume{' '}
+            <svg
+              className="inline-block w-[11px] h-[11px] ml-1 -translate-y-px"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path d="M2 10L10 2M4 2h6v6" />
+            </svg>
           </a>
           <button
             onClick={handleCopy}
