@@ -21,6 +21,7 @@ export default function Skills() {
                 <span className="font-label text-sm text-on-surface-variant py-2 px-4 border border-outline-variant/30">C++</span>
                 <span className="font-label text-sm text-on-surface-variant py-2 px-4 border border-outline-variant/30">SQL</span>
                 <span className="font-label text-sm text-on-surface-variant py-2 px-4 border border-outline-variant/30">R</span>
+                <span className="font-label text-sm text-on-surface-variant py-2 px-4 border border-outline-variant/30">Matlab</span>
               </div>
             </div>
             <div>
@@ -36,22 +37,22 @@ export default function Skills() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="space-y-6">
               <div className="group">
-                <span className="font-label text-[10px] text-secondary uppercase block mb-1">Mathematics &amp; Modeling</span>
-                <p className="font-body text-sm font-medium border-b border-outline-variant/20 pb-2 group-hover:border-secondary transition-all">Stochastic Calculus, Linear Algebra, Real Analysis</p>
+                <span className="font-label text-[10px] text-secondary uppercase block mb-1">Mathematics &amp; Stochastic Modeling</span>
+                <p className="font-body text-sm font-medium border-b border-outline-variant/20 pb-2 group-hover:border-secondary transition-all">Quantitative Methods in Finance</p>
               </div>
               <div className="group">
-                <span className="font-label text-[10px] text-secondary uppercase block mb-1">Derivatives &amp; Risk</span>
-                <p className="font-body text-sm font-medium border-b border-outline-variant/20 pb-2 group-hover:border-secondary transition-all">Option Pricing Theory, Market Risk, Credit Risk</p>
+                <span className="font-label text-[10px] text-secondary uppercase block mb-1">Derivatives &amp; Risk Management</span>
+                <p className="font-body text-sm font-medium border-b border-outline-variant/20 pb-2 group-hover:border-secondary transition-all">Introduction to Derivative Securities, Financial Risk Management</p>
               </div>
             </div>
             <div className="space-y-6">
               <div className="group">
-                <span className="font-label text-[10px] text-secondary uppercase block mb-1">Statistics &amp; ML</span>
-                <p className="font-body text-sm font-medium border-b border-outline-variant/20 pb-2 group-hover:border-secondary transition-all">Time Series Analysis, Statistical Inference, Neural Networks</p>
+                <span className="font-label text-[10px] text-secondary uppercase block mb-1">Statistics &amp; Machine Learning</span>
+                <p className="font-body text-sm font-medium border-b border-outline-variant/20 pb-2 group-hover:border-secondary transition-all">Financial Econometrics, Machine Learning in Financial Engineering</p>
               </div>
               <div className="group">
                 <span className="font-label text-[10px] text-secondary uppercase block mb-1">Programming</span>
-                <p className="font-body text-sm font-medium border-b border-outline-variant/20 pb-2 group-hover:border-secondary transition-all">Algorithmic Trading Systems, Computational Finance</p>
+                <p className="font-body text-sm font-medium border-b border-outline-variant/20 pb-2 group-hover:border-secondary transition-all">Financial Computing in C++</p>
               </div>
             </div>
           </div>

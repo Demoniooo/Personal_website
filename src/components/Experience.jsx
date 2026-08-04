@@ -15,17 +15,51 @@ export default function Experience() {
         
         <div className="relative border-l-2 border-outline-variant/20 ml-2 md:ml-6 pl-10 md:pl-16 space-y-20">
           
-          {/* Experience 1: Donghai Securities */}
+          {/* Experience 1: China Securities (CSC) */}
           <div className="relative group">
              {/* Timeline Node */}
              <div className="absolute -left-[49px] md:-left-[73px] top-6 w-4 h-4 bg-tertiary-fixed-dim rounded-full shadow-[0_0_12px_rgba(0,230,57,0.5)] z-10"></div>
-             
+
              <div className="bg-surface-container-lowest p-10 md:p-14 border border-outline-variant/10 shadow-[0_8px_32px_rgba(1,10,39,0.04)] transition-all group-hover:shadow-[0_16px_48px_rgba(1,10,39,0.06)] relative overflow-hidden">
                 <div className="flex flex-wrap items-center gap-3 mb-6">
-                  <span className="px-3 py-1 bg-tertiary-container text-tertiary-fixed-dim font-label text-[10px] uppercase tracking-tighter">◒ EXECUTED_RECORD</span>
+                  <span className="px-3 py-1 bg-tertiary-container text-tertiary-fixed-dim font-label text-[10px] uppercase tracking-tighter">● LATEST_RECORD</span>
+                  <span className="font-label text-sm text-outline-variant font-bold tracking-widest ml-auto">Jul 2026 — Sep 2026</span>
+                </div>
+
+                <h3 className="font-headline text-3xl md:text-4xl font-bold mb-2 text-primary group-hover:text-secondary transition-colors">China Securities Co., Ltd. (CSC)</h3>
+                <h4 className="font-body text-xl text-on-surface-variant font-medium mb-2">FinTech Intern, Information Technology Department</h4>
+                <span className="font-label text-xs text-outline tracking-widest">Beijing, CN</span>
+
+                <div className="bg-surface-container-low p-6 border-l-2 border-secondary mt-8 mb-8">
+                  <span className="font-label text-[10px] text-secondary uppercase block mb-3">Key Deliverables</span>
+                  <ul className="list-none space-y-3 font-label text-sm text-primary font-medium leading-relaxed">
+                     <li>→ Owned end-to-end backend development of an AI-assisted narrative generation feature for the firm's anti-money laundering (AML) system (Java, SQL, Spring Boot, MyBatis, MySQL).</li>
+                     <li>→ Designed a submit-task / async-invoke / poll-result API chain that queries 13 customer profile fields from data warehouse parameter tables (TDSQL), merges them with relationship managers' due-diligence inputs, and calls the firm's internal LLM agent platform to generate customer due-diligence narratives.</li>
+                  </ul>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">Java</span>
+                  <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">Spring Boot</span>
+                  <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">MyBatis</span>
+                  <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">MySQL</span>
+                  <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">LLM Integration</span>
+                  <span className="font-label text-[10px] text-secondary border border-secondary/30 px-2 py-0.5">AML</span>
+                </div>
+             </div>
+          </div>
+
+          {/* Experience 2: Donghai Securities */}
+          <div className="relative group">
+             {/* Timeline Node */}
+             <div className="absolute -left-[49px] md:-left-[73px] top-6 w-4 h-4 bg-surface-container-high border-2 border-outline-variant rounded-full z-10 transition-colors group-hover:bg-primary-container"></div>
+
+             <div className="bg-surface-container-lowest/70 p-10 md:p-14 border border-outline-variant/10 relative overflow-hidden transition-all group-hover:bg-surface-container-lowest">
+                <div className="flex flex-wrap items-center gap-3 mb-6">
+                  <span className="font-label text-[10px] uppercase tracking-tighter text-outline px-3 py-1 border border-outline-variant/30">◒ EXECUTED_RECORD</span>
                   <span className="font-label text-sm text-outline-variant font-bold tracking-widest ml-auto">Jun 2024 — Aug 2024</span>
                 </div>
-                
+
                 <h3 className="font-headline text-3xl md:text-4xl font-bold mb-2 text-primary group-hover:text-secondary transition-colors">Donghai Securities</h3>
                 <h4 className="font-body text-xl text-on-surface-variant font-medium mb-2">Investment Department Intern</h4>
                 <span className="font-label text-xs text-outline tracking-widest">Beijing, CN</span>

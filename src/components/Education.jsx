@@ -29,18 +29,15 @@ export default function Education() {
                 <h3 className="font-headline text-3xl md:text-4xl font-bold mb-2 text-primary group-hover:text-secondary transition-colors">New York University (NYU Tandon)</h3>
                 <h4 className="font-body text-xl text-on-surface-variant font-medium mb-8">Master of Science in Financial Engineering</h4>
                 
-                <div className="bg-surface-container-low p-6 border-l-2 border-secondary mb-8">
-                  <span className="font-label text-[10px] text-secondary uppercase block mb-1">Cumulative GPA</span>
-                  <p className="font-label text-2xl text-primary font-bold">3.78 <span className="text-sm font-normal text-outline">/ 4.0</span></p>
-                </div>
-
                 <div>
                    <span className="font-label text-[10px] text-outline uppercase tracking-widest block mb-4">Core Structural Coursework</span>
                    <div className="flex flex-wrap gap-2">
-                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Stochastic Calculus</span>
-                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Option Pricing Theory</span>
-                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Algorithmic Trading Systems</span>
-                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Market Risk</span>
+                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Quantitative Methods in Finance</span>
+                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Derivative Securities</span>
+                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Financial Risk Management</span>
+                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Financial Econometrics</span>
+                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Machine Learning in Financial Engineering</span>
+                     <span className="font-label text-xs text-primary py-2 px-4 border border-outline-variant/20">Financial Computing in C++</span>
                    </div>
                 </div>
              </div>
@@ -60,11 +57,6 @@ export default function Education() {
                 <h3 className="font-headline text-3xl md:text-4xl font-bold mb-2 text-primary group-hover:text-secondary transition-colors">University of Washington</h3>
                 <h4 className="font-body text-xl text-on-surface-variant font-medium mb-8">Bachelor of Science in Computational Finance &amp; Risk Management</h4>
                 
-                <div className="bg-surface-container-low p-6 border-l-2 border-outline-variant/50 mb-8 transition-colors group-hover:border-secondary">
-                  <span className="font-label text-[10px] text-secondary uppercase block mb-1">Cumulative GPA</span>
-                  <p className="font-label text-2xl text-primary font-bold">3.73 <span className="text-sm font-normal text-outline">/ 4.0</span></p>
-                </div>
-
                 <div>
                    <span className="font-label text-[10px] text-outline uppercase tracking-widest block mb-4">Foundation Coursework</span>
                    <div className="flex flex-wrap gap-2">

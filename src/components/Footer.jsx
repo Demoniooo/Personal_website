@@ -7,7 +7,7 @@ export default function Footer() {
         </span>
         <div className="flex gap-12">
           <a className="font-mono text-[10px] uppercase tracking-widest text-primary hover:text-[#745a27] underline decoration-dotted" href="https://www.linkedin.com/in/haolin-liu-b73799299/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a className="font-mono text-[10px] uppercase tracking-widest text-primary hover:text-[#745a27] underline decoration-dotted" href="#">GitHub</a>
+          <a className="font-mono text-[10px] uppercase tracking-widest text-primary hover:text-[#745a27] underline decoration-dotted" href="https://github.com/haolin122" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
       </div>
     </footer>

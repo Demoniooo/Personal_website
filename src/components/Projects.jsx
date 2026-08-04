@@ -6,8 +6,6 @@ const projects = [
     title: "Earnings Event Study & CAAR Analysis",
     description:
       "A sector-neutral event study evaluating how quarterly earnings announcements affect Russell 3000 stock price movements. Built Beat, Meet, and Miss groups from earnings surprise, retrieved adjusted close prices through the EOD Historical Data API, computed AAR and CAAR with bootstrap sampling, and visualized expected CAAR paths with gnuplot.",
-    insight:
-      '"Earnings surprises produced clearly separated post-announcement CAAR paths, with Beat stocks showing positive momentum and Miss stocks experiencing the strongest negative abnormal returns."',
     files: [
       {
         label: "Final Project (PDF)",
@@ -28,8 +26,6 @@ const projects = [
     title: "GARCH Option Pricing & Implied Volatility Term Structure",
     description:
       "A rigorous examination of S&P 500 option pricing comparing implied volatility term structures derived from classical Black-Scholes and GARCH(1,1) volatility simulations. Constructed 3D implied volatility surfaces and found BS overpriced deep OTM calls by up to 8.6%.",
-    insight:
-      '"GARCH(1,1) better captures volatility clustering and produces more realistic IV surfaces than the constant-vol Black-Scholes assumption."',
     files: [
       {
         label: "Report (PDF)",
@@ -50,8 +46,6 @@ const projects = [
     title: "Financial Risk Management — FRM Final Project",
     description:
       "Comprehensive financial risk management analysis covering Value-at-Risk estimation, CVaR, stress testing, and regulatory capital frameworks. Developed quantitative models to assess and mitigate market, credit, and operational risk exposures.",
-    insight:
-      '"Stress testing under historical and Monte Carlo scenarios reveals tail-risk exposures invisible to standard VaR at the 95% confidence level."',
     files: [
       {
         label: "Final Paper (PDF)",
@@ -77,8 +71,6 @@ const projects = [
     title: "Quantitative Research — Internship Project",
     description:
       "Applied quantitative research project completed during an industry internship. Involved data pipeline construction, statistical modeling, and analytical reporting; full write-up available as a PDF thesis.",
-    insight:
-      '"Real-world data is messy — robust preprocessing and feature engineering proved as critical as model selection in driving analytical accuracy."',
     files: [
       {
         label: "Thesis (PDF)",
@@ -94,8 +86,6 @@ const projects = [
     title: "Market Manipulation Detection in Limit Order Book Data",
     description:
       "An anomaly-detection pipeline for suspicious trading behavior in millisecond-level limit order book data. Engineered 76 session-aware features across returns, order flow, event density, time gaps, and sequence structure, then trained an Isolation Forest on normal samples to flag manipulative patterns such as spoofing, layering, and quote stuffing.",
-    insight:
-      '"Session-aware feature engineering mattered more than model complexity: grouping by Date + ExternalSymbol helped the Isolation Forest reach a Kaggle score of 0.97223 while surfacing realistic anomalies in names like MSFT and INTC."',
     files: [
       {
         label: "Report (PDF)",
@@ -111,8 +101,6 @@ const projects = [
     title: "AI-Assisted Treasury Bond Analytics Validation",
     description:
       "A Python implementation and review study for U.S. Treasury note and bond analytics. Compared GPT-5.5 and Claude Opus 4.7 drafts against fixed-income pricing requirements, then built a corrected USTreasurySecurity class covering 32nds quote parsing, actual/actual accrued interest, dirty price, Newton-solved YTM, PV01, duration, and convexity.",
-    insight:
-      '"Agreement between two AI-generated implementations was not proof of correctness: both drafts matched standard tests but shared a high-impact 100-24++ quote-parsing bug that only specification-level validation caught."',
     files: [
       {
         label: "Corrected Code",
@@ -125,6 +113,15 @@ const projects = [
         icon: "description",
       },
     ],
+  },
+  {
+    id: "07",
+    course: "Research Project",
+    tags: ["FX", "Ambiguity Index", "OLS Regression", "IMF COFER", "Python"],
+    title: "FX Ambiguity & Safe-Haven Reserve Allocation",
+    description:
+      "Constructed a quarterly FX ambiguity index from daily spot returns of 9 major currency pairs using the Asano (2025) methodology, merged with IMF COFER reserve data to test whether ambiguity shocks shift central-bank allocations toward USD and CHF. OLS regression and correlation analysis on 37 quarterly observations (2016–2025) found a weak negative relationship (r = -0.36), suggesting central banks do not increase safe-haven holdings during elevated FX ambiguity — contrasting with private-market carry-trade behavior.",
+    files: [],
   },
 ];
 
@@ -194,16 +191,6 @@ export default function Projects() {
                 <p className="font-body text-on-surface-variant mb-8 max-w-2xl leading-relaxed">
                   {project.description}
                 </p>
-
-                {/* Key insight */}
-                <div className="bg-surface-container-low p-5 border-l-2 border-secondary mb-10">
-                  <span className="font-label text-[10px] text-secondary uppercase block mb-2 tracking-widest">
-                    Key Insight
-                  </span>
-                  <p className="font-label text-sm text-primary font-medium italic">
-                    {project.insight}
-                  </p>
-                </div>
 
                 {/* File links */}
                 <div className="flex flex-wrap gap-3">
