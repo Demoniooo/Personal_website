@@ -1,20 +1,19 @@
+import Section from './Section';
+
 export default function About() {
   return (
-    <section className="bg-surface py-32 px-12" id="about">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16">
-        <div className="md:col-span-4 flex flex-col gap-4">
-          <span className="font-label text-xs text-secondary uppercase tracking-[0.4em]">01. Profile</span>
-          <h2 className="font-headline text-4xl font-bold text-primary">Technical <br/>Philosophy</h2>
-        </div>
-        <div className="md:col-span-8 flex flex-col gap-8 border-l border-outline-variant/20 pl-12">
-          <p className="font-headline text-2xl leading-snug text-on-surface-variant italic">
-            Richard Hamming — "The purpose of computing is insight, not numbers."
-          </p>
-          <p className="font-body text-lg text-on-surface-variant max-w-2xl leading-relaxed">
-            I am a Quantitative Finance graduate student at NYU Tandon with a background in Computational Finance and Risk Management (Data Science) from the University of Washington. My expertise lies in derivative pricing, stochastic modeling, and the application of machine learning within high-frequency financial contexts. I focus on building robust models that account for market ambiguity and tail-risk volatility.
-          </p>
-        </div>
-      </div>
-    </section>
+    <Section no="01" title="Profile" id="about">
+      <p className="text-[21px] md:text-[26px] leading-[1.35] font-bold tracking-[-0.02em] max-w-[30ch] mb-6">
+        "The purpose of computing is <span className="text-scarlet">insight</span>,
+        not numbers." — Richard Hamming
+      </p>
+      <p className="text-[15px] md:text-base leading-[1.65] text-[#333333] max-w-[62ch]">
+        I am a Quantitative Finance graduate student at NYU Tandon with a background
+        in Computational Finance and Risk Management (Data Science) from the
+        University of Washington. My expertise lies in derivative pricing,
+        stochastic modeling, and the application of machine learning within
+        high-frequency financial contexts.
+      </p>
+    </Section>
   );
 }

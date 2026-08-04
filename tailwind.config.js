@@ -8,6 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
+        "ink": "#0A0A0A",
+        "scarlet": "#E10600",
+        "smoke": "#6B6B6B",
+        "hairline": "#D9D9D9",
         "on-tertiary-fixed": "#002203",
         "on-primary-fixed": "#0f1a37",
         "surface-variant": "#e2e2e2",
@@ -63,9 +67,9 @@ export default {
         full: "0.75rem"
       },
       fontFamily: {
-        headline: ["Noto Serif", "serif"],
-        body: ["Inter", "sans-serif"],
-        label: ["Space Grotesk", "monospace"]
+        headline: ["Helvetica Neue", "Helvetica", "Inter", "Arial", "sans-serif"],
+        body: ["Helvetica Neue", "Helvetica", "Inter", "Arial", "sans-serif"],
+        label: ["Helvetica Neue", "Helvetica", "Inter", "Arial", "sans-serif"]
       }
     }
   },
