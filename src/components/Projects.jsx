@@ -3,6 +3,15 @@ import Section from './Section';
 const projects = [
   {
     id: 'P.01',
+    course: 'MSFE Capstone',
+    tags: 'HMM · SJM · LPPLS',
+    title: 'QWIM Regime-Based Investing with LLMs',
+    description:
+      'Regime-aware portfolio management framework combining market-state detection (Hidden Markov & Statistical Jump Models, in time and frequency domains) with LPPLS bubble-risk signals, feeding out-of-sample mean-variance construction against StaticMVO benchmarks. The LPPLS defensive overlay delivered the clearest gains — improving return, Sharpe, Sortino, Calmar, and tail-risk metrics with only modest turnover.',
+    files: [{ label: 'Report', href: '/capstone-proj/capstone-report.pdf' }],
+  },
+  {
+    id: 'P.02',
     course: 'FRE 6883',
     tags: 'C++ · Bootstrap · CAAR',
     title: 'Earnings Event Study & CAAR Analysis',
@@ -14,7 +23,7 @@ const projects = [
     ],
   },
   {
-    id: 'P.02',
+    id: 'P.03',
     course: 'FRE 6083',
     tags: 'GARCH · Monte Carlo · Python',
     title: 'GARCH Option Pricing & IV Term Structure',
@@ -29,7 +38,7 @@ const projects = [
     ],
   },
   {
-    id: 'P.03',
+    id: 'P.04',
     course: 'FRE 6123',
     tags: 'VaR · CVaR · Stress Testing',
     title: 'Financial Risk Management — FRM Final',
@@ -42,7 +51,7 @@ const projects = [
     ],
   },
   {
-    id: 'P.04',
+    id: 'P.05',
     course: 'Internship',
     tags: 'Python · Research',
     title: 'Quantitative Research — US Market Thesis',
@@ -51,7 +60,7 @@ const projects = [
     files: [{ label: 'Thesis', href: '/intern-proj/us_market_thesis.pdf' }],
   },
   {
-    id: 'P.05',
+    id: 'P.06',
     course: 'FRE 7773',
     tags: 'Isolation Forest · LOB · Kaggle',
     title: 'Market Manipulation Detection in LOB Data',
@@ -60,7 +69,7 @@ const projects = [
     files: [{ label: 'Report', href: '/7773-proj/7773-report.pdf' }],
   },
   {
-    id: 'P.06',
+    id: 'P.07',
     course: 'Fixed Income',
     tags: 'YTM · PV01 · Python',
     title: 'AI-Assisted Treasury Analytics Validation',
