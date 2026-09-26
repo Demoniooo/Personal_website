@@ -296,12 +296,12 @@ button{font:inherit;color:inherit}
 .det-d{margin-top:8px;font:500 17px/1.45 var(--f-body);color:var(--line-dim)}
 .det-body{padding-left:0}
 @media (min-width:640px){.det-n,.det-d{grid-column:2}.det-n{margin-top:10px}.det-body{padding-left:62px}}
-.mdim{position:relative;display:flex;align-items:center;gap:10px;width:calc(var(--yrs) * 21%);min-width:190px;max-width:100%;margin-top:22px}
-.mdim::before,.mdim::after{content:"";position:absolute;top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
+.mdim{position:relative;width:calc(var(--yrs) * 21%);max-width:100%;margin-top:20px;text-align:center}
+.mdim::before,.mdim::after{content:"";position:absolute;bottom:-7px;width:1px;height:15px;background:var(--line)}
 .mdim::before{left:0}.mdim::after{right:0}
-.mdim-ln{position:relative;flex:1;height:1px;background:var(--line)}
-.mdim-t{font:500 12px/1 var(--f-mono);letter-spacing:.08em;white-space:nowrap;font-variant-numeric:tabular-nums}
-.crs{margin-top:26px;border-top:1px solid var(--line-2)}
+.mdim-ln{display:block;position:relative;height:1px;background:var(--line)}
+.mdim-t{display:block;padding:0 4px 7px;font:500 12px/1 var(--f-mono);letter-spacing:.08em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.crs{margin-top:30px;border-top:1px solid var(--line-2)}
 .crs li{position:relative;display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0 11px 24px;border-bottom:1px solid var(--line-3);font:400 16px/1.4 var(--f-body)}
 .crs li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--line)}
 .crs li:last-child::before{bottom:50%}
@@ -322,7 +322,7 @@ button{font:inherit;color:inherit}
 .tbl th:first-child{border-left:0}
 .tbl td{padding:22px 14px 24px;border-top:1px solid var(--line-2);border-left:1px solid var(--line-3);vertical-align:top}
 .tbl td:first-child{border-left:0}
-.tbl tbody tr:first-child td{border-top:0}
+@media (min-width:1080px){.tbl tbody tr:first-child td{border-top:0}}
 .tbl tbody tr{transition:background-color .15s}
 .tbl tbody tr:hover,.tbl tbody tr:focus-within,.tbl tbody tr:target{background-color:rgba(234,242,255,.045)}
 .tbl tbody tr:hover td:first-child,.tbl tbody tr:focus-within td:first-child,.tbl tbody tr:target td:first-child{box-shadow:inset 3px 0 0 var(--redline)}
@@ -373,7 +373,6 @@ td.c-date{white-space:nowrap}
   .tbl tbody{display:grid;gap:18px}
   .tbl tbody tr{display:grid;border:1px solid var(--line)}
   .tbl td{border:0;padding:14px 16px}
-  .tbl tbody tr:first-child td{border-top:0}
   .tbl td[data-l]::before{content:attr(data-l);display:block;margin-bottom:6px;font:400 9.5px/1.2 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--line-dim)}
   .tbl tbody tr:hover td:first-child,.tbl tbody tr:focus-within td:first-child,.tbl tbody tr:target td:first-child{box-shadow:none}
   .tbl tbody tr:hover,.tbl tbody tr:focus-within,.tbl tbody tr:target{box-shadow:inset 3px 0 0 var(--redline)}
@@ -642,7 +641,7 @@ td.c-date{white-space:nowrap}
               <p class="det-d">Master of Science in Financial Engineering</p>
             </header>
             <div class="det-body">
-              <p class="mdim" style="--yrs:2"><span class="mdim-ln" aria-hidden="true"><i class="ah ah-l"></i></span><span class="mdim-t">2025 — 2027</span><span class="mdim-ln" aria-hidden="true"><i class="ah ah-r"></i></span></p>
+              <p class="mdim" style="--yrs:2"><span class="mdim-t">2025 — 2027</span><span class="mdim-ln" aria-hidden="true"><i class="ah ah-l"></i><i class="ah ah-r"></i></span></p>
               <ul class="crs" aria-label="Courses">
                 <li>Quantitative Methods<span class="ix" aria-hidden="true">A.1</span></li>
                 <li>Derivative Securities<span class="ix" aria-hidden="true">A.2</span></li>
@@ -662,7 +661,7 @@ td.c-date{white-space:nowrap}
               <p class="det-d">BS, Computational Finance &amp; Risk Management</p>
             </header>
             <div class="det-body">
-              <p class="mdim" style="--yrs:4"><span class="mdim-ln" aria-hidden="true"><i class="ah ah-l"></i></span><span class="mdim-t">2021 — 2025</span><span class="mdim-ln" aria-hidden="true"><i class="ah ah-r"></i></span></p>
+              <p class="mdim" style="--yrs:4"><span class="mdim-t">2021 — 2025</span><span class="mdim-ln" aria-hidden="true"><i class="ah ah-l"></i><i class="ah ah-r"></i></span></p>
               <ul class="crs" aria-label="Courses">
                 <li>Time Series Analysis<span class="ix" aria-hidden="true">B.1</span></li>
                 <li>Linear Algebra<span class="ix" aria-hidden="true">B.2</span></li>
