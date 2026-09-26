@@ -36,7 +36,7 @@
   --gutter:clamp(80px,8vw,96px);
   --axis:28px;                        /* centre line of the index marks in the left margin */
   --col:680px;
-  --ins:clamp(92px,8.6vw,124px);      /* width of the vertical inscription column (= its font size) */
+  --ins:clamp(92px,min(8.6vw,15.5vh),124px);   /* width of the vertical inscription column (= its font size) */
   --lane-min:calc(var(--ins) + 40px);
   --sec:clamp(88px,10vw,140px);
   --nav-h:64px;
@@ -66,7 +66,7 @@ h1,h2,h3{text-wrap:balance}
 p,li{text-wrap:pretty}
 ul,ol{padding:0;list-style:none}
 button{font:inherit;color:inherit}
-:focus-visible{outline:1.5px solid var(--seal);outline-offset:4px;border-radius:1px}
+:focus-visible{outline:1.5px solid var(--seal);outline-offset:4px}
 .nw{white-space:nowrap}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .defs{position:absolute;width:0;height:0;overflow:hidden}
@@ -141,26 +141,26 @@ button{font:inherit;color:inherit}
 .nav-links .res svg{width:9px;height:9px;transform:translateY(-1px)}
 
 /* ---------- hero ---------- */
-.hero{padding-top:clamp(40px,6.4vw,92px)}
+.hero{padding-top:clamp(40px,min(6.4vw,10vh),92px)}
 .hero-grid{align-items:start}
 .hero-text{grid-column:2;grid-row:1}
 .kicker{margin-bottom:26px}
 .name{
-  font:400 clamp(48px,6.6vw,96px)/.98 var(--f-disp);
+  font:400 clamp(48px,min(6.6vw,11.5vh),96px)/.98 var(--f-disp);
   letter-spacing:-.014em;color:var(--ink);
   margin-left:-.04em;
 }
 .name em{font-style:italic;font-weight:400;letter-spacing:-.02em}
-.lede{margin-top:34px;max-width:33em}
+.lede{margin-top:clamp(22px,4vh,34px);max-width:33em}
 .lede-a{display:block;font:italic 400 clamp(21px,1.9vw,26px)/1.3 var(--f-disp);color:var(--ink)}
 .lede-b{display:block;margin-top:12px;font-size:17px;line-height:1.7;color:var(--ink-2);text-wrap:pretty}
-.meta{margin-top:38px;font-size:14.5px;line-height:1.6}
+.meta{margin-top:clamp(24px,4.4vh,38px);font-size:14.5px;line-height:1.6}
 .meta li{display:grid;grid-template-columns:168px minmax(0,1fr);column-gap:20px;padding:3px 0}
 .meta b{font-weight:500;color:var(--ink)}
 .meta span{color:var(--ink-2)}
-.meta a{color:var(--ink-2);text-decoration:underline;text-decoration-color:rgba(27,27,26,.25);text-underline-offset:4px;text-decoration-thickness:1px;transition:text-decoration-color .2s}
+.meta a{display:inline-block;padding:10px 0;margin:-10px 0;color:var(--ink-2);text-decoration:underline;text-decoration-color:rgba(27,27,26,.25);text-underline-offset:4px;text-decoration-thickness:1px;transition:text-decoration-color .2s}
 .meta a:hover{text-decoration-color:var(--seal)}
-.actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px 38px;margin-top:30px}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px 38px;margin-top:clamp(20px,3.6vh,30px)}
 
 /* inscription: vertical name + seal */
 .inscription{
@@ -247,7 +247,7 @@ main{display:block}
 .dots{display:flex;flex-wrap:wrap;overflow:hidden;margin-top:14px;font-size:14.5px;line-height:1.95;color:var(--ink-2)}
 .dots li{position:relative;margin-right:1.5em;white-space:nowrap}
 .dots li::before{content:"";position:absolute;left:-.8em;top:50%;width:3px;height:3px;margin:-1px 0 0 -1.5px;border-radius:50%;background:var(--wash-soft)}
-.dots.caps{font:500 11px/2.1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--wash)}
+.dots.caps{font:500 11px/2.1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--wash)}
 .dots.caps li{margin-right:1.7em}
 .dots.caps li::before{left:-.95em;width:2.5px;height:2.5px}
 
@@ -262,7 +262,7 @@ main{display:block}
   font:700 16px/1 var(--f-cjk);
 }
 .leaf-title{font:600 26px/1.2 var(--f-disp);color:var(--ink);letter-spacing:-.003em}
-.leaf-meta{margin-top:10px;font-size:11px;letter-spacing:.17em}
+.leaf-meta{margin-top:10px;font-size:11px;letter-spacing:.18em}
 .leaf-desc{margin-top:14px;font-size:16.5px;line-height:1.75;color:var(--ink-2);max-width:37em}
 .leaf-links{display:flex;flex-wrap:wrap;gap:0 28px;margin-top:10px}
 .leaf--featured{--inset:41px;border:1px solid var(--line);padding:40px 40px 34px;position:relative}
@@ -272,7 +272,6 @@ main{display:block}
 .leaf--featured .stem{top:6px}
 .leaf--featured .leaf-title{font-size:clamp(30px,3vw,38px);line-height:1.12}
 .leaf--featured .leaf-desc{font-size:17px}
-.leaf--featured .leaf-links{position:relative;z-index:1}
 
 /* ---------- 肆 experience ---------- */
 .timeline{display:grid;row-gap:64px}
@@ -336,7 +335,6 @@ main{display:block}
   margin-left:var(--gutter);
   font-size:12.5px;line-height:1.6;color:var(--wash);letter-spacing:.02em;
 }
-.foot-base .label{font-size:10.5px}
 
 /* ---------- tablet ---------- */
 @media (max-width:1079px){
@@ -372,6 +370,7 @@ main{display:block}
   .name{font-size:clamp(44px,12.4vw,54px);line-height:1}
   .name em{display:block}
   .lede{margin-top:24px}
+  .quote .hang{margin-left:0}
   .lede-a{font-size:21px}
   .lede-b{font-size:16.5px;clear:both}
   .meta{margin-top:30px;font-size:14px}
@@ -387,7 +386,7 @@ main{display:block}
 
   .leaf-head{display:flex;align-items:flex-start;gap:14px}
   .stem{position:static;flex:none;width:28px;height:28px;font-size:15px;margin-top:2px}
-  .leaf--featured{padding:30px 22px 24px;margin-inline:-6px}
+  .leaf--featured{padding:28px 20px 22px}
   .leaf--featured::after{inset:5px}
   .leaf--featured .leaf-head{flex-direction:column;gap:14px}
   .leaf--featured .leaf-title{font-size:30px}
@@ -951,7 +950,7 @@ main{display:block}
 
   var lastW = 0, timer;
   function redraw() { var w = cv.clientWidth; if (w && w !== lastW) { lastW = w; draw(); } }
-  redraw();
+  (window.requestAnimationFrame || setTimeout)(redraw);   // after first paint; the canvas is still fading in
   window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(redraw, 160); });
 })();
 </script>

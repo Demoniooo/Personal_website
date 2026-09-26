@@ -120,7 +120,8 @@ button{font:inherit;color:inherit}
 .vt-bub{position:absolute;left:0;top:calc(-1px - var(--bub) / 2);width:var(--bub);height:var(--bub);border:1.5px solid var(--line);border-radius:50%;display:grid;grid-template-rows:1fr 1fr;justify-items:center;font:500 11px/1 var(--f-mono);letter-spacing:.04em;color:var(--line)}
 .vt-bub b{font-weight:500;align-self:end;padding-bottom:5px}
 .vt-bub b+b{align-self:start;padding:5px 0 0;color:var(--line-dim)}
-.vt-r{font:400 11px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--line-dim);padding-bottom:1px}
+.vt-r{display:none;font:400 11px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--line-dim);padding-bottom:1px}
+@media (min-width:640px){.vt-r{display:block}}
 @media (min-width:900px){
   .vt{--bub:56px;margin-bottom:56px}
   .vt-h{padding-right:48px;font-size:44px;padding-bottom:12px}
@@ -145,6 +146,8 @@ button{font:inherit;color:inherit}
   position:relative;display:inline-block;max-width:100%;margin-top:44px;padding-right:50px}
 .hdim{contain:inline-size;position:relative;margin:0 calc(var(--S) * .052) calc(var(--D) - var(--capT)) calc(var(--S) * .044)}
 .hdim-t{display:block;padding:0 6px 8px;text-align:center;font:500 10.5px/16px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--line)}
+.hdim-t .nw{display:block;white-space:nowrap}
+.hdim-t .sep{display:none}
 .hdim-ln{display:block;position:relative;height:1px;background:var(--line);transform-origin:50% 50%}
 .ah{position:absolute;display:block;background:var(--line)}
 .hdim .ah,.mdim .ah{top:-3px;width:13px;height:7px}
@@ -188,7 +191,7 @@ button{font:inherit;color:inherit}
 .tab .lbl{min-width:8.2ch;text-align:center}
 
 /* title block */
-.tb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"proj proj dwg" "ttl ttl ttl" "drw sch sch" "loc loc scl" "con con con" "dat sht rev";gap:1px;margin:0 calc(-1 * var(--pad));border-top:2px solid var(--line);background:var(--line-2)}
+.tb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"proj proj dwg" "ttl ttl ttl" "drw sch sch" "loc scl sht" "con con con" "dat rev rev";gap:1px;margin:0 calc(-1 * var(--pad));border-top:2px solid var(--line);background:var(--line-2)}
 .tb-c{min-width:0;padding:8px 12px 9px;background:var(--paper)}
 .tb dt{font:400 9.5px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--line-dim)}
 .tb dd{margin-top:3px;font:500 12px/1.35 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
@@ -203,16 +206,18 @@ button{font:inherit;color:inherit}
 .rc{position:relative;display:inline-grid;place-items:center;width:20px;height:18px}
 .rc svg{position:absolute;left:-4px;top:-4px;width:28px;height:26px;overflow:visible}
 .rc path,.hand svg path{fill:none;stroke:var(--redline);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.hand{font:600 23px/1 var(--f-hand);letter-spacing:.01em;color:var(--redline);text-decoration:none;white-space:nowrap}
+.hand{font:600 23px/1 var(--f-hand);letter-spacing:.01em;text-transform:none;color:var(--redline);text-decoration:none;white-space:nowrap}
 .hand-rev{display:inline-flex;align-items:center;gap:2px;margin:-10px 0;padding:10px 0;transform:rotate(-5deg);transform-origin:0 50%}
 .hand-rev svg{width:24px;height:14px}
-.hand-rev:hover span{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.tb dd a.hand-rev{text-decoration:none}
+.tb dd a.hand-rev:hover span{text-decoration:underline;text-decoration-color:var(--redline);text-decoration-thickness:1px;text-underline-offset:3px}
 
 /* hero, wide container: one-line name, splayed leaders, title block in the corner */
 @container hero (min-width:680px){
   .assy{--S:clamp(56px,calc((100cqi - 84px) / 6.8),148px);--lh:1;--D:26px;margin-top:64px;padding-right:80px}
   .nm-a,.nm-b{display:inline}
   .hdim-t{font-size:12px;padding-bottom:9px}
+  .hdim-t .nw,.hdim-t .sep{display:inline}
   .vdim{left:calc(100% + 14px);width:56px}
   .vdim-ln{left:12px}
   .vdim .ext{left:-9px;width:29px}
@@ -222,13 +227,13 @@ button{font:inherit;color:inherit}
 @container hero (min-width:960px){
   .co{display:block;height:54px;margin-top:0}
   .co::before,.co::after{display:none}
-  .co li{position:absolute;left:var(--x);top:calc(1px - var(--baseB));top:round(calc(1px - var(--baseB)),1px);display:block;width:max-content;height:60px}
+  .co li{position:absolute;left:var(--x);top:calc(-1px - var(--baseB));top:round(calc(-1px - var(--baseB)),1px);display:block;width:max-content;height:60px}
   .co-ld{display:block;position:absolute;left:0;top:0;width:44px;height:52px;overflow:visible}
   .co-ld .ld{fill:none;stroke:var(--line);stroke-width:1}
   .co-ld .lda{fill:var(--line)}
   .co-b{position:absolute;left:40px;top:34px;background:none}
   .co-t{position:absolute;left:76px;top:47px;transform:translateY(-50%);white-space:nowrap}
-  .hero-ft{grid-template-columns:minmax(0,1fr) 560px;align-items:end;gap:48px;margin-top:60px}
+  .hero-ft{grid-template-columns:minmax(0,1fr) 560px;align-items:end;gap:48px;margin-top:44px}
   .hero-copy{padding-bottom:52px}
   .tagline{font-size:21px}
   .cta{margin-top:28px;gap:12px}
@@ -238,7 +243,7 @@ button{font:inherit;color:inherit}
 
 /* ---------- general notes + system diagram ---------- */
 .about-g{display:grid;gap:56px}
-@media (min-width:1080px){.about-g{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:72px;align-items:start}}
+@media (min-width:1080px){.about-g{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:72px}}
 .uos{margin-bottom:22px;font:400 11px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--line-dim)}
 .notes{display:grid;gap:24px}
 .notes li{display:grid;grid-template-columns:34px minmax(0,1fr);align-items:baseline}
@@ -248,21 +253,25 @@ button{font:inherit;color:inherit}
 .note-body{max-width:60ch;font:400 16.5px/1.68 var(--f-body)}
 @media (min-width:900px){.note-caps{font-size:24px}.note-body{font-size:17px}}
 
-.sysd{container:sysd / inline-size}
+.sysd{container:sysd / inline-size;display:flex;flex-direction:column}
+.sysd-v{position:relative;flex:1 1 auto;display:flex;align-items:center;padding:30px 18px;--cm:linear-gradient(var(--line-2),var(--line-2));background:var(--cm) left top/16px 1px no-repeat,var(--cm) left top/1px 16px no-repeat,var(--cm) right top/16px 1px no-repeat,var(--cm) right top/1px 16px no-repeat,var(--cm) left bottom/16px 1px no-repeat,var(--cm) left bottom/1px 16px no-repeat,var(--cm) right bottom/16px 1px no-repeat,var(--cm) right bottom/1px 16px no-repeat}
+.sysd-v .flow{width:100%;max-width:300px;margin:0 auto}
 .flow{display:flex;flex-direction:column;align-items:stretch}
 .blk{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:62px;padding:16px 12px 14px;border:1px solid var(--line);background:rgba(10,47,99,.72);text-align:center}
 .blk-i{position:absolute;top:5px;left:6px;font:400 9.5px/1 var(--f-mono);letter-spacing:.06em;color:var(--line-dim)}
 .blk-n{font:600 15px/1.15 var(--f-cond);letter-spacing:.1em;text-transform:uppercase}
-.blk-s{margin-top:5px;font:400 10.5px/1.3 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--line-dim)}
+.blk-s{margin-top:5px;font:400 10.5px/1.3 var(--f-mono);letter-spacing:.02em;white-space:nowrap;text-transform:uppercase;color:var(--line-dim)}
 .grp{border-style:dashed;padding:22px 10px 10px}
 .grp-l{display:flex;gap:6px;width:100%;margin-top:10px}
 .grp-l li{flex:1 1 0;min-width:0;display:grid;place-items:center;min-height:34px;padding:6px 4px;border:1px solid var(--line-2);font:500 10.5px/1.25 var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
 .arr{position:relative;flex:0 0 26px;width:1px;align-self:center;background:var(--line)}
 .arr::after{content:"";position:absolute;left:-3px;bottom:0;width:7px;height:12px;background:var(--line);clip-path:polygon(50% 100%,0 0,100% 0)}
-.sysd figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;margin-top:22px;padding-top:9px;border-top:1px solid var(--line-2)}
+.sysd figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;margin-top:14px;padding-top:9px;border-top:1px solid var(--line-2)}
 .cap-t{font:600 14px/1.2 var(--f-cond);letter-spacing:.14em;text-transform:uppercase}
 .cap-s{font:400 10.5px/1.4 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--line-dim)}
 @container sysd (min-width:540px){
+  .sysd-v{padding:40px 20px}
+  .sysd-v .flow{max-width:none}
   .flow{flex-direction:row;align-items:center}
   .blk{flex:1 1 0;min-width:0;min-height:88px;padding:18px 8px 12px}
   .grp{flex:1.5 1 0;padding:24px 8px 8px}
@@ -274,14 +283,16 @@ button{font:inherit;color:inherit}
 /* ---------- details A & B ---------- */
 .dets{position:relative;display:grid;gap:56px}
 .cl{display:none}
-.det-h{position:relative;padding-left:62px}
-.det-bal{position:absolute;left:0;top:0;width:40px;height:40px;display:grid;place-items:center;border:1.5px solid var(--line);border-radius:50%;font:700 20px/1 var(--f-cond)}
+.det-h{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:22px;align-items:center}
+.det-bal{position:relative;grid-column:1;grid-row:1;width:40px;height:40px;display:grid;place-items:center;border:1.5px solid var(--line);border-radius:50%;font:700 20px/1 var(--f-cond)}
 .det-bal::after{content:"";position:absolute;left:100%;top:50%;width:12px;height:1px;background:var(--line)}
-.det-k{display:flex;align-items:center;min-height:40px;font:600 14px/1 var(--f-cond);letter-spacing:.16em;text-transform:uppercase}
+.det-k{grid-column:2;grid-row:1;display:flex;align-items:center;min-height:40px;font:600 14px/1 var(--f-cond);letter-spacing:.16em;text-transform:uppercase}
 .det-k span{margin-left:10px;font:400 10.5px/1 var(--f-mono);letter-spacing:.1em;color:var(--line-dim)}
-.det-n{margin-top:10px;font:700 26px/1.08 var(--f-cond);letter-spacing:.04em;text-transform:uppercase}
+.det-n,.det-d{grid-column:1 / -1}
+.det-n{margin-top:14px;font:700 26px/1.08 var(--f-cond);letter-spacing:.04em;text-transform:uppercase}
 .det-d{margin-top:8px;font:500 17px/1.45 var(--f-body);color:var(--line-dim)}
-.det-body{padding-left:62px}
+.det-body{padding-left:0}
+@media (min-width:640px){.det-n,.det-d{grid-column:2}.det-n{margin-top:10px}.det-body{padding-left:62px}}
 .mdim{position:relative;display:flex;align-items:center;gap:10px;width:calc(var(--yrs) * 21%);min-width:190px;max-width:100%;margin-top:22px}
 .mdim::before,.mdim::after{content:"";position:absolute;top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
 .mdim::before{left:0}.mdim::after{right:0}
@@ -370,6 +381,7 @@ td.c-date{white-space:nowrap}
   .bom-t .c-item,.bom-t .c-pn,.bom-t .c-ref{background:var(--paper-deep);border-bottom:1px solid var(--line);padding:10px 16px 11px}
   .bom-t .c-pn,.bom-t .c-ref{border-left:1px solid var(--line-2)}
   .bom-t .c-item{display:flex;align-items:center;padding:10px 14px}
+  .bom-t .c-item::before,.rev-t .c-rev::before{margin:0 10px 0 0}
   .bom-t td.c-pn{font:500 13px/1.3 var(--f-mono)}
   .bom-t td.c-ref{padding-top:10px;line-height:1.3}
   .bom-t .c-desc{padding-top:18px;padding-bottom:6px}
@@ -518,7 +530,7 @@ td.c-date{white-space:nowrap}
 
         <div class="assy">
           <p class="hdim">
-            <span class="hdim-t">MS Financial Engineering · NYU Tandon · 2025 — 2027</span>
+            <span class="hdim-t"><span class="nw">MS Financial Engineering</span><span class="sep"> · </span><span class="nw">NYU Tandon · 2025 — 2027</span></span>
             <span class="hdim-ln" aria-hidden="true"><i class="ah ah-l"></i><i class="ah ah-r"></i></span>
             <i class="ext ext-l" aria-hidden="true"></i><i class="ext ext-r" aria-hidden="true"></i>
           </p>
@@ -583,7 +595,7 @@ td.c-date{white-space:nowrap}
           </div>
 
           <figure class="sysd" aria-labelledby="sysd-cap">
-            <div class="flow">
+            <div class="sysd-v"><div class="flow">
               <div class="blk"><span class="blk-i" aria-hidden="true">01</span><span class="blk-n">Market data</span></div>
               <span class="arr" aria-hidden="true"></span>
               <div class="blk"><span class="blk-i" aria-hidden="true">02</span><span class="blk-n">Features</span></div>
@@ -595,7 +607,7 @@ td.c-date{white-space:nowrap}
               <div class="blk"><span class="blk-i" aria-hidden="true">04</span><span class="blk-n">Risk</span><span class="blk-s">VaR · CVaR</span></div>
               <span class="arr" aria-hidden="true"></span>
               <div class="blk"><span class="blk-i" aria-hidden="true">05</span><span class="blk-n">Portfolio</span></div>
-            </div>
+            </div></div>
             <figcaption id="sysd-cap"><span class="cap-t">System diagram — quant pipeline</span><span class="cap-s">Schematic · not to scale</span></figcaption>
           </figure>
         </div>
@@ -871,9 +883,9 @@ td.c-date{white-space:nowrap}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <filter id="rough" x="-4%" y="-8%" width="108%" height="116%">
     <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4" result="n1"/>
-    <feDisplacementMap in="SourceGraphic" in2="n1" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feDisplacementMap in="SourceGraphic" in2="n1" scale="2" xChannelSelector="R" yChannelSelector="G" result="d"/>
     <feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="1" seed="11" result="n2"/>
-    <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  4.5 0 0 0 -1.25" result="m"/>
+    <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  7 0 0 0 -1.62" result="m"/>
     <feComposite in="d" in2="m" operator="in"/>
   </filter>
 </svg>
@@ -948,7 +960,7 @@ td.c-date{white-space:nowrap}
     if (!r.width || !r.height) return;
     let seed = 7;
     const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-    const inset = 8, P = 10;
+    const inset = 11, P = 12;
     const w = r.width - inset * 2, h = r.height - inset * 2;
     const W = w + P * 2, H = h + P * 2;
     cloud.style.left = (r.left - b.left + inset - P) + 'px';
@@ -957,9 +969,9 @@ td.c-date{white-space:nowrap}
     cloud.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
     const edge = (x1, y1, x2, y2) => {
       const len = Math.hypot(x2 - x1, y2 - y1);
-      const n = Math.max(1, Math.round(len / 27));
+      const n = Math.max(1, Math.round(len / 34));
       const ws = []; let sum = 0;
-      for (let i = 0; i < n; i++) { const v = 0.8 + rand() * 0.4; ws.push(v); sum += v; }
+      for (let i = 0; i < n; i++) { const v = 0.72 + rand() * 0.56; ws.push(v); sum += v; }
       let acc = 0, out = '';
       for (let i = 0; i < n; i++) {
         acc += ws[i];
@@ -1001,9 +1013,9 @@ td.c-date{white-space:nowrap}
       } else { Z.textContent = '—'; }
     };
     const queue = () => { if (!raf) raf = requestAnimationFrame(paint); };
-    xy.hidden = false;
     window.addEventListener('pointermove', (e) => {
       if (e.pointerType && e.pointerType !== 'mouse') return;
+      if (xy.hidden) xy.hidden = false;
       cx = e.clientX; cy = e.clientY;
       xv.classList.add('on'); xh.classList.add('on');
       queue();

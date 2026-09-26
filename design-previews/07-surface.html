@@ -140,8 +140,10 @@ button { font: inherit; color: inherit; }
   font: 400 10px/1 var(--mono); color: var(--muted); letter-spacing: .02em;
   pointer-events: none;
 }
+.cbar-lab { display: block; }
 .cbar-ramp { height: 4px; margin: 8px 0 6px; border-radius: 1px;
-  background: linear-gradient(90deg, #440154, #482475 12.5%, #3B528B 25%, #2C728E 37.5%, #21918C 50%, #28AE80 62.5%, #5EC962 75%, #ADDC30 87.5%, #FDE725); }
+  --stops: #440154, #482475 12.5%, #3B528B 25%, #2C728E 37.5%, #21918C 50%, #28AE80 62.5%, #5EC962 75%, #ADDC30 87.5%, #FDE725;
+  background: linear-gradient(90deg, var(--stops)); }
 .cbar-ticks { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
 
 .hero-copy { position: relative; padding: 28px var(--gut) 44px; }
@@ -315,11 +317,16 @@ button { font: inherit; color: inherit; }
 /* ------------------------------------------------------------------ tablet (phone layout, wider) */
 @media (min-width: 640px) {
   :root { --gut: 32px; }
+  .cta .btn { flex: 0 0 auto; }
+}
+
+/* the right column lays itself out by its own width: phone, tablet and the narrow 1024 split */
+.col { container: col / inline-size; }
+@container col (min-width: 520px) {
   .row { grid-template-columns: var(--lcol) minmax(0, 1fr); gap: 0 var(--lgap); }
   .when { padding-top: 4px; }
   .proj { grid-template-columns: var(--lcol) minmax(0, 1fr); gap: 0 var(--lgap); }
   .pid { height: 26px; }
-  .jobs::before { display: none; }
   .job { padding-left: 0; display: grid; grid-template-columns: var(--lcol) minmax(0, 1fr); gap: 0 var(--lgap); }
   .job::before { left: calc(var(--lcol) + var(--lgap) / 2); top: 14px; }
   .job::after  { left: calc(var(--lcol) + var(--lgap) / 2 - 3px); top: 8px; }
@@ -329,14 +336,17 @@ button { font: inherit; color: inherit; }
   .meta li + li { border-top: 0; border-left: 1px solid var(--line); }
   .meta li:first-child { padding-left: 0; }
   .meta span, .meta a { display: block; margin-top: 3px; text-align: left; }
+}
+@container col (min-width: 400px) {
   .skills { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .sk { display: block; padding: 0 20px; border-top: 0; border-left: 1px solid var(--line); }
   .sk:first-child { padding-left: 0; border-left: 0; }
   .sk h3 { margin-bottom: 16px; }
   .sk ul { display: block; }
   .sk li { font-size: clamp(19px, 1.6vw, 22px); line-height: 1.55; }
+}
+@container col (min-width: 600px) {
   .colophon { flex-direction: row; justify-content: space-between; gap: 24px; }
-  .cta .btn { flex: 0 0 auto; }
 }
 
 /* ------------------------------------------------------------------ desktop split */
@@ -348,7 +358,11 @@ button { font: inherit; color: inherit; }
   .stage { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; }
   .viz { position: absolute; inset: 0; height: auto; }
   .viz-cap { top: 44px; right: 40px; }
-  .cbar { right: 40px; bottom: 50px; }
+  /* desktop colorbar stands upright beside the copy, like matplotlib's default */
+  .cbar { right: 40px; bottom: 50px; width: auto; height: 118px; display: grid; grid-template-columns: auto 4px auto; column-gap: 8px; }
+  .cbar-ticks { grid-column: 1; grid-row: 1; flex-direction: column-reverse; justify-content: space-between; align-items: flex-end; margin: -1px 0; }
+  .cbar-ramp { grid-column: 2; grid-row: 1; height: auto; margin: 0; background: linear-gradient(0deg, var(--stops)); }
+  .cbar-lab { grid-column: 3; grid-row: 1; writing-mode: vertical-rl; transform: rotate(180deg); text-align: left; letter-spacing: .04em; }
   .hero-copy { position: absolute; left: 48px; right: 48px; bottom: 48px; padding: 0; z-index: 2; }
   .hero-copy::before {                         /* soft scrim so the name stays crisp over the mesh */
     content: ""; position: absolute; z-index: -1; pointer-events: none;
@@ -357,7 +371,7 @@ button { font: inherit; color: inherit; }
   }
   .name { font-size: clamp(44px, min(5.5vw, 8.8vh), 80px); }
   .cn-name { display: none; }
-  .tagline, .cta { max-width: min(38ch, calc(100% - 150px)); }
+  .tagline { max-width: min(40ch, calc(100% - 92px)); }
   .tagline { font-size: 15.5px; }
 
   /* brand + vertical nav, overlaid top-left of the surface */
@@ -386,8 +400,8 @@ button { font: inherit; color: inherit; }
   .nav-resume:hover { color: var(--text); }
 
   /* right column */
-  .col { border-left: 1px solid var(--line); padding: 82px clamp(40px, 5vw, 72px) 48px; }
-  main, .foot { max-width: 640px; }
+  .col { border-left: 1px solid var(--line); padding: 82px clamp(40px, 5vw, 72px) 48px clamp(40px, 5.6vw, 120px); }
+  main, .foot { max-width: 680px; }
   .sec { padding: 72px 0; scroll-margin-top: 24px; }
   .meta + .sec { padding-top: 64px; }
   .hint { display: flex; }
@@ -406,7 +420,7 @@ button { font: inherit; color: inherit; }
   .nav-link, .nav-resume { height: 28px; }
   .viz-cap { top: 30px; }
   .hero-copy { bottom: 36px; }
-  .cbar { bottom: 38px; }
+  .cbar { bottom: 38px; height: 108px; }
   .kicker { margin-bottom: 12px; }
   .tagline { margin-top: 16px; }
   .cta { margin-top: 20px; }
@@ -442,7 +456,7 @@ button { font: inherit; color: inherit; }
       <canvas id="surface" role="img" aria-label="Illustrative implied-volatility surface drawn as a slowly rotating wireframe, coloured by height"></canvas>
       <p class="viz-cap" id="viz-cap" aria-hidden="true"><i class="dot"></i><span class="cap-t" id="viz-cap-t">IV surface · equity skew</span></p>
       <div class="cbar" aria-hidden="true">
-        <div>illustrative surface</div>
+        <span class="cbar-lab">illustrative surface</span>
         <div class="cbar-ramp" id="cb-ramp"></div>
         <div class="cbar-ticks"><span id="cb-lo">σ lo</span><span id="cb-hi">hi</span></div>
       </div>
@@ -857,7 +871,7 @@ button { font: inherit; color: inherit; }
     (function () {                              /* colorbar shows exactly the mapped range */
       var stops = [];
       for (var i = 0; i <= 8; i++) stops.push(hex(vir(TLO + (1 - TLO) * i / 8)) + ' ' + (i * 12.5) + '%');
-      cbRamp.style.background = 'linear-gradient(90deg,' + stops.join(',') + ')';
+      cbRamp.style.setProperty('--stops', stops.join(','));
     })();
 
     /* sigma(k,T) = base + s(T)[skew(k-1) + smile(k-1)^2] + term e^(-T/tau) + ripple (+ preset features) */
