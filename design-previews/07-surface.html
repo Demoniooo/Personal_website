@@ -1,0 +1,1249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B0D11">
+<title>Haolin Liu — Vol Surface</title>
+<meta name="description" content="Haolin (Alex) Liu — quantitative finance portfolio: projects, experience, education and stack.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* ------------------------------------------------------------------ tokens */
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  color-scheme: dark;
+  --ground: #0B0D11;
+  --panel:  #10141A;
+  --line:   #1E242E;
+  --text:   #E6E9EF;
+  --muted:  #8C95A6;   /* 6.4:1 on ground */
+  --dim:    #5B6475;   /* non-essential marks only */
+  --v0: #440154; --v1: #3B528B; --v2: #21918C; --v3: #5EC962; --v4: #FDE725;
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --cjk:  "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  --gut: 20px;
+  --bar-h: 52px;
+  --lcol: 128px;       /* left meta column of every row list */
+  --lgap: 24px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+html { background: var(--ground); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font: 400 16px/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+h1, h2, h3, p, ul, ol, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+::selection { background: #E6E9EF; color: #0B0D11; }
+:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; border-radius: 2px; }
+.sr { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.mono { font-family: var(--mono); }
+.nw { white-space: nowrap; }
+.cjk { font-family: var(--cjk); }
+.ico { width: 10px; height: 10px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.35; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c, var(--v2)); flex: none; }
+
+.skip {
+  position: absolute; left: 12px; top: -80px; z-index: 100;
+  background: var(--text); color: var(--ground);
+  font: 500 13px/1 var(--mono); padding: 12px 14px; border-radius: 3px; text-decoration: none;
+}
+.skip:focus { top: calc(12px + env(safe-area-inset-top, 0px)); }
+
+/* underlined text links (UI accent stays white) */
+.ul {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(230, 233, 239, .34);
+  transition: text-decoration-color .2s, color .2s;
+}
+.ul:hover { text-decoration-color: currentColor; }
+
+/* ------------------------------------------------------------------ top bar / nav (phone first) */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  display: flex; align-items: center;
+  height: var(--bar-h);
+  padding-left: var(--gut);
+  background: rgba(11, 13, 17, .86);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  flex: none; display: inline-flex; align-items: center; height: 44px;
+  padding-right: 12px;
+  font: 500 13px/1 var(--mono); letter-spacing: .04em; color: var(--text); text-decoration: none;
+}
+.brand .cn { display: none; }
+.nav { flex: 1; min-width: 0; height: 100%; display: flex; align-items: center; }
+.nav-list {
+  position: relative; flex: 1; min-width: 0; height: 100%;
+  display: flex; align-items: center;
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+}
+.nav-list::-webkit-scrollbar { display: none; }
+.nav-list li:last-child { padding-right: 20px; }
+.nav-link, .nav-resume {
+  position: relative; display: flex; align-items: center; gap: 6px; height: 44px;
+  font: 400 12px/1 var(--mono); letter-spacing: .02em; white-space: nowrap; text-decoration: none;
+  transition: color .25s;
+}
+.nav-link { padding: 0 9px; color: var(--muted); }
+.nav-link::after {                       /* phone: underline grows under the active link */
+  content: ""; position: absolute; left: 9px; right: 9px; bottom: 8px; height: 1px;
+  background: var(--text); transform: scaleX(0); transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.nav-link:hover, .nav-link.is-active { color: var(--text); }
+.nav-link.is-active::after { transform: scaleX(1); }
+.nav-resume {
+  flex: none; height: 100%; padding: 0 var(--gut) 0 14px;
+  border-left: 1px solid var(--line); color: var(--text);
+}
+
+/* ------------------------------------------------------------------ hero stage */
+.stage { position: relative; }
+.viz {
+  position: relative; height: clamp(360px, 96vw, 420px);
+  overflow: hidden;
+}
+.viz canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.viz-cap {
+  position: absolute; top: 16px; right: var(--gut); z-index: 3;
+  display: flex; align-items: center; gap: 8px;
+  font: 400 11px/1 var(--mono); letter-spacing: .02em; color: var(--muted);
+  pointer-events: none;
+}
+.viz-cap .dot { transition: background-color .4s; }
+.viz-cap.swap .cap-t { animation: capIn .45s var(--ease) both; }
+@keyframes capIn { from { opacity: 0; transform: translateY(3px); } }
+
+.cbar {
+  position: absolute; right: var(--gut); bottom: 16px; z-index: 3; width: 128px; white-space: nowrap;
+  font: 400 10px/1 var(--mono); color: var(--muted); letter-spacing: .02em;
+  pointer-events: none;
+}
+.cbar-ramp { height: 4px; margin: 8px 0 6px; border-radius: 1px;
+  background: linear-gradient(90deg, #440154, #482475 12.5%, #3B528B 25%, #2C728E 37.5%, #21918C 50%, #28AE80 62.5%, #5EC962 75%, #ADDC30 87.5%, #FDE725); }
+.cbar-ticks { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+
+.hero-copy { position: relative; padding: 28px var(--gut) 44px; }
+.kicker {
+  font: 400 11.5px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 18px;
+}
+.name {
+  font-family: var(--sans); font-weight: 300;
+  font-size: clamp(44px, 13.4vw, 64px); line-height: .96; letter-spacing: -0.035em;
+  color: var(--text);
+}
+.name > span { display: block; }
+.name .alt { color: var(--muted); }
+.cn-name { margin-top: 14px; display: flex; align-items: baseline; gap: 10px; color: var(--muted); }
+.cn-name .cjk { font-size: 17px; letter-spacing: .12em; color: var(--text); }
+.cn-name .mono { font-size: 12px; letter-spacing: .02em; }
+.tagline { margin-top: 22px; max-width: 40ch; font-size: 15.5px; line-height: 1.62; color: var(--muted); text-wrap: pretty; }
+.tagline b { font-weight: 400; color: var(--text); }
+.cta { display: flex; gap: 10px; margin-top: 28px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  height: 46px; padding: 0 18px; border-radius: 3px;
+  font: 500 14px/1 var(--sans); letter-spacing: -0.005em; text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent; background: none; cursor: pointer;
+  transition: background-color .2s, border-color .2s, color .2s;
+}
+.btn .ico { width: 11px; height: 11px; }
+.btn-solid { background: var(--text); color: var(--ground); }
+.btn-solid:hover { background: #FFFFFF; }
+.btn-line { color: var(--text); border-color: rgba(230, 233, 239, .3); }
+.btn-line:hover { border-color: var(--text); }
+.cta .btn { flex: 1 1 0; }
+
+/* entrance: CSS only, finishes on its own */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy > * { animation: rise .9s var(--ease) both; }
+  .hero-copy > :nth-child(2) { animation-delay: .08s; }
+  .hero-copy > :nth-child(3) { animation-delay: .16s; }
+  .hero-copy > :nth-child(4) { animation-delay: .24s; }
+  .hero-copy > :nth-child(5) { animation-delay: .32s; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+/* ------------------------------------------------------------------ right column */
+.col { padding: 0 var(--gut) 40px; min-width: 0; }
+
+.meta { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.meta li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 13px 0; }
+.meta li + li { border-top: 1px solid var(--line); }
+.meta b { font-weight: 500; font-size: 14px; line-height: 1.35; color: var(--text); }
+.meta span, .meta a { font: 400 12px/1.4 var(--mono); color: var(--muted); text-align: right; }
+.meta a { color: var(--text); }
+
+.sec { padding: 56px 0; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--bar-h) + 8px); }
+.meta + .sec { border-top: 0; }
+.sec-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
+.sec-h {
+  display: inline-flex; align-items: center; gap: 10px;
+  font: 500 11.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text);
+}
+.sec-h .n { color: var(--muted); font-weight: 400; }
+.sec-aux { font: 400 11.5px/1 var(--mono); letter-spacing: .04em; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* profile */
+.quote p {
+  font-weight: 300; font-size: clamp(27px, 7.4vw, 40px); line-height: 1.16; letter-spacing: -0.028em;
+  color: var(--text); text-wrap: balance;
+}
+.quote .hang { margin-left: -0.4em; }
+.quote figcaption { margin-top: 16px; font: 400 12px/1 var(--mono); letter-spacing: .04em; color: var(--muted); }
+.bio { margin-top: 36px; max-width: 60ch; font-size: 17px; line-height: 1.7; color: var(--text); text-wrap: pretty; }
+
+/* generic two-column rows */
+.row { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.when {
+  font: 400 12px/1.5 var(--mono); letter-spacing: .04em; text-transform: uppercase;
+  color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.when small { display: block; font-size: 12px; text-transform: none; letter-spacing: .02em; }
+.row-t { font-weight: 500; font-size: 20px; line-height: 1.3; letter-spacing: -0.014em; color: var(--text); text-wrap: balance; }
+.row-s { margin-top: 4px; font-size: 15px; line-height: 1.5; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.chip {
+  font: 400 11.5px/1 var(--mono); letter-spacing: .01em; color: var(--muted); white-space: nowrap;
+  border: 1px solid var(--line); border-radius: 3px; padding: 6px 8px 6px;
+}
+
+/* education */
+.edu + .edu { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--line); }
+
+/* projects */
+.hint { display: none; align-items: center; gap: 10px; margin: -8px 0 18px; font: 400 11.5px/1 var(--mono); color: var(--muted); letter-spacing: .02em; }
+.hint svg { width: 20px; height: 10px; flex: none; }
+.projects { margin: 0 -12px -26px; }
+.proj {
+  position: relative; display: grid; grid-template-columns: 1fr; gap: 10px;
+  padding: 24px 12px 26px; border-radius: 4px;
+  transition: background-color .25s;
+}
+.proj::before { content: ""; position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: var(--line); transition: opacity .25s; }
+.proj:hover, .proj:focus-within, .proj.is-on { background: var(--panel); }
+.proj:hover::before, .proj:focus-within::before, .proj.is-on::before,
+.proj:hover + .proj::before, .proj:focus-within + .proj::before, .proj.is-on + .proj::before { opacity: 0; }
+.pid {
+  display: flex; align-items: center; gap: 9px;
+  font: 500 12px/1 var(--mono); letter-spacing: .04em; color: var(--muted); font-variant-numeric: tabular-nums;
+  transition: color .25s;
+}
+.pid .dot { transition: transform .35s var(--ease); }
+.proj:hover .pid, .proj.is-on .pid, .proj:focus-within .pid { color: var(--text); }
+.proj:hover .pid .dot, .proj.is-on .pid .dot, .proj:focus-within .pid .dot { transform: scale(1.45); }
+.p-meta { font: 400 11.5px/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.p-meta b { font-weight: 500; color: var(--text); }
+.p-t { font-weight: 500; font-size: 20px; line-height: 1.3; letter-spacing: -0.015em; text-wrap: balance; }
+.proj.feat .p-t { font-size: clamp(22px, 6vw, 26px); line-height: 1.22; letter-spacing: -0.022em; }
+.p-d { margin-top: 10px; max-width: 62ch; font-size: 15px; line-height: 1.65; color: var(--muted); text-wrap: pretty; }
+.p-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 24px; margin-top: 12px; }
+.tags { font: 400 12px/1.5 var(--mono); letter-spacing: .01em; color: var(--muted); padding: 6px 0; }
+.files { display: flex; flex-wrap: wrap; gap: 0 20px; }
+.file {
+  display: inline-flex; align-items: center; gap: 5px; min-height: 40px;
+  font-weight: 500; font-size: 14px; color: var(--text);
+}
+.file .ico { width: 9px; height: 9px; }
+
+/* experience timeline */
+.jobs { position: relative; }
+.job { position: relative; padding-left: 24px; }
+.job + .job { margin-top: 40px; }
+.job::before {                                   /* rail to the next node */
+  content: ""; position: absolute; left: 3px; top: 12px; bottom: -46px; width: 1px; background: var(--line);
+}
+.job:last-child::before { display: none; }
+.job::after {                                    /* node */
+  content: ""; position: absolute; left: 0; top: 5px; width: 7px; height: 7px; border-radius: 50%;
+  border: 1px solid var(--muted); background: var(--ground);
+}
+.job:first-child::after { background: var(--text); border-color: var(--text); }
+.bul { margin-top: 14px; }
+.bul li { position: relative; padding-left: 20px; max-width: 64ch; font-size: 15px; line-height: 1.65; color: var(--muted); text-wrap: pretty; }
+.bul li + li { margin-top: 8px; }
+.bul li::before { content: ""; position: absolute; left: 0; top: .82em; width: 10px; height: 1px; background: var(--dim); }
+
+/* skills */
+.skills { display: grid; grid-template-columns: 1fr; }
+.sk { display: grid; grid-template-columns: 104px 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline; }
+.sk:first-child { border-top: 0; padding-top: 0; }
+.sk h3 { font: 500 11.5px/1.6 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.sk ul { display: flex; flex-wrap: wrap; gap: 2px 16px; }
+.sk li { font-weight: 400; font-size: 20px; line-height: 1.45; letter-spacing: -0.015em; }
+.sk li small { font-size: .7em; color: var(--muted); letter-spacing: 0; }
+
+/* footer */
+.foot { padding: 56px 0 8px; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--bar-h) + 8px); }
+.talk { font-weight: 300; font-size: clamp(48px, 15vw, 88px); line-height: 1; letter-spacing: -0.04em; }
+.mail-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 26px; }
+.mail {
+  font-weight: 300; font-size: clamp(24px, 6.6vw, 34px); line-height: 1.2; letter-spacing: -0.02em; color: var(--text);
+  text-underline-offset: 7px;
+}
+.btn-sm { height: 40px; padding: 0 14px; font-size: 13px; }
+.elsewhere { display: flex; flex-wrap: wrap; gap: 0 26px; margin-top: 22px; }
+.elsewhere a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 15px; color: var(--text); }
+.colophon {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line);
+  font: 400 11.5px/1.5 var(--mono); letter-spacing: .02em; color: var(--muted);
+}
+
+/* ------------------------------------------------------------------ tablet (phone layout, wider) */
+@media (min-width: 640px) {
+  :root { --gut: 32px; }
+  .row { grid-template-columns: var(--lcol) minmax(0, 1fr); gap: 0 var(--lgap); }
+  .when { padding-top: 4px; }
+  .proj { grid-template-columns: var(--lcol) minmax(0, 1fr); gap: 0 var(--lgap); }
+  .pid { height: 26px; }
+  .jobs::before { display: none; }
+  .job { padding-left: 0; display: grid; grid-template-columns: var(--lcol) minmax(0, 1fr); gap: 0 var(--lgap); }
+  .job::before { left: calc(var(--lcol) + var(--lgap) / 2); top: 14px; }
+  .job::after  { left: calc(var(--lcol) + var(--lgap) / 2 - 3px); top: 8px; }
+  .job > div { padding-left: 14px; }
+  .meta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .meta li { display: block; padding: 14px 16px 15px; }
+  .meta li + li { border-top: 0; border-left: 1px solid var(--line); }
+  .meta li:first-child { padding-left: 0; }
+  .meta span, .meta a { display: block; margin-top: 3px; text-align: left; }
+  .skills { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sk { display: block; padding: 0 20px; border-top: 0; border-left: 1px solid var(--line); }
+  .sk:first-child { padding-left: 0; border-left: 0; }
+  .sk h3 { margin-bottom: 16px; }
+  .sk ul { display: block; }
+  .sk li { font-size: clamp(19px, 1.6vw, 22px); line-height: 1.55; }
+  .colophon { flex-direction: row; justify-content: space-between; gap: 24px; }
+  .cta .btn { flex: 0 0 auto; }
+}
+
+/* ------------------------------------------------------------------ desktop split */
+@media (min-width: 1024px) {
+  :root { --gut: 40px; }
+  .split { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); }
+
+  /* left column: sticky full-height surface */
+  .stage { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; }
+  .viz { position: absolute; inset: 0; height: auto; }
+  .viz-cap { top: 44px; right: 40px; }
+  .cbar { right: 40px; bottom: 50px; }
+  .hero-copy { position: absolute; left: 48px; right: 48px; bottom: 48px; padding: 0; z-index: 2; }
+  .hero-copy::before {                         /* soft scrim so the name stays crisp over the mesh */
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    left: -48px; right: -48px; bottom: -48px; top: -56px;
+    background: linear-gradient(to top, rgba(11,13,17,.96) 0%, rgba(11,13,17,.9) 55%, rgba(11,13,17,.55) 82%, rgba(11,13,17,0) 100%);
+  }
+  .name { font-size: clamp(44px, min(5.5vw, 8.8vh), 80px); }
+  .cn-name { display: none; }
+  .tagline, .cta { max-width: min(38ch, calc(100% - 150px)); }
+  .tagline { font-size: 15.5px; }
+
+  /* brand + vertical nav, overlaid top-left of the surface */
+  .bar {
+    position: fixed; top: 0; left: 0; z-index: 30; display: block; height: auto;
+    padding: 40px 0 0 48px; background: none; border: 0;
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .brand { height: auto; padding: 0; font-size: 12px; letter-spacing: .06em; }
+  .brand .cn { display: inline; color: var(--muted); }
+  .brand .cn .cjk { font-size: 13px; letter-spacing: .08em; }
+  .nav { display: block; height: auto; margin-top: 30px; }
+  .nav-list { display: block; height: auto; overflow: visible; -webkit-mask-image: none; mask-image: none; }
+  .nav-list li:last-child { padding-right: 0; }
+  .nav-link, .nav-resume { height: 28px; padding: 0; gap: 14px; border: 0; }
+  .nav-link::after { display: none; }
+  .nav-link::before, .nav-resume::before {
+    content: ""; width: 24px; height: 1px; flex: none; background: currentColor;
+    transform: scaleX(.34); transform-origin: left; opacity: .55;
+    transition: transform .45s var(--ease), opacity .45s;
+  }
+  .nav-link.is-active::before { transform: scaleX(1); opacity: 1; }
+  .nav-link:hover::before { opacity: 1; }
+  .nav-resume { margin-top: 8px; color: var(--muted); }
+  .nav-resume::before { opacity: 0; }
+  .nav-resume:hover { color: var(--text); }
+
+  /* right column */
+  .col { border-left: 1px solid var(--line); padding: 82px clamp(40px, 5vw, 72px) 48px; }
+  main, .foot { max-width: 640px; }
+  .sec { padding: 72px 0; scroll-margin-top: 24px; }
+  .meta + .sec { padding-top: 64px; }
+  .hint { display: flex; }
+  .projects { margin: 0 -20px -28px; }
+  .proj { padding: 26px 20px 28px; }
+  .proj::before { left: 20px; right: 20px; }
+  .proj .files .file { min-height: 32px; }
+  .foot { padding-top: 72px; scroll-margin-top: 24px; }
+  .talk { font-size: clamp(56px, 5.4vw, 88px); }
+  .mail { font-size: clamp(26px, 2.3vw, 34px); }
+  .elsewhere a { min-height: 36px; }
+}
+@media (min-width: 1024px) and (max-height: 760px) {
+  .bar { padding-top: 28px; }
+  .nav { margin-top: 26px; }
+  .nav-link, .nav-resume { height: 28px; }
+  .viz-cap { top: 30px; }
+  .hero-copy { bottom: 36px; }
+  .cbar { bottom: 38px; }
+  .kicker { margin-bottom: 12px; }
+  .tagline { margin-top: 16px; }
+  .cta { margin-top: 20px; }
+}
+@media (hover: none) { .hint { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="brand" href="#top" aria-label="Haolin Liu, back to top">HL<span class="cn">&nbsp;/&nbsp;<span class="cjk" lang="zh-Hans">刘昊霖</span></span></a>
+  <nav class="nav" aria-label="Sections">
+    <ul class="nav-list">
+      <li><a class="nav-link" href="#about">About</a></li>
+      <li><a class="nav-link" href="#education">Education</a></li>
+      <li><a class="nav-link" href="#projects">Projects</a></li>
+      <li><a class="nav-link" href="#experience">Experience</a></li>
+      <li><a class="nav-link" href="#skills">Skills</a></li>
+    </ul>
+    <a class="nav-resume" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener">Resume<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg><span class="sr"> (PDF, opens in a new tab)</span></a>
+  </nav>
+</header>
+
+<div class="split">
+
+  <section class="stage" id="top" aria-labelledby="hero-name">
+    <div class="viz">
+      <canvas id="surface" role="img" aria-label="Illustrative implied-volatility surface drawn as a slowly rotating wireframe, coloured by height"></canvas>
+      <p class="viz-cap" id="viz-cap" aria-hidden="true"><i class="dot"></i><span class="cap-t" id="viz-cap-t">IV surface · equity skew</span></p>
+      <div class="cbar" aria-hidden="true">
+        <div>illustrative surface</div>
+        <div class="cbar-ramp" id="cb-ramp"></div>
+        <div class="cbar-ticks"><span id="cb-lo">σ lo</span><span id="cb-hi">hi</span></div>
+      </div>
+    </div>
+
+    <div class="hero-copy">
+      <p class="kicker">Quantitative Finance — Portfolio 2026</p>
+      <h1 class="name" id="hero-name"><span>Haolin</span> <span><span class="alt">(Alex)</span> Liu</span></h1>
+      <p class="cn-name"><span class="cjk" lang="zh-Hans">刘昊霖</span><span class="mono">Liú Hàolín</span></p>
+      <p class="tagline"><b>Quantitative Finance · Data Science · Risk Management.</b> Building robust models that account for market ambiguity and <span class="nw">tail-risk</span> volatility.</p>
+      <div class="cta">
+        <a class="btn btn-solid" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener">View Resume<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg><span class="sr"> (PDF, opens in a new tab)</span></a>
+        <button class="btn btn-line" type="button" data-copy data-target="meta-email"><svg class="ico" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><rect x="4.5" y="4.5" width="7" height="7" rx="1"/><path d="M9.5 2.5h-6a1 1 0 0 0-1 1v6"/></svg><span class="lbl">Copy email</span></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="col">
+    <main id="main">
+
+      <ul class="meta" aria-label="At a glance">
+        <li><b>NYU Tandon</b><span>MS Financial Engineering</span></li>
+        <li><b>Univ. of Washington</b><span>BS CFRM</span></li>
+        <li><b>New York</b><a class="ul" id="meta-email" href="mailto:hl6593@nyu.edu">hl6593@nyu.edu</a></li>
+      </ul>
+
+      <!-- 01 Profile -->
+      <section class="sec" id="about" aria-labelledby="about-h">
+        <div class="sec-head">
+          <h2 class="sec-h" id="about-h"><i class="dot" style="--c:#3B528B"></i><span class="n">01</span>Profile</h2>
+        </div>
+        <figure class="quote">
+          <blockquote><p><span class="hang">“</span>The purpose of computing is insight, not numbers.”</p></blockquote>
+          <figcaption>— Richard Hamming</figcaption>
+        </figure>
+        <p class="bio">I am a Quantitative Finance graduate student at NYU Tandon with a background in Computational Finance and Risk Management (Data Science) from the University of Washington. My expertise lies in derivative pricing, stochastic modeling, and the application of machine learning within high-frequency financial contexts.</p>
+      </section>
+
+      <!-- 02 Education -->
+      <section class="sec" id="education" aria-labelledby="edu-h">
+        <div class="sec-head">
+          <h2 class="sec-h" id="edu-h"><i class="dot" style="--c:#2A788E"></i><span class="n">02</span>Education</h2>
+          <span class="sec-aux">2021 — 2027</span>
+        </div>
+        <div class="row edu">
+          <p class="when">2025 — 2027</p>
+          <div>
+            <h3 class="row-t">New York University, Tandon</h3>
+            <p class="row-s">Master of Science in Financial Engineering</p>
+            <ul class="chips" aria-label="Courses">
+              <li class="chip">Quantitative Methods</li>
+              <li class="chip">Derivative Securities</li>
+              <li class="chip">Financial Risk Management</li>
+              <li class="chip">Financial Econometrics</li>
+              <li class="chip">ML in Financial Engineering</li>
+              <li class="chip">Financial Computing in C++</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row edu">
+          <p class="when">2021 — 2025</p>
+          <div>
+            <h3 class="row-t">University of Washington</h3>
+            <p class="row-s">BS, Computational Finance &amp; Risk Management</p>
+            <ul class="chips" aria-label="Courses">
+              <li class="chip">Time Series Analysis</li>
+              <li class="chip">Linear Algebra</li>
+              <li class="chip">Statistical Inference</li>
+              <li class="chip">Real Analysis</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 Projects -->
+      <section class="sec" id="projects" aria-labelledby="proj-h">
+        <div class="sec-head">
+          <h2 class="sec-h" id="proj-h"><i class="dot" style="--c:#249D87"></i><span class="n">03</span>Selected Projects</h2>
+          <span class="sec-aux">P.01 — P.07</span>
+        </div>
+        <p class="hint" aria-hidden="true"><svg viewBox="0 0 20 10" aria-hidden="true" focusable="false"><defs><linearGradient id="smile-g" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#FDE725"/><stop offset=".5" stop-color="#21918C"/><stop offset="1" stop-color="#5EC962"/></linearGradient></defs><path d="M1.5 1.5C5 8.5 12 9 18.5 3" fill="none" stroke="url(#smile-g)" stroke-width="1.4" stroke-linecap="round"/></svg>Hover a project to reshape the surface</p>
+
+        <ol class="projects">
+          <li class="proj feat" data-morph="p1" data-cap="two regimes" style="--c:#3B528B">
+            <div class="pid"><i class="dot"></i>P.01</div>
+            <div>
+              <p class="p-meta"><b>Featured</b> · MSFE Capstone</p>
+              <h3 class="p-t">QWIM Regime-Based Investing with LLMs</h3>
+              <p class="p-d">Regime-aware portfolio management framework combining market-state detection (Hidden Markov &amp; Statistical Jump Models, in time and frequency domains) with LPPLS bubble-risk signals, feeding out-of-sample mean-variance construction against StaticMVO benchmarks. The LPPLS defensive overlay delivered the clearest gains — improving return, Sharpe, Sortino, Calmar, and tail-risk metrics with only modest turnover.</p>
+              <div class="p-foot">
+                <p class="tags">HMM · SJM · LPPLS</p>
+                <div class="files"><a class="file ul" href="../public/capstone-proj/capstone-report.pdf" target="_blank" rel="noopener">Report<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="proj" data-morph="p2" data-cap="event bump" style="--c:#2C728E">
+            <div class="pid"><i class="dot"></i>P.02</div>
+            <div>
+              <p class="p-meta">FRE 6883</p>
+              <h3 class="p-t">Earnings Event Study &amp; CAAR Analysis</h3>
+              <p class="p-d">Sector-neutral event study of how quarterly earnings announcements move Russell 3000 stocks — Beat/Meet/Miss grouping, AAR &amp; CAAR with bootstrap sampling, EOD Historical Data API.</p>
+              <div class="p-foot">
+                <p class="tags">C++ · Bootstrap · CAAR</p>
+                <div class="files">
+                  <a class="file ul" href="../public/6883-proj/fre6883-final-project.pdf" target="_blank" rel="noopener">PDF<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                  <a class="file ul" href="https://github.com/FRE6883/fre6883-teamproject-fre6883_team2" target="_blank" rel="noopener">GitHub<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="proj" data-morph="p3" data-cap="term structure" style="--c:#21918C">
+            <div class="pid"><i class="dot"></i>P.03</div>
+            <div>
+              <p class="p-meta">FRE 6083</p>
+              <h3 class="p-t">GARCH Option Pricing &amp; IV Term Structure</h3>
+              <p class="p-d">Compared implied-volatility term structures from Black-Scholes vs GARCH(1,1) simulation on S&amp;P 500 options; 3D IV surfaces show BS overpricing deep OTM calls by up to 8.6%.</p>
+              <div class="p-foot">
+                <p class="tags">GARCH · Monte Carlo · Python</p>
+                <div class="files">
+                  <a class="file ul" href="../public/6083-proj/report.pdf" target="_blank" rel="noopener">Report<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                  <a class="file ul" href="../public/6083-proj/Comparing%20IV%20termstructure%20from%20Black%20Scholes%20and%20Volatility%20sumulations%20using%20GARCH(1%2C1)%20(1).pptx" target="_blank" rel="noopener">Slides<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="proj" data-morph="p4" data-cap="steep skew" style="--c:#28AE80">
+            <div class="pid"><i class="dot"></i>P.04</div>
+            <div>
+              <p class="p-meta">FRE 6123</p>
+              <h3 class="p-t">Financial Risk Management — FRM Final</h3>
+              <p class="p-d">VaR &amp; CVaR estimation, stress testing, and regulatory capital frameworks across market, credit, and operational risk exposures.</p>
+              <div class="p-foot">
+                <p class="tags">VaR · CVaR · Stress Testing</p>
+                <div class="files">
+                  <a class="file ul" href="../public/6123-proj/FRM_Final%20Paper%20(2).pdf" target="_blank" rel="noopener">Paper<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                  <a class="file ul" href="../public/6123-proj/FRM_Project_Report.pdf" target="_blank" rel="noopener">Report<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                  <a class="file ul" href="../public/6123-proj/FRM_Final%20project.pptx" target="_blank" rel="noopener">Slides<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="proj" data-morph="p5" data-cap="calm regime" style="--c:#5EC962">
+            <div class="pid"><i class="dot"></i>P.05</div>
+            <div>
+              <p class="p-meta">Internship</p>
+              <h3 class="p-t">Quantitative Research — US Market Thesis</h3>
+              <p class="p-d">Applied research project from an industry internship: data pipeline construction, statistical modeling, and a full analytical write-up.</p>
+              <div class="p-foot">
+                <p class="tags">Python · Research</p>
+                <div class="files"><a class="file ul" href="../public/intern-proj/us_market_thesis.pdf" target="_blank" rel="noopener">Thesis<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="proj" data-morph="p6" data-cap="microstructure noise" style="--c:#ADDC30">
+            <div class="pid"><i class="dot"></i>P.06</div>
+            <div>
+              <p class="p-meta">FRE 7773</p>
+              <h3 class="p-t">Market Manipulation Detection in LOB Data</h3>
+              <p class="p-d">76 session-aware features over millisecond limit-order-book data; Isolation Forest trained on normal samples flags spoofing, layering, and quote stuffing.</p>
+              <div class="p-foot">
+                <p class="tags">Isolation Forest · LOB · Kaggle</p>
+                <div class="files"><a class="file ul" href="../public/7773-proj/7773-report.pdf" target="_blank" rel="noopener">Report<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="proj" data-morph="p7" data-cap="convexity" style="--c:#FDE725">
+            <div class="pid"><i class="dot"></i>P.07</div>
+            <div>
+              <p class="p-meta">Fixed Income</p>
+              <h3 class="p-t">AI-Assisted Treasury Analytics Validation</h3>
+              <p class="p-d">Reviewed GPT-5.5 &amp; Claude drafts against fixed-income pricing requirements, then built a corrected USTreasurySecurity class: 32nds quotes, act/act accrual, Newton-solved YTM, PV01, duration, convexity.</p>
+              <div class="p-foot">
+                <p class="tags">YTM · PV01 · Python</p>
+                <div class="files">
+                  <a class="file ul" href="../public/treasury-ai-proj/treasury-ai-comparison-report.pdf" target="_blank" rel="noopener">Report<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                  <a class="file ul" href="../public/treasury-ai-proj/treasury-security-corrected.py" target="_blank" rel="noopener">Code<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 04 Experience -->
+      <section class="sec" id="experience" aria-labelledby="exp-h">
+        <div class="sec-head">
+          <h2 class="sec-h" id="exp-h"><i class="dot" style="--c:#48BE6E"></i><span class="n">04</span>Experience</h2>
+          <span class="sec-aux">2023 — 2026</span>
+        </div>
+        <ol class="jobs">
+          <li class="job">
+            <p class="when">Jul — Sep 2026<small>Beijing</small></p>
+            <div>
+              <h3 class="row-t">China Securities Co., Ltd. (CSC)</h3>
+              <p class="row-s">FinTech Intern, Information Technology</p>
+              <ul class="bul">
+                <li>Owned end-to-end backend development of an AI-assisted narrative generation feature for the firm’s AML system (Java, Spring Boot, MyBatis, MySQL).</li>
+                <li>Designed a submit / async-invoke / poll API chain joining 13 data-warehouse profile fields with due-diligence inputs, calling the firm’s internal LLM platform.</li>
+              </ul>
+              <ul class="chips" aria-label="Skills used">
+                <li class="chip">Java</li><li class="chip">Spring Boot</li><li class="chip">MySQL</li><li class="chip">LLM Integration</li><li class="chip">AML</li>
+              </ul>
+            </div>
+          </li>
+          <li class="job">
+            <p class="when">Jun — Aug 2024<small>Beijing</small></p>
+            <div>
+              <h3 class="row-t">Donghai Securities</h3>
+              <p class="row-s">Investment Department Intern</p>
+              <ul class="bul">
+                <li>Macro / meso / micro market analysis; logistic regression forecasting CSI All Share Index trends over 10+ years of data, outperforming baseline benchmarks.</li>
+              </ul>
+              <ul class="chips" aria-label="Skills used">
+                <li class="chip">Logistic Regression</li><li class="chip">CSI Index</li>
+              </ul>
+            </div>
+          </li>
+          <li class="job">
+            <p class="when">Jun — Sep 2023<small>Tianjin</small></p>
+            <div>
+              <h3 class="row-t">Green Fund</h3>
+              <p class="row-s">Summer Intern, Investment Department</p>
+              <ul class="bul">
+                <li>Analyzed 5-year yields of Chinese mid/long-term bond funds — 19.4% cumulative, 3.8% annual compound.</li>
+              </ul>
+              <ul class="chips" aria-label="Skills used">
+                <li class="chip">Fixed Income</li><li class="chip">Yield Curve</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 05 Stack -->
+      <section class="sec" id="skills" aria-labelledby="skills-h">
+        <div class="sec-head">
+          <h2 class="sec-h" id="skills-h"><i class="dot" style="--c:#9DD83A"></i><span class="n">05</span>Stack</h2>
+        </div>
+        <div class="skills">
+          <div class="sk">
+            <h3>Expert</h3>
+            <ul><li>Python</li><li>Pandas</li><li>Java</li></ul>
+          </div>
+          <div class="sk">
+            <h3>Proficient</h3>
+            <ul><li>C++</li><li>SQL</li><li>R <small>/ Matlab</small></li></ul>
+          </div>
+          <div class="sk">
+            <h3>Libraries</h3>
+            <ul><li>NumPy</li><li>SciPy</li><li>Statsmodels</li><li>Matplotlib</li><li>Scikit-learn</li></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot" id="contact" aria-labelledby="talk-h">
+      <div class="sec-head">
+        <p class="sec-h"><i class="dot" style="--c:#FDE725"></i><span class="n">06</span>Contact</p>
+      </div>
+      <h2 class="talk" id="talk-h">Let’s talk</h2>
+      <div class="mail-row">
+        <a class="mail ul" id="foot-email" href="mailto:hl6593@nyu.edu">hl6593@nyu.edu</a>
+        <button class="btn btn-line btn-sm" type="button" data-copy data-target="foot-email"><svg class="ico" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><rect x="4.5" y="4.5" width="7" height="7" rx="1"/><path d="M9.5 2.5h-6a1 1 0 0 0-1 1v6"/></svg><span class="lbl">Copy</span><span class="sr"> email address</span></button>
+      </div>
+      <ul class="elsewhere">
+        <li><a class="ul" href="https://www.linkedin.com/in/haolin-liu-b73799299/" target="_blank" rel="noopener">LinkedIn<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a></li>
+        <li><a class="ul" href="https://github.com/haolin122" target="_blank" rel="noopener">GitHub<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a></li>
+        <li><a class="ul" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener">Resume<svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3.5 8.5l5-5M4.6 3.5h3.9v3.9"/></svg></a></li>
+      </ul>
+      <div class="colophon">
+        <span>© 2026 Haolin (Alex) Liu · New York, NY</span>
+        <span>Surface: illustrative, not market data</span>
+      </div>
+      <p class="sr" id="copy-status" role="status" aria-live="polite"></p>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var doc = document;
+  var EMAIL = 'hl6593@nyu.edu';
+  var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var mqDesk = window.matchMedia('(min-width: 1024px)');
+  var mqFine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  function onMQ(mq, fn) { if (mq.addEventListener) mq.addEventListener('change', fn); else if (mq.addListener) mq.addListener(fn); }
+
+  /* ------------------------------------------------------------ copy email */
+  var status = doc.getElementById('copy-status');
+  function selectNode(el) {
+    try {
+      var r = doc.createRange(); r.selectNodeContents(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    } catch (e) { /* nothing else to try */ }
+  }
+  doc.querySelectorAll('[data-copy]').forEach(function (btn) {
+    var lbl = btn.querySelector('.lbl');
+    var orig = lbl.textContent, timer = 0;
+    function flash(text, msg) {
+      lbl.textContent = text; status.textContent = msg;
+      clearTimeout(timer);
+      timer = setTimeout(function () { lbl.textContent = orig; }, 1800);
+    }
+    function fallback() {
+      var target = doc.getElementById(btn.getAttribute('data-target'));
+      if (target) selectNode(target);
+      flash('Selected', 'Email address selected. Press Control or Command plus C to copy.');
+    }
+    btn.addEventListener('click', function () {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(EMAIL)
+            .then(function () { flash('Copied', 'Email address copied to the clipboard.'); })
+            .catch(fallback);
+        } else { fallback(); }
+      } catch (e) { fallback(); }
+    });
+  });
+
+  /* ------------------------------------------------------------ scroll spy (styling only) */
+  var links = [].slice.call(doc.querySelectorAll('.nav-link'));
+  var navList = doc.querySelector('.nav-list');
+  var ids = links.map(function (a) { return a.getAttribute('href').slice(1); });
+  var seen = {};
+  var current = '';
+  function setActive(id) {
+    if (!id || id === current) return;
+    current = id;
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+      if (on && !mqDesk.matches && navList.scrollWidth > navList.clientWidth) {
+        var left = Math.max(0, a.offsetLeft - 12);
+        try { navList.scrollTo({ left: left, behavior: mqReduce.matches ? 'auto' : 'smooth' }); }
+        catch (e) { navList.scrollLeft = left; }
+      }
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+      for (var i = 0; i < ids.length; i++) { if (seen[ids[i]]) { setActive(ids[i]); break; } }
+    }, { rootMargin: '-32% 0px -62% 0px', threshold: 0 });
+    ids.forEach(function (id) { var el = doc.getElementById(id); if (el) spy.observe(el); });
+  }
+  links.forEach(function (a) { a.addEventListener('click', function () { setActive(a.getAttribute('href').slice(1)); }); });
+
+  /* ------------------------------------------------------------ the implied-vol surface */
+  var surface = (function () {
+    var canvas = doc.getElementById('surface');
+    var ctx = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+    if (!ctx) return { morph: function () {} };
+
+    var viz = canvas.parentElement;
+    var copy = doc.querySelector('.hero-copy');
+    var navEl = doc.querySelector('.nav');
+    var cbar = doc.querySelector('.cbar');
+    var cap = doc.getElementById('viz-cap');
+    var capText = doc.getElementById('viz-cap-t');
+    var cbLo = doc.getElementById('cb-lo'), cbHi = doc.getElementById('cb-hi'), cbRamp = doc.getElementById('cb-ramp');
+    var MONO = '"Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace';
+    var TAU = Math.PI * 2, DEG = Math.PI / 180;
+
+    /* grid: 34 moneyness x 22 maturity points */
+    var NK = 34, NT = 22, NP = NK * NT, NQ = (NK - 1) * (NT - 1);
+    var KMIN = 0.7, KMAX = 1.3, TMIN = 0.08, TMAX = 2.0;
+    var XS = 1.2, ZS = 1.0;                    /* world half-extents (x: moneyness, z: maturity) */
+    var SFLOOR = 0.06, HS = 2.6, SAXIS = 0.5;  /* sigma -> world height */
+    var DXW = 2 * XS / (NK - 1), DZW = 2 * ZS / (NT - 1);
+
+    /* camera: looking from the long-dated, put-wing corner so the tall wing sits on the right */
+    var YAW0 = 142 * DEG, SWING = 22 * DEG, PERIOD = 16000, PITCH0 = 27 * DEG, DIST = 5;
+    /*TESTHOOK*/ var TH = {}; (location.hash.match(/vs=([^&]+)/) || [0, ''])[1].split(',').forEach(function (kv) { kv = kv.split(':'); if (kv[1]) TH[kv[0]] = parseFloat(kv[1]); });
+    /*TESTHOOK*/ if (TH.yaw != null) YAW0 = TH.yaw * DEG; if (TH.pitch != null) PITCH0 = TH.pitch * DEG; if (TH.hs != null) HS = TH.hs; if (TH.dist != null) DIST = TH.dist;
+    var PAR_YAW = 5 * DEG, PAR_PITCH = 2.5 * DEG;
+    var cyw = 1, syw = 0, cpt = 1, spt = 0, F = 300, CX = 0, CY = 0, px = 0, py = 0;
+    function setCam(yaw, pitch) { cyw = Math.cos(yaw); syw = Math.sin(yaw); cpt = Math.cos(pitch); spt = Math.sin(pitch); }
+    function proj(x, y, z) {
+      var x1 = x * cyw - z * syw, z1 = x * syw + z * cyw;
+      var y2 = y * cpt + z1 * spt, z2 = z1 * cpt - y * spt;
+      var s = F / (DIST + z2);
+      px = CX + x1 * s; py = CY - y2 * s;
+      return z2;                               /* depth: larger = farther */
+    }
+
+    /* viridis (matplotlib), 9 stops */
+    var VIR = [[68,1,84],[72,36,117],[59,82,139],[44,114,142],[33,145,140],[40,174,128],[94,201,98],[173,220,48],[253,231,37]];
+    function vir(t) {
+      t = Math.max(0, Math.min(1, t)) * 8;
+      var i = Math.min(7, Math.floor(t)), f = t - i, a = VIR[i], b = VIR[i + 1];
+      return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+    }
+    function hex(c) { return '#' + c.map(function (v) { return ('0' + Math.round(v).toString(16)).slice(-2); }).join(''); }
+    var TLO = 0.1;                             /* skip the darkest purple so the valley reads on the dark ground */
+    var NB = 48, NS = 6, LINE = [], FILL = [];
+    for (var b = 0; b < NB; b++) {
+      var c = vir(TLO + (1 - TLO) * b / (NB - 1));
+      LINE.push('rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')');
+      for (var s = 0; s < NS; s++) {
+        var a = 0.04 + 0.1 * s / (NS - 1);
+        FILL.push('rgb(' + Math.round(11 + (c[0] - 11) * a) + ',' + Math.round(13 + (c[1] - 13) * a) + ',' + Math.round(17 + (c[2] - 17) * a) + ')');
+      }
+    }
+    (function () {                              /* colorbar shows exactly the mapped range */
+      var stops = [];
+      for (var i = 0; i <= 8; i++) stops.push(hex(vir(TLO + (1 - TLO) * i / 8)) + ' ' + (i * 12.5) + '%');
+      cbRamp.style.background = 'linear-gradient(90deg,' + stops.join(',') + ')';
+    })();
+
+    /* sigma(k,T) = base + s(T)[skew(k-1) + smile(k-1)^2] + term e^(-T/tau) + ripple (+ preset features) */
+    var D = { base: .19, skew: -.30, smile: .85, term: -.05, tau: .55, rip: .004, hump: 0, event: 0, noise: 0 };
+    function P(o) { var r = {}, k; for (k in D) r[k] = D[k]; for (k in o) r[k] = o[k]; return r; }
+    var PRESETS = {
+      flat: P({ skew: 0, smile: 0, term: 0, rip: 0 }),
+      base: P({}),
+      p1: P({ base: .17, skew: -.14, smile: .5, term: -.02, rip: .012, hump: .085 }),  /* regimes: two humps       */
+      p2: P({ event: .12 }),                                                          /* earnings: event bump     */
+      p3: P({ base: .165, skew: -.22, smile: .7, term: .16, tau: .33 }),              /* GARCH: term structure    */
+      p4: P({ base: .18, skew: -.5, smile: 1.05, term: -.02 }),                       /* VaR / CVaR: steep skew   */
+      p5: P({ base: .16, skew: -.17, smile: .5, term: -.07, tau: .7 }),               /* calm regime              */
+      p6: P({ noise: .016, rip: .006 }),                                              /* LOB: microstructure      */
+      p7: P({ base: .17, skew: -.04, smile: 2.3, term: -.03 })                        /* fixed income: convexity  */
+    };
+    var KEYS = Object.keys(D);
+    function sig(p, k, T, u, v) {
+      var m = k - 1, st = 0.5 + 0.95 * Math.exp(-T / 0.45);
+      var y = p.base + st * (p.skew * m + p.smile * m * m) + p.term * Math.exp(-T / p.tau);
+      y += p.rip * Math.sin(TAU * (1.4 * u + 0.15)) * Math.sin(TAU * (0.9 * v + 0.1));
+      if (p.hump > 1e-5) {
+        var h1 = (m + 0.14) / 0.075, h2 = (m - 0.13) / 0.075;
+        y += p.hump * (Math.exp(-h1 * h1) + 0.85 * Math.exp(-h2 * h2)) * (0.45 + 0.55 * Math.exp(-T / 1.1));
+      }
+      if (p.event > 1e-5) { var e = (T - 0.3) / 0.09; y += p.event * Math.exp(-e * e) * (1 - 2.4 * m * m); }
+      if (p.noise > 1e-5) {
+        y += p.noise * (Math.sin(TAU * 8.5 * u + 0.7) * Math.sin(TAU * 6.5 * v + 1.3) + 0.6 * Math.sin(TAU * 13 * u) * Math.sin(TAU * 3 * v));
+      }
+      return y;
+    }
+
+    /* static grid geometry */
+    var GX = new Float32Array(NP), GZ = new Float32Array(NP), GK = new Float32Array(NP), GT = new Float32Array(NP), GU = new Float32Array(NP), GV = new Float32Array(NP);
+    var n, i, j, q;
+    for (j = 0; j < NT; j++) for (i = 0; i < NK; i++) {
+      n = j * NK + i;
+      var u = i / (NK - 1), v = j / (NT - 1);
+      GU[n] = u; GV[n] = v; GX[n] = -XS + 2 * XS * u; GZ[n] = -ZS + 2 * ZS * v;
+      GK[n] = KMIN + (KMAX - KMIN) * u; GT[n] = TMIN + (TMAX - TMIN) * v;
+    }
+    function kx(k) { return -XS + 2 * XS * (k - KMIN) / (KMAX - KMIN); }
+    function tz(T) { return -ZS + 2 * ZS * (T - TMIN) / (TMAX - TMIN); }
+
+    /* which floor edges face the camera (constant over the whole swing) */
+    setCam(YAW0, PITCH0);
+    var SIDE = proj(XS, 0, 0) < proj(-XS, 0, 0) ? 1 : -1;     /* x sign of the near side edge  (T axis)     */
+    var FRONT = proj(0, 0, ZS) < proj(0, 0, -ZS) ? 1 : -1;    /* z sign of the near front edge (K/S axis)   */
+    var FARX = -SIDE * XS, FARZ = -FRONT * ZS;                /* far corner carries the sigma axis          */
+
+    /* upper envelope of every preset, so the fitted view never clips while morphing */
+    var ENV = new Float32Array(NP);
+    Object.keys(PRESETS).forEach(function (key) {
+      for (var m = 0; m < NP; m++) {
+        var y = (sig(PRESETS[key], GK[m], GT[m], GU[m], GV[m]) - SFLOOR) * HS;
+        if (y > ENV[m]) ENV[m] = y;
+      }
+    });
+
+    var SIG = new Float32Array(NP), WY = new Float32Array(NP), SX = new Float32Array(NP), SY = new Float32Array(NP), SZ = new Float32Array(NP);
+    var QD = new Float32Array(NQ), QT = new Float32Array(NQ), QS = new Uint8Array(NQ);
+    var order = []; for (q = 0; q < NQ; q++) order.push(q);
+    var byDepth = function (a, b) { return QD[b] - QD[a]; };
+    var LX = -0.38, LY = 0.82, LZ = -0.43;      /* fixed key light for the faint fill shading */
+    (function () { var l = Math.sqrt(LX * LX + LY * LY + LZ * LZ); LX /= l; LY /= l; LZ /= l; })();
+
+    /* state */
+    var W = 0, H = 0, dpr = 1;
+    var reduce = mqReduce.matches;
+    var cur = P(reduce ? {} : PRESETS.flat), from = P(cur), target = PRESETS.base, mStart = -1, mDur = 620;
+    var clock = 0, last = 0, raf = 0, onScreen = true, pageVisible = !doc.hidden;
+    var parX = 0, parY = 0, parTX = 0, parTY = 0;
+    var lastLo = '', lastHi = '';
+
+    /* unit-scale samples of everything that must stay on screen: the upper envelope of all presets
+       (edges + a subsample of the interior) and the label anchors, over the full swing */
+    function envelope(desk) {
+      var ytop = (SAXIS - SFLOOR) * HS, out = [], m, k;
+      var A = [
+        [-XS, 0, FRONT * (ZS + 0.2)], [XS, 0, FRONT * (ZS + 0.2)], [0, 0, FRONT * (ZS + 0.46)],
+        [SIDE * (XS + 0.3), 0, -ZS], [SIDE * (XS + 0.3), 0, ZS], [SIDE * (XS + 0.44), 0, 0],
+        [FARX, ytop + 0.12, FARZ],
+        [-XS, 0, -ZS], [XS, 0, -ZS], [XS, 0, ZS], [-XS, 0, ZS]
+      ];
+      F = 1; CX = 0; CY = 0;
+      for (var sw = -1; sw <= 1.0001; sw += 0.125) {
+        for (var pp = -1; pp <= 1; pp += 2) {
+          setCam(YAW0 + sw * (SWING + (desk ? PAR_YAW : 0)), PITCH0 + (desk ? pp * PAR_PITCH : 0));
+          for (m = 0; m < NP; m++) {
+            var ci = m % NK, cj = (m / NK) | 0;
+            if (!(ci === 0 || cj === 0 || ci === NK - 1 || cj === NT - 1) && m % 3) continue;
+            proj(GX[m], ENV[m], GZ[m]); out.push(px, py);
+          }
+          for (k = 0; k < A.length; k++) { proj(A[k][0], A[k][1], A[k][2]); out.push(px, py); }
+          /* sigma tick labels sit ~34px beside the axis */
+          proj(FARX, (0.3 - SFLOOR) * HS, FARZ); out.push(px, py);
+        }
+      }
+      return out;
+    }
+
+    /* biggest scale whose placement keeps the surface inside the box and clear of the overlays */
+    function fit() {
+      var desk = mqDesk.matches, l, r, t, bt, tl = null, br = null, vb = viz.getBoundingClientRect();
+      if (desk) {
+        l = 28; r = W - 22; t = 84; bt = copy.offsetTop - 16;
+        var nb = navEl.getBoundingClientRect();
+        tl = { x: nb.right - vb.left + 26, y: nb.bottom - vb.top + 12 };        /* keep out of the nav */
+      } else {
+        l = 16; r = W - 16; t = 40; bt = H - 12;
+        var cb = cbar.getBoundingClientRect();
+        br = { x: cb.left - vb.left - 14, y: cb.top - vb.top - 10 };            /* keep out of the colorbar */
+      }
+      if (bt - t < 200) bt = t + 200;
+      var U = envelope(desk), N = U.length, p;
+      var minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+      for (p = 0; p < N; p += 2) {
+        if (U[p] < minX) minX = U[p]; if (U[p] > maxX) maxX = U[p];
+        if (U[p + 1] < minY) minY = U[p + 1]; if (U[p + 1] > maxY) maxY = U[p + 1];
+      }
+      var sc = Math.min((r - l) / (maxX - minX), (bt - t) / (maxY - minY)), best = null;
+      for (var it = 0; it < 48 && !best; it++, sc *= 0.98) {
+        var cxLo = l - sc * minX, cxHi = r - sc * maxX, cyLo = t - sc * minY, cyHi = bt - sc * maxY;
+        if (cxHi < cxLo || cyHi < cyLo) continue;
+        var cxMid = (cxLo + cxHi) / 2, cyMid = (cyLo + cyHi) / 2;
+        for (var c = 0; c <= 6 && !best; c++) {
+          var cy = cyMid + (desk ? 1 : -1) * (desk ? cyHi - cyMid : cyMid - cyLo) * c / 6;
+          var lo = cxLo, hi = cxHi, v;
+          for (p = 0; p < N; p += 2) {
+            var y = cy + sc * U[p + 1];
+            if (tl && y < tl.y) { v = tl.x - sc * U[p]; if (v > lo) lo = v; }
+            if (br && y > br.y) { v = br.x - sc * U[p]; if (v < hi) hi = v; }
+          }
+          if (lo <= hi) best = [sc, Math.max(lo, Math.min(cxMid, hi)), cy];
+        }
+      }
+      if (!best) best = [sc, (l + r) / 2, (t + bt) / 2];
+      F = best[0]; CX = best[1]; CY = best[2];
+    }
+
+    function resize() {
+      var rect = viz.getBoundingClientRect();
+      W = Math.max(1, rect.width); H = Math.max(1, rect.height);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      fit();
+      render();
+    }
+
+    function line3(x0, y0, z0, x1, y1, z1) {
+      proj(x0, y0, z0); var ax = px, ay = py;
+      proj(x1, y1, z1); ctx.moveTo(ax, ay); ctx.lineTo(px, py);
+    }
+    function edgeAngle(x0, z0, x1, z1) {
+      proj(x0, 0, z0); var ax = px, ay = py;
+      proj(x1, 0, z1);
+      var ang = Math.atan2(py - ay, px - ax);
+      if (ang > Math.PI / 2) ang -= Math.PI; else if (ang < -Math.PI / 2) ang += Math.PI;
+      return ang;
+    }
+    function halo(str, x, y) { ctx.strokeText(str, x, y); ctx.fillText(str, x, y); }
+    function textAt(str, x, y, z, ang) {
+      proj(x, y, z);
+      if (!ang) { halo(str, px, py); return; }
+      ctx.save(); ctx.translate(px, py); ctx.rotate(ang); halo(str, 0, 0); ctx.restore();
+    }
+
+    function drawFloor() {
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(140,149,166,0.09)';
+      ctx.beginPath();
+      [0.8, 0.9, 1.0, 1.1, 1.2].forEach(function (k) { var x = kx(k); line3(x, 0, -ZS, x, 0, ZS); });
+      [0.5, 1.0, 1.5].forEach(function (T) { var z = tz(T); line3(-XS, 0, z, XS, 0, z); });
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(140,149,166,0.24)';
+      ctx.beginPath();
+      line3(-XS, 0, -ZS, XS, 0, -ZS); line3(XS, 0, -ZS, XS, 0, ZS);
+      line3(XS, 0, ZS, -XS, 0, ZS); line3(-XS, 0, ZS, -XS, 0, -ZS);
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(140,149,166,0.16)';        /* drop lines from the surface corners */
+      ctx.beginPath();
+      [0, NK - 1, NP - NK, NP - 1].forEach(function (m) { line3(GX[m], 0, GZ[m], GX[m], WY[m], GZ[m]); });
+      ctx.stroke();
+      /* sigma axis on the far corner, behind the surface */
+      var ytop = (SAXIS - SFLOOR) * HS;
+      ctx.strokeStyle = 'rgba(140,149,166,0.34)';
+      ctx.beginPath();
+      line3(FARX, 0, FARZ, FARX, ytop, FARZ);
+      ctx.stroke();
+    }
+
+    function drawLabels() {
+      var ytop = (SAXIS - SFLOOR) * HS, fz = FRONT * ZS, sx = SIDE * XS;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(140,149,166,0.45)';
+      ctx.beginPath();
+      [0.8, 1.0, 1.2].forEach(function (k) { var x = kx(k); line3(x, 0, fz, x, 0, FRONT * (ZS + 0.06)); });
+      [0.25, 1, 2].forEach(function (T) { var z = tz(T); line3(sx, 0, z, SIDE * (XS + 0.06), 0, z); });
+      ctx.stroke();
+
+      /* sigma ticks: screen-space, pointing away from the surface centre */
+      proj(0, 0, 0); var cx0 = px;
+      proj(FARX, 0, FARZ); var dir = px < cx0 ? -1 : 1;
+      ctx.strokeStyle = 'rgba(140,149,166,0.45)';
+      ctx.beginPath();
+      [0.2, 0.3, 0.4].forEach(function (s) { proj(FARX, (s - SFLOOR) * HS, FARZ); ctx.moveTo(px, py); ctx.lineTo(px + dir * 5, py); });
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(140,149,166,0.92)';
+      ctx.strokeStyle = 'rgba(11,13,17,0.9)'; ctx.lineWidth = 3; ctx.lineJoin = 'round';
+      ctx.font = '400 10px ' + MONO;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      [0.8, 1.0, 1.2].forEach(function (k) { textAt(k.toFixed(1), kx(k), 0, FRONT * (ZS + 0.15)); });
+      [[0.25, '0.25'], [1, '1'], [2, '2']].forEach(function (t) {
+        proj(sx, 0, tz(t[0])); var ex = px;
+        proj(SIDE * (XS + 0.1), 0, tz(t[0]));
+        ctx.textAlign = px >= ex ? 'left' : 'right';
+        halo(t[1], px + (px >= ex ? 2 : -2), py + 1);
+      });
+      ctx.textAlign = dir < 0 ? 'right' : 'left';
+      [0.2, 0.3, 0.4].forEach(function (s) { proj(FARX, (s - SFLOOR) * HS, FARZ); halo(s.toFixed(1), px + dir * 8, py); });
+
+      /* axis titles, set along their edges */
+      ctx.fillStyle = '#8C95A6';
+      ctx.font = '500 10px ' + MONO;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      textAt('K/S (moneyness)', 0, 0, FRONT * (ZS + 0.36), edgeAngle(-XS, fz, XS, fz));
+      textAt('T (years)', SIDE * (XS + 0.36), 0, tz(1.04), edgeAngle(sx, -ZS, sx, ZS));
+
+      /* sigma_imp, with a real subscript, above the axis */
+      proj(FARX, ytop, FARZ);
+      var ax = px, ay = py - 11;
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      ctx.font = '400 12px ' + MONO; var wS = ctx.measureText('σ').width;
+      ctx.font = '500 9px ' + MONO; var wI = ctx.measureText('imp').width;
+      var x0 = ax - (wS + 1 + wI) / 2;
+      ctx.font = '400 12px ' + MONO; halo('σ', x0, ay);
+      ctx.font = '500 9px ' + MONO; halo('imp', x0 + wS + 1, ay + 3);
+    }
+
+    function render() {
+      if (!W) return;
+      var sw = reduce ? 0.35 : Math.sin(TAU * clock / PERIOD);
+      /*TESTHOOK*/ if (TH.sw != null) sw = TH.sw;
+      setCam(YAW0 + SWING * sw + parX * PAR_YAW, PITCH0 + parY * PAR_PITCH);
+
+      var mn = 1e9, mx = -1e9, y, zq;
+      for (n = 0; n < NP; n++) {
+        y = sig(cur, GK[n], GT[n], GU[n], GV[n]);
+        SIG[n] = y; if (y < mn) mn = y; if (y > mx) mx = y;
+      }
+      for (n = 0; n < NP; n++) {
+        y = (SIG[n] - SFLOOR) * HS; WY[n] = y;
+        SZ[n] = proj(GX[n], y, GZ[n]); SX[n] = px; SY[n] = py;
+      }
+      var rng = Math.max(mx - mn, 0.04), zmin = 1e9, zmax = -1e9, a, b, c, d;
+      for (j = 0, q = 0; j < NT - 1; j++) for (i = 0; i < NK - 1; i++, q++) {
+        a = j * NK + i; b = a + 1; c = a + NK + 1; d = a + NK;
+        zq = (SZ[a] + SZ[b] + SZ[c] + SZ[d]) * 0.25; QD[q] = zq;
+        if (zq < zmin) zmin = zq; if (zq > zmax) zmax = zq;
+        QT[q] = ((SIG[a] + SIG[b] + SIG[c] + SIG[d]) * 0.25 - mn) / rng;
+        var gx = ((WY[b] - WY[a]) + (WY[c] - WY[d])) / (2 * DXW);
+        var gz = ((WY[d] - WY[a]) + (WY[c] - WY[b])) / (2 * DZW);
+        var lam = (-gx * LX + LY - gz * LZ) / Math.sqrt(gx * gx + 1 + gz * gz);
+        var si = Math.round((lam - 0.55) / 0.45 * (NS - 1));
+        QS[q] = si < 0 ? 0 : si > NS - 1 ? NS - 1 : si;
+      }
+      order.sort(byDepth);
+
+      ctx.clearRect(0, 0, W, H);
+      drawFloor();
+
+      ctx.lineWidth = W < 640 ? 1 : 1.15;
+      ctx.lineJoin = 'round';
+      var zr = 1 / Math.max(zmax - zmin, 1e-3);
+      for (n = 0; n < NQ; n++) {
+        q = order[n];
+        j = (q / (NK - 1)) | 0; i = q - j * (NK - 1);
+        a = j * NK + i; b = a + 1; c = a + NK + 1; d = a + NK;
+        var bi = Math.round(QT[q] * (NB - 1)); bi = bi < 0 ? 0 : bi > NB - 1 ? NB - 1 : bi;
+        ctx.beginPath();
+        ctx.moveTo(SX[a], SY[a]); ctx.lineTo(SX[b], SY[b]); ctx.lineTo(SX[c], SY[c]); ctx.lineTo(SX[d], SY[d]);
+        ctx.closePath();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = FILL[bi * NS + QS[q]];
+        ctx.fill();
+        ctx.globalAlpha = 0.5 + 0.4 * (zmax - QD[q]) * zr;
+        ctx.strokeStyle = LINE[bi];
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      drawLabels();
+
+      var lo = Math.round(mn * 100) + '%', hi = Math.round(mx * 100) + '%';
+      if (lo !== lastLo) { cbLo.textContent = 'σ ' + lo; lastLo = lo; }
+      if (hi !== lastHi) { cbHi.textContent = hi; lastHi = hi; }
+    }
+
+    function stepMorph(now) {
+      if (mStart < 0 || now < mStart) return;
+      var p = Math.min(1, (now - mStart) / mDur);
+      var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      for (var k = 0; k < KEYS.length; k++) { var key = KEYS[k]; cur[key] = from[key] + (target[key] - from[key]) * e; }
+      if (p >= 1) mStart = -1;
+    }
+
+    function running() { return !reduce && onScreen && pageVisible; }
+    function tick(now) {
+      raf = 0;
+      var dt = Math.min(64, Math.max(0, now - last)); last = now;
+      clock += dt;
+      stepMorph(now);
+      parX += (parTX - parX) * 0.06; parY += (parTY - parY) * 0.06;
+      render();
+      if (running()) raf = requestAnimationFrame(tick);
+    }
+    function start() { if (!raf && running()) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+    function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+
+    function morph(key, label, color) {
+      var next = PRESETS[key] || PRESETS.base;
+      capText.textContent = label || 'IV surface · equity skew';
+      cap.style.setProperty('--c', color || '#21918C');
+      cap.classList.remove('swap'); void cap.offsetWidth; cap.classList.add('swap');
+      if (next === target && mStart < 0) return;
+      target = next;
+      if (reduce) { cur = P(target); mStart = -1; render(); return; }
+      from = P(cur); mStart = performance.now(); mDur = 620;
+      start();
+    }
+
+    /* wiring */
+    if ('ResizeObserver' in window) new ResizeObserver(function () { resize(); }).observe(viz);
+    else window.addEventListener('resize', resize);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        onScreen = es[es.length - 1].isIntersecting;
+        if (onScreen) start(); else stop();
+      }).observe(canvas);
+    }
+    doc.addEventListener('visibilitychange', function () {
+      pageVisible = !doc.hidden;
+      if (pageVisible) start(); else stop();
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse' || !mqDesk.matches || reduce) return;
+      parTX = (e.clientX / window.innerWidth) * 2 - 1;
+      parTY = (e.clientY / window.innerHeight) * 2 - 1;
+    }, { passive: true });
+    onMQ(mqReduce, function () {
+      reduce = mqReduce.matches;
+      if (reduce) { stop(); cur = P(target); mStart = -1; parX = parY = parTX = parTY = 0; render(); }
+      else start();
+    });
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { fit(); render(); });
+
+    resize();
+    if (!reduce) { from = P(cur); target = PRESETS.base; mStart = performance.now() + 150; mDur = 1500; start(); }
+
+    return { morph: morph };
+  })();
+
+  /* ------------------------------------------------------------ project rows drive the surface */
+  var rows = [].slice.call(doc.querySelectorAll('.proj[data-morph]'));
+  var offTimer = 0;
+  function activate(row) {
+    clearTimeout(offTimer);
+    rows.forEach(function (r) { r.classList.toggle('is-on', r === row); });
+    var id = row.querySelector('.pid').textContent.trim();
+    surface.morph(row.getAttribute('data-morph'), id + ' · ' + row.getAttribute('data-cap'), row.style.getPropertyValue('--c'));
+  }
+  function deactivate(row) {
+    row.classList.remove('is-on');
+    clearTimeout(offTimer);
+    offTimer = setTimeout(function () {
+      if (!rows.some(function (r) { return r.classList.contains('is-on'); })) surface.morph('base');
+    }, 90);
+  }
+  rows.forEach(function (row) {
+    row.addEventListener('mouseenter', function () { activate(row); });
+    row.addEventListener('mouseleave', function () { deactivate(row); });
+    row.addEventListener('focusin', function () { activate(row); });
+    row.addEventListener('focusout', function (e) { if (!row.contains(e.relatedTarget)) deactivate(row); });
+  });
+})();
+</script>
+</body>
+</html>

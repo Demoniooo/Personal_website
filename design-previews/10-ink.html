@@ -1,0 +1,959 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Haolin Liu — Ink &amp; Seal</title>
+<meta name="description" content="Haolin (Alex) Liu — quantitative finance portfolio. NYU Tandon MS Financial Engineering.">
+<meta name="theme-color" content="#F3F4F1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='2' fill='%23B8262B' transform='rotate(-3 16 16)'/%3E%3Cpath d='M11 10v12M16 9v14M21 10v12M10 16h12' stroke='%23F3F4F1' stroke-width='2.4' transform='rotate(-3 16 16)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Noto+Sans:wght@400;500&amp;display=swap">
+<!-- CJK families are subset with &text= to exactly the characters rendered on the page -->
+<!-- Ma Shan Zheng: 刘昊霖 壹贰叁肆伍 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&amp;text=%E5%88%98%E6%98%8A%E9%9C%96%E5%A3%B9%E8%B4%B0%E5%8F%81%E8%82%86%E4%BC%8D&amp;display=swap">
+<!-- Noto Serif SC: 刘昊霖印 精通 熟练 工具库 甲乙丙丁戊己庚 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&amp;text=%E5%88%98%E6%98%8A%E9%9C%96%E5%8D%B0%E7%B2%BE%E9%80%9A%E7%86%9F%E7%BB%83%E5%B7%A5%E5%85%B7%E5%BA%93%E7%94%B2%E4%B9%99%E4%B8%99%E4%B8%81%E6%88%8A%E5%B7%B1%E5%BA%9A&amp;display=swap">
+<style>
+:root{
+  --paper:#F3F4F1;
+  --ink:#1B1B1A;
+  --ink-2:#4A4A47;
+  --wash:#62655F;          /* darkened from #7C7F7A: 5.3:1 on paper for small text */
+  --wash-soft:#7C7F7A;     /* decorative only (separators, rules) */
+  --seal:#B8262B;
+  --celadon:#9FB5AE;       /* used only inside the farthest mountain layer (canvas) */
+  --line:rgba(27,27,26,.15);
+  --line-soft:rgba(27,27,26,.08);
+
+  --f-brush:"Ma Shan Zheng","Xingkai SC","STXingkai","Kaiti SC","STKaiti","KaiTi",serif;
+  --f-cjk:"Noto Serif SC","Songti SC","STSong","Source Han Serif SC","SimSun",serif;
+  --f-disp:"Cormorant Garamond","Cormorant","EB Garamond","Garamond","Baskerville","Times New Roman",serif;
+  --f-body:"Noto Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+
+  --pad:clamp(20px,4vw,48px);
+  --gutter:clamp(80px,8vw,96px);
+  --axis:28px;                        /* centre line of the index marks in the left margin */
+  --col:680px;
+  --ins:clamp(92px,8.6vw,124px);      /* width of the vertical inscription column (= its font size) */
+  --lane-min:calc(var(--ins) + 40px);
+  --sec:clamp(88px,10vw,140px);
+  --nav-h:64px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 24px)}
+body{
+  margin:0;
+  color:var(--ink-2);
+  font:400 17px/1.75 var(--f-body);
+  font-kerning:normal;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  background-color:var(--paper);
+  /* paper: balanced fine grain + faint formation clouds (~5%) */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.011' numOctaves='3' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .21 0 0 0 0 .2 3 0 0 0 -1.35'/%3E%3C/filter%3E%3Cfilter id='d' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .1 0 0 0 0 .1 2.2 0 0 0 -1.1'/%3E%3C/filter%3E%3Cfilter id='l' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -2.2 0 0 0 1.1'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23c)' opacity='.035'/%3E%3Crect width='300' height='300' filter='url(%23d)' opacity='.16'/%3E%3Crect width='300' height='300' filter='url(%23l)' opacity='.24'/%3E%3C/svg%3E");
+  overflow-x:hidden;
+}
+@supports (overflow:clip){body{overflow-x:clip}}
+::selection{background:rgba(27,27,26,.12);color:var(--ink)}
+img,svg,canvas{display:block}
+a{color:inherit}
+p,h1,h2,h3,ul,ol,figure,blockquote,dl,dd{margin:0}
+h1,h2,h3{text-wrap:balance}
+p,li{text-wrap:pretty}
+ul,ol{padding:0;list-style:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:1.5px solid var(--seal);outline-offset:4px;border-radius:1px}
+.nw{white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+
+.skip{position:absolute;left:12px;top:-60px;z-index:50;padding:10px 14px;background:var(--ink);color:var(--paper);font:500 12px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + 10px)}
+
+/* ---------- page frame ---------- */
+.wrap{
+  width:100%;
+  max-width:calc(1180px + 2 * var(--pad));
+  margin-inline:auto;
+  padding-left:max(var(--pad), env(safe-area-inset-left,0px));
+  padding-right:max(var(--pad), env(safe-area-inset-right,0px));
+}
+/* three tracks: index margin · reading column · inscription lane */
+.g{display:grid;grid-template-columns:var(--gutter) minmax(0,var(--col)) minmax(var(--lane-min),1fr)}
+.body-col{margin-left:var(--gutter);max-width:var(--col)}
+
+/* small tracked label */
+.label{font:500 11.5px/1.5 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--wash)}
+
+/* text links: hairline that turns cinnabar, drawn left to right */
+.tl{
+  display:inline-flex;align-items:center;gap:9px;
+  min-height:40px;padding:0;border:0;background:none;cursor:pointer;
+  color:var(--ink);text-decoration:none;
+  font:500 14px/1 var(--f-body);letter-spacing:.02em;
+}
+.tl .u{
+  padding-bottom:5px;
+  background-image:linear-gradient(var(--seal),var(--seal)),linear-gradient(rgba(27,27,26,.32),rgba(27,27,26,.32));
+  background-size:0% 1px,100% 1px;background-position:0 100%,0 100%;background-repeat:no-repeat;
+  transition:background-size .45s cubic-bezier(.45,.05,.2,1);
+}
+.tl:hover .u,.tl:focus-visible .u{background-size:100% 1px,100% 1px}
+.tl svg{width:14px;height:10px;flex:none;transform:translateY(-2px);transition:transform .3s ease}
+.tl:hover svg{transform:translate(3px,-2px)}
+.tl.ext svg{width:10px;height:10px}
+.tl.ext:hover svg{transform:translate(2px,-4px)}
+
+/* ---------- header / nav ---------- */
+.site-head{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+  background:rgba(243,244,241,.82);
+  -webkit-backdrop-filter:blur(12px) saturate(1.05);backdrop-filter:blur(12px) saturate(1.05);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav-row{display:flex;align-items:center;justify-content:space-between;gap:24px;height:var(--nav-h)}
+.logo{
+  flex:none;display:grid;place-items:center;
+  width:44px;height:44px;margin-left:calc(var(--axis) - 22px);
+  text-decoration:none;
+}
+.seal{background:var(--seal);color:var(--paper);font-family:var(--f-cjk);font-weight:900;filter:url(#rough)}
+.seal--nav{display:grid;place-items:center;width:28px;height:28px;border-radius:2px;font-size:18.5px;line-height:1;rotate:-4deg;filter:url(#rough-sm)}
+.logo:hover .seal--nav{rotate:0deg;transition:rotate .35s ease}
+.site-nav{min-width:0;position:relative}
+.nav-links{display:flex;align-items:center;gap:clamp(18px,2.3vw,34px)}
+.nav-links a{
+  position:relative;display:inline-flex;align-items:center;gap:7px;min-height:40px;
+  font:500 11.5px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-2);text-decoration:none;white-space:nowrap;
+  transition:color .2s ease;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a[aria-current="true"]{color:var(--ink)}
+.nav-links a[aria-current="true"]::after{
+  content:"";position:absolute;left:calc(50% - .09em - 2px);bottom:5px;width:4px;height:4px;background:var(--seal);rotate:45deg;
+}
+.nav-links .res{color:var(--ink)}
+.nav-links .res svg{width:9px;height:9px;transform:translateY(-1px)}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(40px,6.4vw,92px)}
+.hero-grid{align-items:start}
+.hero-text{grid-column:2;grid-row:1}
+.kicker{margin-bottom:26px}
+.name{
+  font:400 clamp(48px,6.6vw,96px)/.98 var(--f-disp);
+  letter-spacing:-.014em;color:var(--ink);
+  margin-left:-.04em;
+}
+.name em{font-style:italic;font-weight:400;letter-spacing:-.02em}
+.lede{margin-top:34px;max-width:33em}
+.lede-a{display:block;font:italic 400 clamp(21px,1.9vw,26px)/1.3 var(--f-disp);color:var(--ink)}
+.lede-b{display:block;margin-top:12px;font-size:17px;line-height:1.7;color:var(--ink-2);text-wrap:pretty}
+.meta{margin-top:38px;font-size:14.5px;line-height:1.6}
+.meta li{display:grid;grid-template-columns:168px minmax(0,1fr);column-gap:20px;padding:3px 0}
+.meta b{font-weight:500;color:var(--ink)}
+.meta span{color:var(--ink-2)}
+.meta a{color:var(--ink-2);text-decoration:underline;text-decoration-color:rgba(27,27,26,.25);text-underline-offset:4px;text-decoration-thickness:1px;transition:text-decoration-color .2s}
+.meta a:hover{text-decoration-color:var(--seal)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px 38px;margin-top:30px}
+
+/* inscription: vertical name + seal */
+.inscription{
+  grid-column:3;grid-row:1;justify-self:end;
+  width:var(--ins);display:flex;flex-direction:column;align-items:center;
+  margin-top:-6px;
+}
+.vname{
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font:400 var(--ins)/1 var(--f-brush);color:var(--ink);
+  letter-spacing:.02em;
+}
+.vname span{display:inline-block;animation:write .44s cubic-bezier(.6,.08,.3,1) backwards}
+.vname span:nth-child(1){animation-delay:.12s}
+.vname span:nth-child(2){animation-delay:.48s}
+.vname span:nth-child(3){animation-delay:.84s}
+.seal--name{
+  display:grid;grid-template:repeat(2,1fr)/repeat(2,1fr);place-items:center;
+  writing-mode:vertical-rl;
+  width:76px;height:76px;padding:6px;border-radius:3px;
+  font-size:28px;line-height:1;
+  margin-top:22px;translate:calc(-1 * var(--ins) * .42) 0;rotate:-3deg;
+  animation:stamp .42s cubic-bezier(.3,.6,.35,1) 1.18s backwards;
+}
+.seal--name span{display:block}
+
+/* ink-wash mountains */
+.mountains{
+  display:block;width:100%;height:clamp(150px,16.4vw,236px);
+  margin-top:clamp(8px,1.2vw,16px);
+  animation:mist 1.3s ease .25s backwards;
+}
+
+@keyframes write{
+  from{clip-path:inset(-20% -30% 120% -30%)}
+  to{clip-path:inset(-20% -30% -20% -30%)}
+}
+@keyframes stamp{
+  0%{opacity:0;scale:1.12;rotate:-7deg}
+  55%{opacity:1;scale:.985;rotate:-2.4deg}
+  100%{opacity:1;scale:1;rotate:-3deg}
+}
+@keyframes mist{from{opacity:.4}to{opacity:1}}
+
+/* ---------- sections ---------- */
+main{display:block}
+.sec{margin-top:var(--sec)}
+.sec--first{margin-top:clamp(56px,6vw,92px)}
+.sec-head{position:relative;align-items:center;margin-bottom:clamp(40px,3.8vw,54px)}
+.numeral{
+  grid-column:1;grid-row:1;justify-self:start;
+  width:calc(var(--axis) * 2);text-align:center;
+  font:400 56px/1 var(--f-brush);color:var(--ink);
+  transform:translateY(2px);
+}
+.sec-title{
+  grid-column:2;grid-row:1;
+  font:500 40px/1.1 var(--f-disp);letter-spacing:-.006em;color:var(--ink);
+}
+.stroke{grid-column:2;grid-row:2;width:100%;height:13px;margin-top:18px;overflow:visible}
+.lane-label{
+  position:absolute;top:0;right:0;
+  width:var(--ins);display:flex;flex-direction:column;align-items:center;gap:14px;
+  padding-top:8px;
+}
+.lane-label::before{content:"";width:5px;height:5px;background:var(--seal)}
+.lane-label span{writing-mode:vertical-rl;font:500 10.5px/1 var(--f-body);letter-spacing:.26em;text-transform:uppercase;color:var(--wash)}
+
+/* ---------- 壹 profile ---------- */
+.quote p{
+  font:italic 400 clamp(25px,2.4vw,30px)/1.32 var(--f-disp);color:var(--ink);
+  max-width:23em;
+}
+.quote .hang{margin-left:-.4em}
+.quote figcaption{margin-top:16px}
+.bio{margin-top:40px;max-width:37.5em;color:var(--ink-2)}
+
+/* ---------- 贰 education ---------- */
+.edu + .edu{margin-top:clamp(44px,4.4vw,60px)}
+.years{font-variant-numeric:tabular-nums;margin-bottom:12px}
+.school{font:600 28px/1.18 var(--f-disp);color:var(--ink);letter-spacing:-.004em}
+.degree{margin-top:6px;font-size:16.5px;line-height:1.6;color:var(--ink-2)}
+/* inline list with thin middots; separators at a line start are clipped */
+.dots{display:flex;flex-wrap:wrap;overflow:hidden;margin-top:14px;font-size:14.5px;line-height:1.95;color:var(--ink-2)}
+.dots li{position:relative;margin-right:1.5em;white-space:nowrap}
+.dots li::before{content:"";position:absolute;left:-.8em;top:50%;width:3px;height:3px;margin:-1px 0 0 -1.5px;border-radius:50%;background:var(--wash-soft)}
+.dots.caps{font:500 11px/2.1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--wash)}
+.dots.caps li{margin-right:1.7em}
+.dots.caps li::before{left:-.95em;width:2.5px;height:2.5px}
+
+/* ---------- 叁 projects ---------- */
+.leaves{display:grid;row-gap:clamp(52px,5.4vw,76px)}
+.leaf-head{position:relative}
+.stem{
+  position:absolute;top:1px;
+  left:calc(var(--axis) - 15px - var(--gutter) - var(--inset,0px));
+  width:30px;height:30px;display:grid;place-items:center;
+  border:1px solid var(--seal);color:var(--seal);
+  font:700 16px/1 var(--f-cjk);
+}
+.leaf-title{font:600 26px/1.2 var(--f-disp);color:var(--ink);letter-spacing:-.003em}
+.leaf-meta{margin-top:10px;font-size:11px;letter-spacing:.17em}
+.leaf-desc{margin-top:14px;font-size:16.5px;line-height:1.75;color:var(--ink-2);max-width:37em}
+.leaf-links{display:flex;flex-wrap:wrap;gap:0 28px;margin-top:10px}
+.leaf--featured{--inset:41px;border:1px solid var(--line);padding:40px 40px 34px;position:relative}
+.leaf--featured::after{ /* inner hairline: a mounted album leaf */
+  content:"";position:absolute;inset:6px;border:1px solid var(--line-soft);pointer-events:none;
+}
+.leaf--featured .stem{top:6px}
+.leaf--featured .leaf-title{font-size:clamp(30px,3vw,38px);line-height:1.12}
+.leaf--featured .leaf-desc{font-size:17px}
+.leaf--featured .leaf-links{position:relative;z-index:1}
+
+/* ---------- 肆 experience ---------- */
+.timeline{display:grid;row-gap:64px}
+.job{position:relative}
+.job::before{ /* hairline thread from this dot to the next */
+  content:"";position:absolute;left:calc(var(--axis) - .5px - var(--gutter));top:18px;bottom:-60px;width:1px;
+  background:var(--line);
+}
+.job:last-child::before{bottom:auto;height:72px;background:linear-gradient(var(--line),transparent)}
+.blot{
+  position:absolute;left:calc(var(--axis) - 7px - var(--gutter));top:4px;width:14px;height:14px;
+  border-radius:52% 48% 50% 46%;
+  background:radial-gradient(circle at 46% 42%,rgba(27,27,26,.9) 0 30%,rgba(27,27,26,.62) 44%,rgba(27,27,26,.18) 62%,rgba(27,27,26,0) 72%);
+  box-shadow:0 0 0 4px var(--paper);
+}
+.when{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.company{margin-top:8px;font:600 28px/1.18 var(--f-disp);color:var(--ink)}
+.role{margin-top:4px;font:italic 400 20px/1.4 var(--f-disp);color:var(--ink-2)}
+.role .loc{font:500 11.5px/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--wash);white-space:nowrap}
+.role .loc::before{content:"";display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--wash-soft);margin:0 .75em 0 .7em;vertical-align:middle;transform:translateY(-1px)}
+.points{margin-top:16px;max-width:37em}
+.points li{position:relative;padding-left:22px;font-size:16.5px;line-height:1.72}
+.points li + li{margin-top:10px}
+.points li::before{content:"";position:absolute;left:0;top:.86em;width:10px;height:1px;background:var(--wash-soft)}
+.job .dots{margin-top:14px}
+
+/* ---------- 伍 stack ---------- */
+.stack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(24px,3.4vw,48px)}
+.tier-cn{font:700 15px/1 var(--f-cjk);color:var(--ink);letter-spacing:.14em}
+.tier-en{margin-top:10px;font:500 11px/1.4 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--wash)}
+.tier-list{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font:500 24px/1.6 var(--f-disp);color:var(--ink)}
+.tier-list .sl{color:var(--wash-soft);margin:0 .12em}
+
+/* ---------- footer ---------- */
+.foot{margin-top:calc(var(--sec) + 20px);padding-bottom:calc(36px + env(safe-area-inset-bottom,0px))}
+.foot-grid{align-items:start}
+.foot-main{grid-column:2}
+.foot-kicker{margin-bottom:18px}
+.foot-title{font:italic 400 clamp(46px,6vw,80px)/1 var(--f-disp);color:var(--ink);letter-spacing:-.01em;margin-left:-.03em}
+.foot-mail{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 26px;margin-top:26px}
+.foot-mail a.big{
+  font:500 clamp(28px,3.4vw,44px)/1.25 var(--f-disp);color:var(--ink);letter-spacing:-.005em;
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:9px;text-decoration-color:rgba(27,27,26,.28);
+  transition:text-decoration-color .25s;overflow-wrap:anywhere;
+}
+.foot-mail a.big:hover{text-decoration-color:var(--seal)}
+.foot-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 30px;margin-top:22px}
+.foot-links a{font:500 11.5px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase}
+.foot-seal{grid-column:3;grid-row:1;justify-self:end;width:var(--ins);display:flex;justify-content:center;padding-top:8px}
+.seal--close{
+  display:flex;align-items:center;justify-content:center;
+  writing-mode:vertical-rl;
+  width:40px;height:70px;border:2.5px solid var(--seal);border-radius:3px;
+  background:transparent;color:var(--seal);
+  font-size:28px;line-height:1;letter-spacing:0;
+  rotate:2deg;filter:url(#rough-sm);
+}
+.foot-base{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;
+  margin-top:clamp(64px,7vw,96px);padding-top:22px;border-top:1px solid var(--line);
+  margin-left:var(--gutter);
+  font-size:12.5px;line-height:1.6;color:var(--wash);letter-spacing:.02em;
+}
+.foot-base .label{font-size:10.5px}
+
+/* ---------- tablet ---------- */
+@media (max-width:1079px){
+  :root{--axis:26px}
+  .numeral{font-size:50px}
+}
+
+/* ---------- phone ---------- */
+@media (max-width:759px){
+  :root{--gutter:0px;--ins:72px;--nav-h:56px;--sec:88px}
+  body{font-size:16.5px}
+  .g{grid-template-columns:minmax(0,1fr)}
+  .body-col{margin-left:0}
+
+  .nav-row{gap:10px}
+  .logo{margin-left:-9px}
+  .site-nav{
+    flex:1;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 26px),transparent);
+            mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 26px),transparent);
+  }
+  .site-nav::-webkit-scrollbar{display:none}
+  .nav-links{gap:0;width:max-content;padding:0 22px 0 8px}
+  .nav-links a{min-height:44px;padding:0 10px;font-size:11px}
+
+  .hero{padding-top:40px}
+  .hero-grid{display:flow-root}
+  .inscription{float:right;width:var(--ins);margin:2px -4px 14px 16px}
+  .seal--name{width:50px;height:50px;padding:4px;font-size:18px;margin-top:14px;translate:-22px 0}
+  .kicker{margin-bottom:18px;font-size:11px}
+  .k-sep{display:none}
+  .k-b{display:block}
+  .name{font-size:clamp(44px,12.4vw,54px);line-height:1}
+  .name em{display:block}
+  .lede{margin-top:24px}
+  .lede-a{font-size:21px}
+  .lede-b{font-size:16.5px;clear:both}
+  .meta{margin-top:30px;font-size:14px}
+  .meta li{grid-template-columns:148px minmax(0,1fr);column-gap:14px}
+  .actions{gap:0 30px;margin-top:22px}
+  .tl{min-height:44px}
+
+  .sec-head{display:flex;flex-wrap:wrap;align-items:center;column-gap:16px}
+  .numeral{width:auto;font-size:44px;transform:translateY(-2px)}
+  .sec-title{font-size:32px}
+  .stroke{flex-basis:100%;height:10px;margin-top:14px}
+  .lane-label{display:none}
+
+  .leaf-head{display:flex;align-items:flex-start;gap:14px}
+  .stem{position:static;flex:none;width:28px;height:28px;font-size:15px;margin-top:2px}
+  .leaf--featured{padding:30px 22px 24px;margin-inline:-6px}
+  .leaf--featured::after{inset:5px}
+  .leaf--featured .leaf-head{flex-direction:column;gap:14px}
+  .leaf--featured .leaf-title{font-size:30px}
+  .leaf-title{font-size:24px}
+  .leaf-desc,.leaf--featured .leaf-desc{font-size:16px}
+
+  .timeline{row-gap:52px}
+  .job{padding-left:30px}
+  .job::before{left:6.5px;top:18px;bottom:-48px}
+  .blot{left:0;top:4px}
+  .company{font-size:25px}
+  .role{font-size:19px}
+  .role .loc{display:block;margin-top:6px}
+  .role .loc::before{content:none}
+  .points li{font-size:16px}
+
+  .stack{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .tier{display:grid;grid-template-columns:104px minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+  .tier:last-child{border-bottom:1px solid var(--line)}
+  .tier-cn{grid-column:1;padding-top:10px}
+  .tier-en{grid-column:1;margin-top:8px}
+  .tier-list{grid-column:2;grid-row:1/span 2;margin:0;padding:0;border:0;font-size:23px;line-height:1.55}
+
+  .foot-grid{display:block}
+  .foot-seal{display:none}
+  .foot-title{font-size:48px}
+  .foot-mail a.big{font-size:31px}
+  .foot-base{align-items:center;margin-top:56px}
+  .foot-base .seal--close{display:flex}
+}
+@media (min-width:760px){ .foot-base .seal--close{display:none} }
+@media (max-width:380px){
+  .meta{font-size:13.5px}
+  .meta li{grid-template-columns:134px minmax(0,1fr);column-gap:12px}
+}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- seal impression: uneven edges + tiny specks where the paste did not take -->
+    <filter id="rough" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency=".085" numOctaves="2" seed="11" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="4" result="grain"/>
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -26 18.1" result="holes"/>
+      <feComposite in="rough" in2="holes" operator="in"/>
+    </filter>
+    <filter id="rough-sm" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency=".12" numOctaves="2" seed="5" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <!-- one dry horizontal brush stroke: pressed entry, tapering body, bristles breaking into flying-white -->
+    <linearGradient id="brush-ink" x1="0" y1="0" x2="680" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1B1B1A" stop-opacity=".95"/>
+      <stop offset=".5" stop-color="#1B1B1A" stop-opacity=".86"/>
+      <stop offset=".8" stop-color="#1B1B1A" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#1B1B1A" stop-opacity=".3"/>
+    </linearGradient>
+    <mask id="brush-dry" maskUnits="userSpaceOnUse" x="0" y="0" width="680" height="14">
+      <rect width="680" height="14" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-linecap="round">
+        <path d="M40 8.95C70 8.65 95 8.45 130 8.25" stroke-width=".3" opacity=".35"/>
+        <path d="M118 7.4C200 7.1 260 6.85 330 6.62" stroke-width=".36" opacity=".5"/>
+        <path d="M205 4.62C290 4.78 380 4.97 470 5.16" stroke-width=".3" opacity=".75"/>
+        <path d="M262 6.27C350 6.07 430 5.91 520 5.72" stroke-width=".42"/>
+        <path d="M340 5.36C400 5.41 450 5.46 520 5.5" stroke-width=".3"/>
+      </g>
+    </mask>
+    <symbol id="brush" viewBox="0 0 680 14" preserveAspectRatio="none">
+      <g mask="url(#brush-dry)">
+        <path fill="url(#brush-ink)" d="M2.4 6.6C3.4 3.7 9.4 2.3 17.5 2.6C42 2.9 70 3.35 110 3.55C170 3.8 230 3.95 300 4.2C380 4.45 460 4.8 552 5.35C470 5.95 400 6.4 320 6.85C250 7.2 190 7.55 130 8C90 8.35 55 8.9 26 10.2C12 10.75 3.6 10.2 2.4 6.6Z"/>
+        <path fill="#1B1B1A" fill-opacity=".5" d="M300 4.55C420 4.75 520 4.9 640 5.3C520 5.4 420 5.45 300 5.5Z"/>
+        <path fill="#1B1B1A" fill-opacity=".42" d="M360 6.35C460 6.2 580 5.9 678 5.6C580 6.1 460 6.7 360 7.05Z"/>
+        <path fill="#1B1B1A" fill-opacity=".4" d="M430 5.55C480 5.6 530 5.62 590 5.72C530 5.9 480 6 430 6.1Z"/>
+      </g>
+    </symbol>
+    <symbol id="arrow" viewBox="0 0 14 10"><path d="M0 5h12.6M8.6 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.1"/></symbol>
+    <symbol id="arrow-ne" viewBox="0 0 10 10"><path d="M1 9L8.8 1.2M3 1h6v6" fill="none" stroke="currentColor" stroke-width="1.1"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-head">
+  <div class="wrap nav-row">
+    <a class="logo" href="#top" aria-label="Haolin (Alex) Liu, back to top"><span class="seal seal--nav" aria-hidden="true" lang="zh-Hans">刘</span></a>
+    <nav class="site-nav" aria-label="Sections">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a class="res" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener">Resume<svg aria-hidden="true"><use href="#arrow-ne"/></svg></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ hero ============ -->
+  <section id="top" class="hero" aria-labelledby="h-name">
+    <div class="wrap g hero-grid">
+      <div class="inscription">
+        <p class="vname" lang="zh-Hans"><span>刘</span><span>昊</span><span>霖</span></p>
+        <div class="seal seal--name" role="img" aria-label="Name seal reading 刘昊霖印" lang="zh-Hans"><span aria-hidden="true">刘</span><span aria-hidden="true">昊</span><span aria-hidden="true">霖</span><span aria-hidden="true">印</span></div>
+      </div>
+      <div class="hero-text">
+        <p class="label kicker">Quantitative Finance<span class="k-sep"> · </span><span class="k-b">Portfolio 2026</span></p>
+        <h1 class="name" id="h-name">Haolin <em>(Alex)</em> Liu</h1>
+        <p class="lede">
+          <span class="lede-a"><span class="nw">Quantitative Finance&nbsp;·</span> <span class="nw">Data Science&nbsp;·</span> <span class="nw">Risk Management.</span></span>
+          <span class="lede-b">Building robust models that account for market ambiguity and <span class="nw">tail-risk</span> volatility.</span>
+        </p>
+        <ul class="meta">
+          <li><b>NYU Tandon</b><span>MS Financial Engineering</span></li>
+          <li><b>Univ. of Washington</b><span>BS CFRM</span></li>
+          <li><b>New York</b><span><a href="mailto:hl6593@nyu.edu" id="email-hero">hl6593@nyu.edu</a></span></li>
+        </ul>
+        <div class="actions">
+          <a class="tl" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener"><span class="u">View résumé</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          <button class="tl" type="button" data-copy="email-hero"><span class="u">Copy email</span></button>
+        </div>
+      </div>
+    </div>
+    <canvas class="mountains" id="mountains" aria-hidden="true"></canvas>
+  </section>
+
+  <!-- ============ 壹 profile ============ -->
+  <section id="about" class="sec sec--first" aria-labelledby="h-about">
+    <div class="wrap">
+      <div class="g sec-head">
+        <span class="numeral" aria-hidden="true" lang="zh-Hans">壹</span>
+        <h2 class="sec-title" id="h-about">Profile</h2>
+        <svg class="stroke" aria-hidden="true" focusable="false"><use href="#brush"/></svg>
+        <p class="lane-label" aria-hidden="true"><span>Profile</span></p>
+      </div>
+      <div class="body-col">
+        <figure class="quote">
+          <blockquote><p><span class="hang">“</span>The purpose of computing is insight, not numbers.”</p></blockquote>
+          <figcaption class="label">— Richard Hamming</figcaption>
+        </figure>
+        <p class="bio">I am a Quantitative Finance graduate student at NYU Tandon with a background in Computational Finance and Risk Management (Data Science) from the University of Washington. My expertise lies in derivative pricing, stochastic modeling, and the application of machine learning within <span class="nw">high-frequency</span> financial contexts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 贰 education ============ -->
+  <section id="education" class="sec" aria-labelledby="h-edu">
+    <div class="wrap">
+      <div class="g sec-head">
+        <span class="numeral" aria-hidden="true" lang="zh-Hans">贰</span>
+        <h2 class="sec-title" id="h-edu">Education</h2>
+        <svg class="stroke" aria-hidden="true" focusable="false"><use href="#brush"/></svg>
+        <p class="lane-label" aria-hidden="true"><span>Education</span></p>
+      </div>
+      <div class="body-col">
+        <article class="edu">
+          <p class="label years">2025 — 2027</p>
+          <h3 class="school">New York University, Tandon</h3>
+          <p class="degree">Master of Science in Financial Engineering</p>
+          <ul class="dots" aria-label="Courses">
+            <li>Quantitative Methods</li><li>Derivative Securities</li><li>Financial Risk Management</li><li>Financial Econometrics</li><li>ML in Financial Engineering</li><li>Financial Computing in C++</li>
+          </ul>
+        </article>
+        <article class="edu">
+          <p class="label years">2021 — 2025</p>
+          <h3 class="school">University of Washington</h3>
+          <p class="degree">BS, Computational Finance &amp; Risk Management</p>
+          <ul class="dots" aria-label="Courses">
+            <li>Time Series Analysis</li><li>Linear Algebra</li><li>Statistical Inference</li><li>Real Analysis</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 叁 projects ============ -->
+  <section id="projects" class="sec" aria-labelledby="h-proj">
+    <div class="wrap">
+      <div class="g sec-head">
+        <span class="numeral" aria-hidden="true" lang="zh-Hans">叁</span>
+        <h2 class="sec-title" id="h-proj">Selected Projects</h2>
+        <svg class="stroke" aria-hidden="true" focusable="false"><use href="#brush"/></svg>
+        <p class="lane-label" aria-hidden="true"><span>Selected Projects</span></p>
+      </div>
+      <div class="body-col leaves">
+
+        <article class="leaf leaf--featured">
+          <div class="leaf-head">
+            <span class="stem" aria-hidden="true" lang="zh-Hans">甲</span>
+            <h3 class="leaf-title"><span class="sr">P.01 — </span>QWIM Regime-Based Investing with LLMs</h3>
+          </div>
+          <p class="label leaf-meta">MSFE Capstone · HMM · SJM · LPPLS</p>
+          <p class="leaf-desc">Regime-aware portfolio management framework combining market-state detection (Hidden Markov &amp; Statistical Jump Models, in time and frequency domains) with LPPLS bubble-risk signals, feeding out-of-sample mean-variance construction against StaticMVO benchmarks. The LPPLS defensive overlay delivered the clearest gains — improving return, Sharpe, Sortino, Calmar, and <span class="nw">tail-risk</span> metrics with only modest turnover.</p>
+          <p class="leaf-links">
+            <a class="tl" href="../public/capstone-proj/capstone-report.pdf" target="_blank" rel="noopener"><span class="u">Report</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          </p>
+        </article>
+
+        <article class="leaf">
+          <div class="leaf-head">
+            <span class="stem" aria-hidden="true" lang="zh-Hans">乙</span>
+            <h3 class="leaf-title"><span class="sr">P.02 — </span>Earnings Event Study &amp; CAAR Analysis</h3>
+          </div>
+          <p class="label leaf-meta">FRE 6883 · C++ · Bootstrap · CAAR</p>
+          <p class="leaf-desc">Sector-neutral event study of how quarterly earnings announcements move Russell 3000 stocks — Beat/Meet/Miss grouping, AAR &amp; CAAR with bootstrap sampling, EOD Historical Data API.</p>
+          <p class="leaf-links">
+            <a class="tl" href="../public/6883-proj/fre6883-final-project.pdf" target="_blank" rel="noopener"><span class="u">PDF</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+            <a class="tl" href="https://github.com/FRE6883/fre6883-teamproject-fre6883_team2" target="_blank" rel="noopener"><span class="u">GitHub</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          </p>
+        </article>
+
+        <article class="leaf">
+          <div class="leaf-head">
+            <span class="stem" aria-hidden="true" lang="zh-Hans">丙</span>
+            <h3 class="leaf-title"><span class="sr">P.03 — </span>GARCH Option Pricing &amp; IV Term Structure</h3>
+          </div>
+          <p class="label leaf-meta">FRE 6083 · GARCH · Monte Carlo · Python</p>
+          <p class="leaf-desc">Compared implied-volatility term structures from Black-Scholes vs GARCH(1,1) simulation on S&amp;P 500 options; 3D IV surfaces show BS overpricing deep OTM calls by up to 8.6%.</p>
+          <p class="leaf-links">
+            <a class="tl" href="../public/6083-proj/report.pdf" target="_blank" rel="noopener"><span class="u">Report</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+            <a class="tl" href="../public/6083-proj/Comparing%20IV%20termstructure%20from%20Black%20Scholes%20and%20Volatility%20sumulations%20using%20GARCH(1%2C1)%20(1).pptx" target="_blank" rel="noopener"><span class="u">Slides</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          </p>
+        </article>
+
+        <article class="leaf">
+          <div class="leaf-head">
+            <span class="stem" aria-hidden="true" lang="zh-Hans">丁</span>
+            <h3 class="leaf-title"><span class="sr">P.04 — </span>Financial Risk Management — FRM Final</h3>
+          </div>
+          <p class="label leaf-meta">FRE 6123 · VaR · CVaR · Stress Testing</p>
+          <p class="leaf-desc">VaR &amp; CVaR estimation, stress testing, and regulatory capital frameworks across market, credit, and operational risk exposures.</p>
+          <p class="leaf-links">
+            <a class="tl" href="../public/6123-proj/FRM_Final%20Paper%20(2).pdf" target="_blank" rel="noopener"><span class="u">Paper</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+            <a class="tl" href="../public/6123-proj/FRM_Project_Report.pdf" target="_blank" rel="noopener"><span class="u">Report</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+            <a class="tl" href="../public/6123-proj/FRM_Final%20project.pptx" target="_blank" rel="noopener"><span class="u">Slides</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          </p>
+        </article>
+
+        <article class="leaf">
+          <div class="leaf-head">
+            <span class="stem" aria-hidden="true" lang="zh-Hans">戊</span>
+            <h3 class="leaf-title"><span class="sr">P.05 — </span>Quantitative Research — US Market Thesis</h3>
+          </div>
+          <p class="label leaf-meta">Internship · Python · Research</p>
+          <p class="leaf-desc">Applied research project from an industry internship: data pipeline construction, statistical modeling, and a full analytical write-up.</p>
+          <p class="leaf-links">
+            <a class="tl" href="../public/intern-proj/us_market_thesis.pdf" target="_blank" rel="noopener"><span class="u">Thesis</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          </p>
+        </article>
+
+        <article class="leaf">
+          <div class="leaf-head">
+            <span class="stem" aria-hidden="true" lang="zh-Hans">己</span>
+            <h3 class="leaf-title"><span class="sr">P.06 — </span>Market Manipulation Detection in LOB Data</h3>
+          </div>
+          <p class="label leaf-meta">FRE 7773 · Isolation Forest · LOB · Kaggle</p>
+          <p class="leaf-desc">76 session-aware features over millisecond limit-order-book data; Isolation Forest trained on normal samples flags spoofing, layering, and quote stuffing.</p>
+          <p class="leaf-links">
+            <a class="tl" href="../public/7773-proj/7773-report.pdf" target="_blank" rel="noopener"><span class="u">Report</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          </p>
+        </article>
+
+        <article class="leaf">
+          <div class="leaf-head">
+            <span class="stem" aria-hidden="true" lang="zh-Hans">庚</span>
+            <h3 class="leaf-title"><span class="sr">P.07 — </span>AI-Assisted Treasury Analytics Validation</h3>
+          </div>
+          <p class="label leaf-meta">Fixed Income · YTM · PV01 · Python</p>
+          <p class="leaf-desc">Reviewed GPT-5.5 &amp; Claude drafts against fixed-income pricing requirements, then built a corrected USTreasurySecurity class: 32nds quotes, act/act accrual, Newton-solved YTM, PV01, duration, convexity.</p>
+          <p class="leaf-links">
+            <a class="tl" href="../public/treasury-ai-proj/treasury-ai-comparison-report.pdf" target="_blank" rel="noopener"><span class="u">Report</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+            <a class="tl" href="../public/treasury-ai-proj/treasury-security-corrected.py" target="_blank" rel="noopener"><span class="u">Code</span><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 肆 experience ============ -->
+  <section id="experience" class="sec" aria-labelledby="h-exp">
+    <div class="wrap">
+      <div class="g sec-head">
+        <span class="numeral" aria-hidden="true" lang="zh-Hans">肆</span>
+        <h2 class="sec-title" id="h-exp">Experience</h2>
+        <svg class="stroke" aria-hidden="true" focusable="false"><use href="#brush"/></svg>
+        <p class="lane-label" aria-hidden="true"><span>Experience</span></p>
+      </div>
+      <ol class="body-col timeline">
+        <li class="job">
+          <span class="blot" aria-hidden="true"></span>
+          <p class="label when">Jul — Sep 2026</p>
+          <h3 class="company">China Securities Co., Ltd. (CSC)</h3>
+          <p class="role">FinTech Intern, Information Technology <span class="loc">Beijing</span></p>
+          <ul class="points">
+            <li>Owned end-to-end backend development of an AI-assisted narrative generation feature for the firm’s AML system (Java, Spring Boot, MyBatis, MySQL).</li>
+            <li>Designed a submit / async-invoke / poll API chain joining 13 data-warehouse profile fields with due-diligence inputs, calling the firm’s internal LLM platform.</li>
+          </ul>
+          <ul class="dots caps" aria-label="Tools and topics"><li>Java</li><li>Spring Boot</li><li>MySQL</li><li>LLM Integration</li><li>AML</li></ul>
+        </li>
+        <li class="job">
+          <span class="blot" aria-hidden="true"></span>
+          <p class="label when">Jun — Aug 2024</p>
+          <h3 class="company">Donghai Securities</h3>
+          <p class="role">Investment Department Intern <span class="loc">Beijing</span></p>
+          <ul class="points">
+            <li>Macro / meso / micro market analysis; logistic regression forecasting CSI All Share Index trends over 10+ years of data, outperforming baseline benchmarks.</li>
+          </ul>
+          <ul class="dots caps" aria-label="Tools and topics"><li>Logistic Regression</li><li>CSI Index</li></ul>
+        </li>
+        <li class="job">
+          <span class="blot" aria-hidden="true"></span>
+          <p class="label when">Jun — Sep 2023</p>
+          <h3 class="company">Green Fund</h3>
+          <p class="role">Summer Intern, Investment Department <span class="loc">Tianjin</span></p>
+          <ul class="points">
+            <li>Analyzed 5-year yields of Chinese mid/long-term bond funds — 19.4% cumulative, 3.8% annual compound.</li>
+          </ul>
+          <ul class="dots caps" aria-label="Tools and topics"><li>Fixed Income</li><li>Yield Curve</li></ul>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ 伍 stack ============ -->
+  <section id="skills" class="sec" aria-labelledby="h-skills">
+    <div class="wrap">
+      <div class="g sec-head">
+        <span class="numeral" aria-hidden="true" lang="zh-Hans">伍</span>
+        <h2 class="sec-title" id="h-skills">Stack</h2>
+        <svg class="stroke" aria-hidden="true" focusable="false"><use href="#brush"/></svg>
+        <p class="lane-label" aria-hidden="true"><span>Stack</span></p>
+      </div>
+      <div class="body-col stack">
+        <div class="tier">
+          <p class="tier-cn" lang="zh-Hans">精通</p>
+          <h3 class="tier-en">Expert</h3>
+          <ul class="tier-list"><li>Python</li><li>Pandas</li><li>Java</li></ul>
+        </div>
+        <div class="tier">
+          <p class="tier-cn" lang="zh-Hans">熟练</p>
+          <h3 class="tier-en">Proficient</h3>
+          <ul class="tier-list"><li>C++</li><li>SQL</li><li>R <span class="sl">/</span> Matlab</li></ul>
+        </div>
+        <div class="tier">
+          <p class="tier-cn" lang="zh-Hans">工具库</p>
+          <h3 class="tier-en">Libraries</h3>
+          <ul class="tier-list"><li>NumPy</li><li>SciPy</li><li>Statsmodels</li><li>Matplotlib</li><li>Scikit-learn</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ footer ============ -->
+<footer id="contact" class="foot" aria-labelledby="h-contact">
+  <div class="wrap">
+    <div class="g foot-grid">
+      <div class="foot-main">
+        <p class="label foot-kicker">Contact</p>
+        <h2 class="foot-title" id="h-contact">Let’s talk</h2>
+        <p class="foot-mail">
+          <a class="big" href="mailto:hl6593@nyu.edu" id="email-foot">hl6593@nyu.edu</a>
+          <button class="tl" type="button" data-copy="email-foot"><span class="u">Copy email</span></button>
+        </p>
+        <p class="foot-links">
+          <a class="tl ext" href="https://www.linkedin.com/in/haolin-liu-b73799299/" target="_blank" rel="noopener"><span class="u">LinkedIn</span><svg aria-hidden="true"><use href="#arrow-ne"/></svg></a>
+          <a class="tl ext" href="https://github.com/haolin122" target="_blank" rel="noopener"><span class="u">GitHub</span><svg aria-hidden="true"><use href="#arrow-ne"/></svg></a>
+        </p>
+      </div>
+      <div class="foot-seal" aria-hidden="true">
+        <span class="seal seal--close" lang="zh-Hans">昊霖</span>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 Haolin (Alex) Liu · New York, NY</span>
+      <span class="seal seal--close" aria-hidden="true" lang="zh-Hans">昊霖</span>
+    </div>
+  </div>
+</footer>
+
+<p class="sr" id="live" aria-live="polite"></p>
+
+<script>
+/* ---------- copy email (clipboard with a select-the-text fallback) ---------- */
+(function () {
+  var EMAIL = 'hl6593@nyu.edu';
+  var live = document.getElementById('live');
+  function selectText(el) {
+    try {
+      var r = document.createRange(); r.selectNodeContents(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    } catch (e) {}
+  }
+  function flash(btn, msg) {
+    var lab = btn.querySelector('.u') || btn;
+    if (!btn.hasAttribute('data-label')) btn.setAttribute('data-label', lab.textContent);
+    lab.textContent = msg;
+    if (live) live.textContent = msg;
+    clearTimeout(btn._t);
+    btn._t = setTimeout(function () { lab.textContent = btn.getAttribute('data-label'); }, 2200);
+  }
+  var btns = document.querySelectorAll('[data-copy]');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function () {
+      var btn = this, target = document.getElementById(btn.getAttribute('data-copy'));
+      var fallback = function () { if (target) selectText(target); flash(btn, 'Email selected'); };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(EMAIL).then(function () { flash(btn, 'Copied'); }).catch(fallback);
+        } else { fallback(); }
+      } catch (e) { fallback(); }
+    });
+  }
+})();
+
+/* ---------- current section in the nav (progressive enhancement) ---------- */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var nav = document.querySelector('.site-nav');
+  var links = {};
+  var as = document.querySelectorAll('.nav-links a[href^="#"]');
+  for (var i = 0; i < as.length; i++) links[as[i].getAttribute('href').slice(1)] = as[i];
+  function setActive(id) {
+    for (var k in links) links[k].removeAttribute('aria-current');
+    var a = links[id]; if (!a) return;
+    a.setAttribute('aria-current', 'true');
+    if (nav && nav.scrollWidth > nav.clientWidth + 1) {
+      var l = a.offsetLeft - 16, r = a.offsetLeft + a.offsetWidth + 24;
+      if (l < nav.scrollLeft || r > nav.scrollLeft + nav.clientWidth) {
+        try { nav.scrollTo({ left: Math.max(0, l), behavior: 'smooth' }); } catch (e) { nav.scrollLeft = Math.max(0, l); }
+      }
+    }
+  }
+  var io = new IntersectionObserver(function (entries) {
+    for (var j = 0; j < entries.length; j++) if (entries[j].isIntersecting) setActive(entries[j].target.id);
+  }, { rootMargin: '-38% 0px -58% 0px' });
+  for (var id in links) { var s = document.getElementById(id); if (s) io.observe(s); }
+})();
+
+/* ---------- ink-wash mountains: drawn once, redrawn on resize (no animation loop) ---------- */
+(function () {
+  var cv = document.getElementById('mountains');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  if (!ctx) return;
+
+  function rng(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function noise1(seed) {
+    var r = rng(seed), v = new Float32Array(256);
+    for (var i = 0; i < 256; i++) v[i] = r() * 2 - 1;
+    return function (x) { var i = Math.floor(x), f = x - i, s = f * f * (3 - 2 * f), a = v[i & 255]; return a + (v[(i + 1) & 255] - a) * s; };
+  }
+  function noise2(seed) {
+    var r = rng(seed), N = 128, g = new Float32Array(N * N);
+    for (var i = 0; i < N * N; i++) g[i] = r();
+    return function (x, y) {
+      var xi = Math.floor(x), yi = Math.floor(y), fx = x - xi, fy = y - yi, sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+      var x0 = xi & 127, x1 = (xi + 1) & 127, y0 = (yi & 127) * N, y1 = ((yi + 1) & 127) * N;
+      var a = g[y0 + x0], b = g[y0 + x1], c = g[y1 + x0], d = g[y1 + x1];
+      return a + (b - a) * sx + (c - a + (a - b - c + d) * sx) * sy;
+    };
+  }
+  function smooth(e0, e1, x) { var t = (x - e0) / (e1 - e0); t = t < 0 ? 0 : t > 1 ? 1 : t; return t * t * (3 - 2 * t); }
+  function fbm(n, x, oct) { var s = 0, a = 1, t = 0; for (var o = 0; o < oct; o++) { s += a * n(x); t += a; a *= .5; x *= 2.07; } return s / t; }
+  function crag(n, x, oct) { var s = 0, a = 1, t = 0; for (var o = 0; o < oct; o++) { var v = 1 - Math.abs(n(x)); s += a * v * v; t += a; a *= .5; x *= 2.17; } return s / t; }
+
+  /* Far to near. pk = [centre, left width, right width, height, shape exponent], u in [0,1].
+     Peaks gather on the right, beneath the inscription (a "one-corner" composition); bases > 1 keep a
+     layer below the fold wherever it has no peaks, so the left stays open mist. */
+  var LAYERS = [
+    { rgb: [159, 181, 174], a: .52, occ: 0, base: .74, amp: .60, soft: 7, fall: .40, rim: .12, rimLen: .05, str: 0, sLen: .2, tex: .03, mot: .10, det: .18, fine: .01, f: 4.2, warp: .05, seed: 7,
+      pk: [[.05, .12, .16, .22, 1.5], [.27, .14, .10, .34, 1.6], [.47, .07, .09, .26, 1.5], [.70, .11, .08, .78, 1.55], [.93, .08, .12, .58, 1.6]] },
+    { rgb: [118, 122, 117], a: .40, occ: .82, base: 1.06, amp: .78, soft: 3, fall: .24, rim: .7, rimLen: .025, str: .18, sLen: .22, tex: .05, mot: .14, det: .30, fine: .018, f: 8, warp: .05, seed: 19,
+      pk: [[.17, .11, .09, .30, 1.5], [.55, .07, .05, .42, 1.6], [.66, .05, .06, .74, 1.6], [.70, .03, .03, .60, 1.4], [.79, .05, .06, .98, 1.5], [.97, .06, .05, .80, 1.6]] },
+    { rgb: [64, 64, 61], a: .54, occ: .92, base: 1.10, amp: .80, soft: 1.7, fall: .19, rim: 1.1, rimLen: .02, str: .32, sLen: .25, tex: .06, mot: .16, det: .34, fine: .02, f: 12, warp: .05, seed: 31,
+      pk: [[.61, .06, .035, .46, 1.5], [.72, .035, .05, .70, 1.6], [.80, .03, .03, .60, 1.4], [.88, .06, .05, .86, 1.7], [1.0, .04, .06, .62, 1.5]] },
+    { rgb: [27, 27, 26], a: .66, occ: .96, base: 1.14, amp: .70, soft: 1.2, fall: .15, rim: 1.3, rimLen: .018, str: .36, sLen: .25, tex: .08, mot: .18, det: .30, fine: .024, f: 16, warp: .04, seed: 43,
+      pk: [[.78, .06, .045, .52, 1.6], [.95, .05, .07, .72, 1.5]] }
+  ];
+  LAYERS.forEach(function (L) { L.n = noise1(L.seed); L.m = noise1(L.seed + 57); L.w = noise1(L.seed + 131); L.s = noise1(L.seed + 211); });
+  var grain = noise2(77), mottle = noise2(91);
+
+  function height(L, u) {
+    var uw = u + L.warp * fbm(L.w, u * 3.1, 3), acc = 0;
+    for (var i = 0; i < L.pk.length; i++) {
+      var p = L.pk[i], z = (uw - p[0]) / (uw < p[0] ? p[1] : p[2]);
+      acc += Math.exp(10 * p[3] * Math.exp(-Math.pow(Math.abs(z), p[4])));   // smooth max of the peaks
+    }
+    var h = Math.log(acc) / 10;
+    return h + L.det * (crag(L.n, uw * L.f, 5) - .5) * (.25 + .75 * Math.min(1, h / .55)) + L.fine * fbm(L.m, u * L.f * 7, 3);
+  }
+
+  function draw() {
+    var cssW = cv.clientWidth, cssH = cv.clientHeight;
+    if (!cssW || !cssH) return;
+    var k = Math.min(window.devicePixelRatio || 1, 1.5);
+    var W = Math.round(cssW * k), H = Math.round(cssH * k), n = W * H;
+    cv.width = W; cv.height = H;
+    var world = Math.max(cssW, 1180), off = world - cssW;     // narrow screens show the right-hand (peak) side
+    var R = new Float32Array(n), G = new Float32Array(n), B = new Float32Array(n), A = new Float32Array(n);
+    var ry = new Float32Array(W), sl = new Float32Array(W), rv = new Float32Array(W), fadeTop = H * .6;
+
+    for (var li = 0; li < LAYERS.length; li++) {
+      var L = LAYERS[li], soft = L.soft * k, fallLen = L.fall * H, rimLen = L.rimLen * H, sLen = L.sLen * H, x, y;
+      for (x = 0; x < W; x++) {
+        var u = (x / k + off) / world;
+        ry[x] = Math.max(H * .02, H * (L.base - L.amp * height(L, u)));
+        rv[x] = Math.max(.1, .6 + .8 * fbm(L.m, u * 42 + 3.3, 3));          // the contour line breaks and swells
+      }
+      for (x = 0; x < W; x++) { var xa = Math.max(0, x - 3), xb = Math.min(W - 1, x + 3); sl[x] = (ry[xb] - ry[xa]) / (xb - xa); }
+      for (x = 0; x < W; x++) {
+        var yr = ry[x], c = -sl[x];
+        c = (c > 1.4 ? 1.4 : c < -1.4 ? -1.4 : c) * .85;                      // texture strokes run down the face
+        for (y = Math.max(0, Math.floor(yr - soft)); y < H; y++) {
+          var d = y - yr, e = smooth(-soft, soft, d), dp = d > 0 ? d : 0, i = y * W + x;
+          var cov = L.occ * e;                                                // nearer body hides what is behind it
+          if (cov > 0) { var kp = 1 - cov; R[i] *= kp; G[i] *= kp; B[i] *= kp; A[i] *= kp; }
+          var fall = Math.exp(-dp / fallLen);
+          var rim = 1 + L.rim * rv[x] * Math.exp(-dp / rimLen);
+          var xs = (x + dp * c) / k;
+          var str = L.str * (L.s(xs / 1.9) * .6 + L.s(xs / 6.5 + 40) * .4) * Math.exp(-dp / sLen);
+          var t = 1 + str + L.tex * (2 * grain(x / (1.6 * k), y / (1.6 * k)) - 1) + L.mot * (2 * mottle(x / (46 * k), y / (26 * k)) - 1);
+          var gf = y > fadeTop ? 1 - smooth(fadeTop, H, y) : 1;               // dissolve into the paper
+          var a = L.a * e * fall * rim * t * gf;
+          if (a > 0) {
+            if (a > 1) a = 1;
+            var ia = 1 - a;
+            R[i] = L.rgb[0] * a + R[i] * ia; G[i] = L.rgb[1] * a + G[i] * ia; B[i] = L.rgb[2] * a + B[i] * ia; A[i] = a + A[i] * ia;
+          }
+          if (fall * gf < .003) break;
+        }
+      }
+    }
+    var img = ctx.createImageData(W, H), px = img.data;
+    for (var j = 0; j < n; j++) {
+      var al = A[j];
+      if (al <= 0) continue;
+      px[j * 4] = R[j] / al; px[j * 4 + 1] = G[j] / al; px[j * 4 + 2] = B[j] / al; px[j * 4 + 3] = al * 255;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  var lastW = 0, timer;
+  function redraw() { var w = cv.clientWidth; if (w && w !== lastW) { lastW = w; draw(); } }
+  redraw();
+  window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(redraw, 160); });
+})();
+</script>
+</body>
+</html>

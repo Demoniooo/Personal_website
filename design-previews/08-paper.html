@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Haolin Liu — Preprint</title>
+<meta name="description" content="Haolin (Alex) Liu — quantitative finance portfolio, typeset as a research preprint: derivative pricing, regime detection and tail risk.">
+<meta name="theme-color" content="#1E2023">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E2023'/%3E%3Cpath d='M10 6h9l5 5v15H10z' fill='%23fff'/%3E%3Cpath d='M19 6v5h5' fill='none' stroke='%239E1B32' stroke-width='1.6'/%3E%3C/svg%3E">
+<style>
+/* ---------- Fonts: Latin Modern (text), CM Typewriter (mono), KaTeX subset (math) ---------- */
+@font-face{font-family:"Latin Modern";src:url(fonts/LM-regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Latin Modern";src:url(fonts/LM-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Latin Modern";src:url(fonts/LM-bold.woff2) format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Latin Modern";src:url(fonts/LM-bold-italic.woff2) format("woff2");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"CM Typewriter";src:url(fonts/KaTeX_Typewriter-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+/* KaTeX 0.18.9 (MIT) — trimmed to the shipped faces */
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url(fonts/KaTeX_AMS-Regular.woff2) format("woff2")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url(fonts/KaTeX_Main-Bold.woff2) format("woff2")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url(fonts/KaTeX_Main-Italic.woff2) format("woff2")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Main-Regular.woff2) format("woff2")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url(fonts/KaTeX_Math-Italic.woff2) format("woff2")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Size1-Regular.woff2) format("woff2")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Size2-Regular.woff2) format("woff2")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.18.9"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.katex-newline{display:block}.katex .katex-base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .katex-base,.katex .katex-strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .katex-vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .katex-thinbox{display:inline-flex;flex-direction:row;max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .katex-hdashline,.katex .katex-hline,.katex .katex-overline .overline-line,.katex .katex-rule,.katex .katex-underline .underline-line,.katex .mfrac .frac-line{min-height:1px}.katex .mspace{display:inline-block}.katex .katex-smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.katex-inner,.katex .llap>.katex-inner,.katex .rlap>.katex-inner{position:absolute}.katex .clap>.katex-fix,.katex .llap>.katex-fix,.katex .rlap>.katex-fix{display:inline-block}.katex .llap>.katex-inner{right:0}.katex .clap>.katex-inner,.katex .rlap>.katex-inner{left:0}.katex .clap>.katex-inner>span{margin-left:-50%;margin-right:50%}.katex .katex-rule{border:0 solid;display:inline-block;position:relative}.katex .katex-hline,.katex .katex-overline .overline-line,.katex .katex-underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .katex-hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.katex-root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .katex-sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .katex-sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .katex-sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .katex-sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .katex-sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .katex-sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .katex-sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .katex-sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .katex-sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .katex-sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .katex-sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .katex-sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .katex-sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .katex-sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .katex-sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .katex-sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .katex-sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .katex-sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .katex-sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .katex-sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .katex-sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .katex-sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .katex-sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .katex-sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .katex-sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .katex-sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .katex-sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .katex-sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .katex-sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .katex-sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .katex-sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .katex-sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .katex-sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .katex-sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .katex-sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .katex-sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .katex-sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .katex-sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .katex-sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .katex-sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .katex-sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .katex-sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .katex-sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .katex-sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .katex-sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .katex-sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .katex-sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .katex-sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .katex-sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .katex-sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .katex-sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .katex-sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .katex-sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .katex-sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .katex-sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .katex-sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .katex-sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .katex-sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .katex-sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .katex-sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .katex-sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .katex-sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .katex-sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .katex-sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .katex-sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .katex-sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .katex-sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .katex-sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .katex-sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .katex-sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .katex-sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .katex-sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .katex-sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .katex-sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .katex-sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .katex-sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .katex-sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .katex-sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .katex-sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .katex-sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .katex-sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .katex-sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .katex-sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .katex-sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .katex-sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .katex-sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .katex-sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .katex-sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .katex-sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .katex-sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .katex-sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .katex-sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .katex-sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .katex-sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .katex-sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .katex-sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .katex-sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .katex-sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .katex-sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .katex-sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .katex-sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .katex-sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .katex-sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .katex-sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .katex-sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .katex-sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .katex-sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .katex-sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .katex-sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .katex-sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .katex-sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .katex-sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .katex-sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .katex-sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .katex-sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .katex-sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .katex-sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .katex-sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .katex-sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .katex-sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .katex-sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .katex-accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .katex-accent .accent-body{position:relative}.katex .katex-accent .accent-body:not(.accent-full){width:0}.katex .katex-overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .katex-stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .katex-stretchy:after,.katex .katex-stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .katex-sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .reflectbox{display:inline-block;transform:scaleX(-1)}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.katex-tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.katex-tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+/* KaTeX_Main is Computer Modern, same design size as Latin Modern: math at 1em matches the text */
+.katex{font-size:1em}
+
+:root{
+  --desk:#2E3035;--toolbar:#1E2023;--page:#FFFFFF;--ink:#111111;--grey:#5E5E5E;
+  --red:#9E1B32;--green:#1B6E3A;--blue:#1F4FB8;--stamp:#9A9A9A;
+  --serif:"Latin Modern","Computer Modern Serif","Times New Roman",serif;
+  --mono:"CM Typewriter","Latin Modern Mono",ui-monospace,Menlo,Consolas,monospace;
+  --ui:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --cjk:"PingFang SC","Noto Serif CJK SC","Songti SC",serif;
+  --tb:44px;--heavy:2px;--light:1px;
+}
+@media (min-resolution:2dppx){:root{--heavy:1.5px;--light:.75px}}
+
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--desk);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:var(--serif)}
+::selection{background:rgba(31,79,184,.2)}
+.sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-60px;z-index:50;padding:10px 14px;border-radius:6px;background:#fff;color:var(--ink);font:600 14px/1 var(--ui);text-decoration:none}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + 6px)}
+
+/* ---------- Reader chrome ---------- */
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;column-gap:12px;height:var(--tb);padding:0 max(14px,env(safe-area-inset-right)) 0 max(14px,env(safe-area-inset-left));background:var(--toolbar);color:rgba(255,255,255,.9);font:500 13px/1 var(--ui);-webkit-font-smoothing:antialiased;box-shadow:0 1px 0 rgba(0,0,0,.6),0 4px 16px rgba(0,0,0,.22)}
+.toolbar::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:env(safe-area-inset-top,0px);background:var(--toolbar)}
+.toolbar a,.toolbar summary{-webkit-tap-highlight-color:transparent}
+.toolbar a:focus-visible,.toolbar summary:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.tb-file{justify-self:start;display:inline-flex;align-items:center;gap:9px;min-width:0;max-width:100%;height:32px;margin-left:-6px;padding:0 9px 0 6px;border-radius:6px;color:inherit;text-decoration:none}
+.tb-file:hover{background:rgba(255,255,255,.07)}
+.tb-doc{flex:none;width:15px;height:18px}
+.tb-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.5;color:rgba(255,255,255,.86);letter-spacing:.005em}
+
+.outline{position:relative;justify-self:center;min-width:0;max-width:100%}
+.ind{display:flex;align-items:center;gap:9px;height:30px;padding:0 10px 0 12px;border-radius:6px;background:rgba(0,0,0,.34);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);color:#fff;cursor:pointer;list-style:none;white-space:nowrap;user-select:none;-webkit-user-select:none;font-variant-numeric:tabular-nums}
+.ind::-webkit-details-marker{display:none}
+.ind::marker{content:""}
+.ind:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.ind-txt{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.ind-n{color:rgba(255,255,255,.6)}
+.ind-sep{color:rgba(255,255,255,.38)}
+.t-short{display:none}
+.ind svg{flex:none;width:10px;height:10px;opacity:.65;transition:transform .15s ease}
+.outline[open] .ind svg{transform:rotate(180deg)}
+.outline-panel{position:absolute;top:calc(100% + 8px);left:50%;width:360px;transform:translateX(-50%);max-height:calc(100vh - var(--tb) - 28px);overflow:auto;overscroll-behavior:contain;padding:6px;background:var(--toolbar);border:1px solid rgba(255,255,255,.1);border-radius:8px;box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.op-h{margin:0;padding:9px 10px 7px;font:600 11px/1 var(--ui);letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.48)}
+.outline-panel ol{list-style:none;margin:0;padding:0}
+.outline-panel a{display:flex;align-items:baseline;gap:8px;padding:8px 10px;border-radius:5px;color:rgba(255,255,255,.86);text-decoration:none;line-height:1.3}
+.outline-panel a:hover{background:rgba(255,255,255,.07);color:#fff}
+.outline-panel a[aria-current]{background:rgba(255,255,255,.12);color:#fff}
+.outline-panel .n{flex:none;min-width:1.7em;color:rgba(255,255,255,.48);font-variant-numeric:tabular-nums}
+.outline-panel ol ol a{padding-left:28px;font-size:12.5px;color:rgba(255,255,255,.68)}
+.outline-panel ol ol .n{min-width:2.3em}
+
+.tb-actions{justify-self:end;display:flex;align-items:center;gap:4px}
+.tb-btn{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:6px;color:rgba(255,255,255,.9);text-decoration:none;white-space:nowrap}
+.tb-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.tb-cv{box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.tb-btn svg{flex:none;width:14px;height:14px}
+
+/* ---------- Desk and sheet ---------- */
+.desk{display:block;padding:28px 24px 64px}
+.sheet{position:relative;max-width:816px;margin:0 auto;padding:80px 88px 44px;background:var(--page);color:var(--ink);box-shadow:0 0 0 1px rgba(0,0,0,.3),0 2px 5px rgba(0,0,0,.28),0 18px 44px rgba(0,0,0,.32);font-size:18px;line-height:1.45;font-kerning:normal;font-variant-ligatures:common-ligatures;font-variant-numeric:lining-nums proportional-nums}
+.stamp{position:absolute;left:31px;top:318px;writing-mode:vertical-rl;transform:rotate(180deg);font-size:15px;line-height:1;letter-spacing:.012em;color:var(--stamp);white-space:nowrap;user-select:none;-webkit-user-select:none}
+.stamp .g{display:inline-block;inline-size:1.15em}
+
+/* links, hyperref colours */
+.sheet a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:rgba(31,79,184,.12)}
+.sheet a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.16em}
+.sheet a:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:1px}
+.sheet a.ref{color:var(--red)}
+.sheet a.cite{color:var(--green)}
+.sheet a.url,.sheet a.mat{color:var(--blue)}
+.sheet a[data-tip]{position:relative}
+.sheet a[data-tip]::after{content:"";position:absolute;inset:-7px -6px}
+.tt{font-family:var(--mono);font-size:.95em;letter-spacing:0}
+.cjk{font-family:var(--cjk)}
+.nw{white-space:nowrap}
+
+/* ---------- Front matter ---------- */
+.front{text-align:center;scroll-margin-top:calc(var(--tb) + 18px)}
+.series{margin:0 0 30px;font-size:14px;font-variant-caps:all-small-caps;letter-spacing:.1em;word-spacing:.08em}
+.title{margin:0 auto;font-size:30px;font-weight:400;line-height:1.24;letter-spacing:-.003em;text-wrap:balance}
+.subtitle{display:block;margin-top:.3em;font-size:.72em;line-height:1.3;text-wrap:balance}
+.author{margin:26px 0 0;font-size:21px;line-height:1.3}
+.author sup{font-size:.62em;line-height:0;margin-left:.08em;vertical-align:.55em}
+.affils{list-style:none;margin:10px auto 0;padding:0;font-size:14.5px;line-height:1.42;text-wrap:balance}
+.affils sup{font-size:.72em;line-height:0;margin-right:.18em;vertical-align:.45em}
+.email{margin:7px 0 0;font-size:15.5px}
+.date{margin:18px 0 0;font-size:18px}
+
+.abstract{margin:44px 2.5em 0;font-size:.92em;text-align:left}
+.abstract h2{margin:0 0 .45em;font-size:1em;font-weight:700;text-align:center}
+.abstract p{margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.abstract .kw{margin-top:.75em;text-align:left}
+.abstract .kw + .kw{margin-top:.15em}
+
+/* ---------- Body ---------- */
+.sec{scroll-margin-top:calc(var(--tb) + 18px)}
+.sec h2{display:flex;gap:1em;margin:2.05em 0 .7em;font-size:1.3em;font-weight:700;line-height:1.25;scroll-margin-top:calc(var(--tb) + 18px)}
+.sec h3{display:flex;gap:.9em;margin:1.55em 0 .3em;font-size:1.1em;font-weight:700;line-height:1.3}
+.sn{flex:none;font-variant-numeric:lining-nums tabular-nums}
+.sub{scroll-margin-top:calc(var(--tb) + 18px)}
+.sec p{margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto;text-wrap:pretty}
+.sec p + p,.sec .tbl + p{text-indent:1.5em}
+.sec p.cont{text-indent:0}
+h1,h2,h3{hyphens:manual;-webkit-hyphens:manual}
+.fnm{font-size:.66em;line-height:0;vertical-align:.52em;margin-left:.05em}
+
+.epigraph{display:table;margin:.1em 0 1.3em auto;max-width:78%}
+.epigraph blockquote{margin:0}
+.sec .epigraph p{font-style:italic;text-align:right;text-indent:0;hyphens:manual}
+.epigraph .src{margin-top:.3em;padding-top:.28em;border-top:var(--light) solid var(--ink);text-align:right;font-size:.92em}
+
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:1.2em;margin:0 0 .4em;line-height:1.4}
+.meta .ctx{font-style:italic}
+.meta .mats{display:flex;flex-wrap:wrap;column-gap:.45em}
+.mat-w{white-space:nowrap}
+
+/* display equations: number flush right, body scrolls on its own if it cannot fit */
+.eq{display:grid;grid-template-columns:3em minmax(0,1fr) 3em;align-items:center;margin:.75em 0}
+.eq-body{grid-column:2;min-width:0;overflow-x:auto;overflow-y:hidden;padding:.3em 0;text-align:center;scrollbar-width:thin;container-type:inline-size}
+.eq .katex-display{margin:0}
+.eq-no{grid-column:3;justify-self:end;font-variant-numeric:lining-nums tabular-nums}
+.v-narrow{display:none}
+/* switch to the broken form when the display cannot fit on one line (widths measured: 27.8em, 23.4em) */
+@container (max-width:28.4em){.sw1 .v-wide{display:none}.sw1 .v-narrow{display:block}}
+@container (max-width:24em){.sw2 .v-wide{display:none}.sw2 .v-narrow{display:block}}
+
+/* figure */
+.fig{margin:1.6em 0 .4em}
+.fig-plot{position:relative;width:100%}
+.fig svg{display:block;width:100%;height:auto;overflow:visible}
+.fig .band{fill:#ECECEC}
+.fig .px{fill:none;stroke:var(--ink);stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round}
+.fig .ex{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:5 3}
+.fig .fr,.fig .tk{fill:none;stroke:var(--ink);stroke-width:1}
+.fig .lbl{fill:var(--ink);font-family:var(--serif);font-variant-numeric:lining-nums tabular-nums}
+.fig figcaption{margin:.8em 0 0;font-size:.92em;line-height:1.4;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+
+/* booktabs */
+.tbl{margin:1.1em 0 1.25em;overflow-x:auto}
+table.booktabs{margin:0 auto;border-collapse:collapse;font-size:.83em;line-height:1.35;font-variant-numeric:lining-nums tabular-nums}
+.booktabs caption{margin:0 0 .55em;font-size:1.1em;line-height:1.4}
+.booktabs th,.booktabs td{padding:.3em .6em;text-align:left;vertical-align:top;font-weight:400}
+.booktabs thead th{padding-top:.5em;padding-bottom:.4em;border-top:var(--heavy) solid var(--ink);border-bottom:var(--light) solid var(--ink)}
+.booktabs tbody tr:first-child > *{padding-top:.5em}
+.booktabs tbody tr:last-child > *{padding-bottom:.5em;border-bottom:var(--heavy) solid var(--ink)}
+.booktabs tr > :first-child{padding-left:0}
+.booktabs tr > :last-child{padding-right:0}
+.booktabs .yr{white-space:nowrap}
+@media (min-width:600px){.booktabs td:first-child{white-space:nowrap}}
+
+/* experience */
+.role{margin-top:1.15em}
+.sec h2 + .role{margin-top:0}
+.role-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:1.2em}
+.sec .role-h h3{display:block;margin:0;font-size:1em}
+.when{white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
+.role-m{font-style:italic}
+.itemize{list-style:none;margin:.3em 0 .25em;padding:0 0 0 1.6em}
+.itemize li{position:relative;text-align:justify;hyphens:auto;-webkit-hyphens:auto;text-wrap:pretty}
+.itemize li + li{margin-top:.18em}
+.itemize li::before{content:"\2022";position:absolute;left:-1.05em}
+.sec p.tools{font-size:.9em;text-align:left}
+
+/* correspondence */
+.annot{display:inline-flex;align-items:center;gap:5px;position:relative;margin:0 .1em 0 .45em;padding:2px 7px 2px 6px;vertical-align:.12em;border:1px solid rgba(31,79,184,.55);border-radius:1px;background:rgba(31,79,184,.05);color:var(--blue);font:600 11px/1.25 var(--ui);letter-spacing:.03em;cursor:pointer}
+.annot:hover{background:rgba(31,79,184,.1)}
+.annot:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.annot svg{width:11px;height:11px;flex:none}
+
+.desc{display:grid;grid-template-columns:max-content minmax(0,1fr);align-items:baseline;column-gap:1.3em;row-gap:.32em;margin:.65em 0 0;padding-left:1.5em}
+.desc dt{font-style:italic}
+.desc dd{margin:0;min-width:0}
+
+/* references */
+.refs h2{display:block}
+.bib{list-style:none;margin:0;padding:0;font-size:.9em;line-height:1.4}
+.bib li{display:grid;grid-template-columns:1.9em minmax(0,1fr);column-gap:.55em;margin:0 0 .42em;scroll-margin-top:calc(var(--tb) + 24px)}
+.bib .bx{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.bib li:target .bx,.footnotes li:target{background:rgba(27,110,58,.07);box-shadow:0 0 0 3px rgba(27,110,58,.07)}
+
+/* page foot: footnotes + folio */
+.foot{margin-top:2.6em}
+.footnotes{font-size:.8em;line-height:1.4}
+.footnotes hr{width:40%;height:0;margin:0 0 .7em;border:0;border-top:var(--light) solid var(--ink)}
+.footnotes ol{list-style:none;margin:0;padding:0}
+.footnotes li{position:relative;padding-left:1.8em;scroll-margin-top:calc(var(--tb) + 24px)}
+.footnotes li + li{margin-top:.2em}
+.footnotes .fm{position:absolute;left:0;width:1.45em;text-align:right;font-size:.75em;line-height:1;top:.18em}
+.folio{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:baseline;column-gap:1em;margin-top:3em;font-size:13px}
+.folio .pg{font-size:18px;font-variant-numeric:lining-nums}
+.folio .r{text-align:right}
+
+/* citation / footnote preview (visual only; the reference itself is linked and aria-describedby) */
+.tip{position:fixed;left:0;top:0;z-index:40;max-width:min(380px,calc(100vw - 16px));padding:8px 11px 9px;background:#fff;color:var(--ink);border:1px solid rgba(17,17,17,.22);border-radius:3px;box-shadow:0 8px 24px rgba(0,0,0,.2);font:14px/1.4 var(--serif);pointer-events:none;opacity:0;visibility:hidden;transition:opacity .12s ease,visibility 0s linear .12s}
+.tip.on{opacity:1;visibility:visible;transition:opacity .12s ease}
+.tip .tl{margin-right:.35em}
+
+/* ---------- Responsive ---------- */
+@media (max-width:899px){
+  .desk{padding:16px 16px 40px}
+  .sheet{padding:56px 52px 36px}
+  .stamp{display:none}
+}
+@media (max-width:760px){
+  .toolbar{grid-template-columns:auto minmax(0,1fr) auto}
+  .tb-name{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+}
+@media (max-width:599px){
+  :root{--tb:48px}
+  html,body{background:var(--page)}
+  .toolbar{column-gap:8px}
+  .tb-file{width:40px;height:40px;justify-content:center;padding:0;margin-left:-8px}
+  .ind{height:40px;padding:0 11px 0 12px}
+  .t-long{display:none}.t-short{display:inline}
+  .tb-btn{height:40px;padding:0 11px}
+  .tb-contact{display:none}
+  .outline-panel{position:fixed;top:calc(env(safe-area-inset-top,0px) + var(--tb) + 6px);left:10px;right:10px;width:auto;transform:none;max-height:calc(100vh - var(--tb) - 24px);max-height:calc(100dvh - var(--tb) - 24px)}
+  .outline-panel a{min-height:40px;align-items:center;font-size:14px}
+  .outline-panel ol ol a{font-size:13.5px}
+  .desk{padding:0}
+  .sheet{padding:30px 20px 26px;box-shadow:none;font-size:16.5px}
+  .series{margin-bottom:22px;font-size:12.5px}
+  .title{font-size:24px;line-height:1.28}
+  .author{margin-top:20px;font-size:18.5px}
+  .affils{font-size:13.5px}
+  .email{font-size:14.5px}
+  .date{margin-top:14px;font-size:16.5px}
+  .abstract{margin:34px 0 0}
+  .epigraph{max-width:92%}
+  .eq{grid-template-columns:0 minmax(0,1fr) auto;column-gap:.4em}
+  .meta{margin-bottom:.45em}
+  .meta .mats{margin-top:.1em}
+  .mat-w{position:relative}
+  .mat-w::after,.annot::after,.sec a.url::after,.bib a::after{content:"";position:absolute;inset:-9px -4px}
+  .sec a.url{position:relative}
+  .bib .bx{text-align:left}
+  .desc{padding-left:0;column-gap:1em}
+  .itemize{padding-left:1.25em}
+  .itemize li::before{left:-.95em}
+  table.booktabs{font-size:.88em}
+  .booktabs th,.booktabs td{padding-left:.5em;padding-right:.5em}
+  .folio{font-size:12px;column-gap:.6em}
+  .folio .pg{font-size:16.5px}
+  .nohy .sec > p,.nohy .sub > p,.nohy .itemize li,.nohy .abstract p,.nohy .fig figcaption{text-align:left}
+}
+@supports not (container-type:inline-size){
+  @media (max-width:760px){.v-wide{display:none}.v-narrow{display:block}}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+@media print{
+  html,body{background:#fff}
+  .toolbar,.stamp,.skip,.tip{display:none!important}
+  .desk{padding:0}
+  .sheet{max-width:none;padding:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<script>
+/* Justified text needs hyphenation on a phone measure; probe for it and fall back to ragged-right. */
+(function () {
+  var t = document.createElement('div');
+  t.lang = 'en';
+  t.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;width:3em;font:16px/16px serif;-webkit-hyphens:auto;hyphens:auto';
+  t.textContent = 'incomprehensibilities';
+  document.body.appendChild(t);
+  if (t.offsetHeight < 30) document.documentElement.className += ' nohy';
+  document.body.removeChild(t);
+})();
+</script>
+<a class="skip" href="#top">Skip to document</a>
+
+<header class="toolbar">
+  <a class="tb-file" href="#top" title="Back to first page">
+    <svg class="tb-doc" viewBox="0 0 15 18" aria-hidden="true"><path d="M1.5 .75h8l4.75 4.75v11.75H1.5z" fill="rgba(255,255,255,.1)" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M9.5.75V5.5h4.75" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M4.25 9.25h6.5M4.25 11.75h6.5M4.25 14.25h4" stroke="currentColor" stroke-width="1.1" opacity=".7"/></svg>
+    <span class="tb-name">liu_portfolio_2026.pdf</span>
+  </a>
+
+  <details class="outline" id="outline">
+    <summary class="ind"><span class="sr">Outline. Current section: </span><span class="ind-txt"><span class="ind-n" id="ind-n"></span><span class="ind-sep" id="ind-sep" hidden> — </span><span class="t-long" id="ind-long">Abstract</span><span class="t-short" id="ind-short">Abstract</span></span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <nav class="outline-panel" aria-label="Document outline">
+      <p class="op-h" aria-hidden="true">Outline</p>
+      <ol>
+        <li><a href="#top"><span class="n"></span>Abstract</a></li>
+        <li><a href="#about"><span class="n">1</span>Introduction</a></li>
+        <li><a href="#education"><span class="n">2</span>Education</a></li>
+        <li><a href="#projects"><span class="n">3</span>Selected Projects</a>
+          <ol>
+            <li><a href="#p1"><span class="n">3.1</span>QWIM Regime-Based Investing with LLMs</a></li>
+            <li><a href="#p2"><span class="n">3.2</span>Earnings Event Study &amp; CAAR Analysis</a></li>
+            <li><a href="#p3"><span class="n">3.3</span>GARCH Option Pricing &amp; IV Term Structure</a></li>
+            <li><a href="#p4"><span class="n">3.4</span>Financial Risk Management — FRM Final</a></li>
+            <li><a href="#p5"><span class="n">3.5</span>Quantitative Research — US Market Thesis</a></li>
+            <li><a href="#p6"><span class="n">3.6</span>Market Manipulation Detection in LOB Data</a></li>
+            <li><a href="#p7"><span class="n">3.7</span>AI-Assisted Treasury Analytics Validation</a></li>
+          </ol>
+        </li>
+        <li><a href="#experience"><span class="n">4</span>Professional Experience</a></li>
+        <li><a href="#skills"><span class="n">5</span>Technical Stack</a></li>
+        <li><a href="#contact"><span class="n">6</span>Correspondence</a></li>
+        <li><a href="#references"><span class="n"></span>References</a></li>
+      </ol>
+    </nav>
+  </details>
+
+  <nav class="tb-actions" aria-label="Résumé and contact">
+    <a class="tb-btn tb-cv" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5v7.25M4 5.9 7 8.9l3-3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9.75v2.5h10v-2.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download CV</span></a>
+    <a class="tb-btn tb-contact" href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="desk">
+<article class="sheet" aria-label="Selected Work in Quantitative Finance (preprint)">
+  <div class="stamp" aria-hidden="true">hl-portfolio:2609.0426v3<span class="g"></span>[q-fin.PM]<span class="g"></span>26 Sep 2026</div>
+
+  <div class="front" id="top" data-sec="" data-title="Abstract" data-short="Abstract">
+    <p class="series">Quantitative Finance — Portfolio 2026</p>
+    <h1 class="title">Selected Work in Quantitative Finance: <span class="subtitle">Derivative Pricing, Regime Detection, and Tail Risk</span></h1>
+    <p class="author">Haolin (Alex) Liu<sup>1,2,<a class="ref" id="fnref0" href="#fn0" aria-describedby="fn0" data-tip="fn0"><span class="sr">footnote </span>∗</a></sup></p>
+    <ul class="affils">
+      <li><sup>1</sup>Department of Finance and Risk Engineering, NYU Tandon School of Engineering, <span class="nw">New York, NY</span></li>
+      <li><sup>2</sup>Computational Finance &amp; Risk Management, University of Washington, <span class="nw">Seattle, WA</span></li>
+    </ul>
+    <p class="email"><a class="tt url" href="mailto:hl6593@nyu.edu">hl6593@nyu.edu</a></p>
+    <p class="date">September 2026</p>
+
+    <section class="abstract" aria-labelledby="h-abs">
+      <h2 id="h-abs">Abstract</h2>
+      <p>Quantitative Finance·<wbr>Data Science·<wbr>Risk Management. I build robust models that account for market ambiguity and tail-risk volatility. This document summarises my education (<a class="ref" href="#education">§2</a>), selected projects (<a class="ref" href="#projects">§3</a>), professional experience (<a class="ref" href="#experience">§4</a>), and technical stack (<a class="ref" href="#skills">§5</a>).</p>
+      <p class="kw"><i>Keywords:</i> derivative pricing; stochastic modeling; regime detection; tail risk; machine learning.</p>
+      <p class="kw"><i>JEL Classification:</i> C22, C58, G11, G13, G32.</p>
+    </section>
+  </div>
+
+  <section class="sec" id="about" data-sec="1" data-title="Introduction" data-short="Introduction" aria-labelledby="h-about">
+    <h2 id="h-about"><span class="sn">1</span><span>Introduction</span></h2>
+    <div class="epigraph">
+      <blockquote><p>The purpose of computing is insight, not numbers.</p></blockquote>
+      <div class="src">— <span class="nw">R. W. Hamming</span> [<a class="cite" href="#ref1" aria-describedby="ref1">1</a>]</div>
+    </div>
+    <p>I am a Quantitative Finance graduate student at NYU Tandon with a background in Computational Finance and Risk Management (Data Science) from the University of Washington. My expertise lies in derivative pricing, stochastic modeling, and the application of machine learning within high-frequency financial contexts.</p>
+  </section>
+
+  <section class="sec" id="education" data-sec="2" data-title="Education" data-short="Education" aria-labelledby="h-edu">
+    <h2 id="h-edu"><span class="sn">2</span><span>Education</span></h2>
+    <p>Both degrees are summarised in <a class="ref" href="#tab1">Table 1</a>.</p>
+    <div class="tbl" id="tab1">
+      <table class="booktabs">
+        <caption>Table 1: Degrees.</caption>
+        <thead><tr><th scope="col">Institution</th><th scope="col">Degree</th><th scope="col">Years</th></tr></thead>
+        <tbody>
+          <tr><td>New York University, Tandon</td><td>Master of Science in Financial Engineering</td><td class="yr">2025–2027</td></tr>
+          <tr><td>University of Washington</td><td>BS, Computational Finance &amp; Risk Management</td><td class="yr">2021–2025</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Coursework at NYU Tandon comprises Quantitative Methods, Derivative Securities, Financial Risk Management, Financial Econometrics, ML in Financial Engineering, and Financial Computing in C++; at the University of Washington it comprised Time Series Analysis, Linear Algebra, Statistical Inference, and Real Analysis.</p>
+  </section>
+
+  <section class="sec" id="projects" data-sec="3" data-title="Selected Projects" data-short="Projects" aria-labelledby="h-proj">
+    <h2 id="h-proj"><span class="sn">3</span><span>Selected Projects</span></h2>
+    <p>Seven projects follow in portfolio order, each with its original materials linked in brackets.<sup class="fnm"><a class="ref" id="fnref1" href="#fn1" aria-describedby="fn1" data-tip="fn1"><span class="sr">footnote </span>1</a></sup></p>
+
+    <section class="sub" id="p1" aria-labelledby="h-p1">
+      <h3 id="h-p1"><span class="sn">3.1</span><span>QWIM Regime-Based Investing with LLMs</span></h3>
+      <div class="meta"><span class="ctx">MSFE Capstone·<wbr>HMM, SJM, LPPLS</span><span class="mats"><span class="mat-w">[<a class="mat" href="../public/capstone-proj/capstone-report.pdf" target="_blank" rel="noopener">Report</a>]</span></span></div>
+      <p>Regime-aware portfolio management framework combining market-state detection (Hidden Markov [<a class="cite" href="#ref3" aria-describedby="ref3">3</a>] &amp; Statistical Jump Models [<a class="cite" href="#ref6" aria-describedby="ref6">6</a>], in time and frequency domains) with LPPLS bubble-risk signals, feeding out-of-sample mean-variance construction against StaticMVO benchmarks. The bubble signal rests on the LPPLS log-price model [<a class="cite" href="#ref4" aria-describedby="ref4">4</a>],</p>
+      <div class="eq" id="eq1">
+        <div class="eq-body"><div class="sw1">
+          <div class="v-wide"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>ln</mi><mo>⁡</mo><mi mathvariant="double-struck">E</mi><mo stretchy="false">[</mo><mi>p</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>=</mo><mi>A</mi><mo>+</mo><mi>B</mi><mo stretchy="false">(</mo><msub><mi>t</mi><mi>c</mi></msub><mo>−</mo><mi>t</mi><msup><mo stretchy="false">)</mo><mi>m</mi></msup><mo>+</mo><mi>C</mi><mo stretchy="false">(</mo><msub><mi>t</mi><mi>c</mi></msub><mo>−</mo><mi>t</mi><msup><mo stretchy="false">)</mo><mi>m</mi></msup><mi>cos</mi><mo>⁡</mo><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><mi>ω</mi><mi>ln</mi><mo>⁡</mo><mo stretchy="false">(</mo><msub><mi>t</mi><mi>c</mi></msub><mo>−</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><mi>ϕ</mi><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">\ln \mathbb{E}[p(t)] = A + B(t_c - t)^m + C(t_c - t)^m \cos\big(\omega \ln(t_c - t) - \phi\big),</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathbb">E</span><span class="mopen">[</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">t</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="mord mathnormal">t</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="delimsizing size1">(</span></span><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">ln</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="mord mathnormal">ϕ</span><span class="mord"><span class="delimsizing size1">)</span></span><span class="mpunct">,</span></span></span></span></span></div>
+          <div class="v-narrow"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>ln</mi><mo>⁡</mo><mi mathvariant="double-struck">E</mi><mo stretchy="false">[</mo><mi>p</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>=</mo><mi>A</mi><mo>+</mo><mi>B</mi><mo stretchy="false">(</mo><msub><mi>t</mi><mi>c</mi></msub><mo>−</mo><mi>t</mi><msup><mo stretchy="false">)</mo><mi>m</mi></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mo>+</mo><mi>C</mi><mo stretchy="false">(</mo><msub><mi>t</mi><mi>c</mi></msub><mo>−</mo><mi>t</mi><msup><mo stretchy="false">)</mo><mi>m</mi></msup><mi>cos</mi><mo>⁡</mo><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><mi>ω</mi><mi>ln</mi><mo>⁡</mo><mo stretchy="false">(</mo><msub><mi>t</mi><mi>c</mi></msub><mo>−</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><mi>ϕ</mi><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo><mo separator="true">,</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned} &amp;\ln \mathbb{E}[p(t)] = A + B(t_c - t)^m \\ &amp;\quad + C(t_c - t)^m \cos\big(\omega \ln(t_c - t) - \phi\big), \end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:2.71em;vertical-align:-1.105em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.605em;"><span style="top:-3.615em;"><span class="pstrut" style="height:2.85em;"></span><span class="mord"></span></span><span style="top:-2.105em;"><span class="pstrut" style="height:2.85em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.105em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.605em;"><span style="top:-3.765em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathbb">E</span><span class="mopen">[</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">t</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span></span><span style="top:-2.255em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">t</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="delimsizing size1">(</span></span><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">ln</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">ϕ</span><span class="mord"><span class="delimsizing size1">)</span></span><span class="mpunct">,</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.105em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+        </div></div>
+        <span class="eq-no">(1)</span>
+      </div>
+      <p class="cont">where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">t_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the critical time. The LPPLS defensive overlay delivered the clearest gains — improving return, Sharpe, Sortino, Calmar, and tail-risk metrics with only modest turnover; <a class="ref" href="#fig1">Figure 1</a> sketches the mechanism.</p>
+
+      <figure class="fig" id="fig1">
+        <div class="fig-plot" id="fig1-plot"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="fig1-cap" focusable="false"><defs><clipPath id="fig1-c1"><rect x="45" y="6" width="587" height="193"/></clipPath></defs><rect class="band" x="138.6" y="6" width="44.1" height="193"/><rect class="band" x="138.6" y="210" width="44.1" height="71"/><rect class="band" x="311.8" y="6" width="58.8" height="193"/><rect class="band" x="311.8" y="210" width="58.8" height="71"/><rect class="band" x="499.8" y="6" width="35.6" height="193"/><rect class="band" x="499.8" y="210" width="35.6" height="71"/><path class="px" clip-path="url(#fig1-c1)" d="M45 150.8L45.8 150L46.5 149.4L47.3 147.5L48.1 150L48.9 146.7L49.6 146.9L50.4 149.2L51.2 149.9L52 146.4L52.7 141.9L53.5 144.1L54.3 140.9L55.1 138.3L55.8 137.4L56.6 139.4L57.4 135L58.1 135.8L58.9 133.6L59.7 134.5L60.5 130.2L61.2 128.5L62 130L62.8 131.8L63.6 133.4L64.3 131.2L65.1 132.9L65.9 135.1L66.7 133.8L67.4 131.2L68.2 130.8L69 128L69.7 127.8L70.5 128.8L71.3 127.4L72.1 129.3L72.8 126.7L73.6 127.3L74.4 130.3L75.2 130.5L75.9 133.2L76.7 134.1L77.5 135.6L78.3 137L79 132.2L79.8 131.6L80.6 134.9L81.3 136.2L82.1 141L82.9 140.6L83.7 139.4L84.4 139.3L85.2 137.5L86 137.3L86.8 136.3L87.5 136.1L88.3 136.6L89.1 137.3L89.9 137L90.6 133.8L91.4 133.5L92.2 137.3L92.9 137.6L93.7 136.2L94.5 131.9L95.3 125.2L96 131.2L96.8 128.9L97.6 130.3L98.4 126.2L99.1 123.3L99.9 119.5L100.7 120.6L101.5 121.4L102.2 118.6L103 115.4L103.8 113.3L104.6 118.6L105.3 121.8L106.1 117.2L106.9 119.3L107.6 119.2L108.4 117.8L109.2 118.1L110 119L110.7 115.9L111.5 116.2L112.3 113.8L113.1 117.2L113.8 118.3L114.6 122.4L115.4 123L116.2 121.3L116.9 119.1L117.7 124.2L118.5 124L119.2 123L120 121.7L120.8 120.5L121.6 121.5L122.3 119.1L123.1 118.5L123.9 117.5L124.7 120.6L125.4 122.1L126.2 118.2L127 117.1L127.8 114.1L128.5 112.5L129.3 114.4L130.1 112.9L130.8 113.5L131.6 112.7L132.4 110.9L133.2 109.6L133.9 109.1L134.7 106.3L135.5 101.8L136.3 102.3L137 100.2L137.8 101.5L138.6 107.9L139.4 105.5L140.1 103L140.9 102.2L141.7 105.7L142.4 114.8L143.2 108.5L144 103.7L144.8 105L145.5 107.2L146.3 101.1L147.1 105.4L147.9 110.1L148.6 111.9L149.4 107.7L150.2 114.8L151 116.1L151.7 122.3L152.5 127.1L153.3 123.9L154 122.4L154.8 119L155.6 125.8L156.4 122.1L157.1 119.5L157.9 121.8L158.7 133.6L159.5 131.4L160.2 133L161 128.2L161.8 134L162.6 139.1L163.3 135.2L164.1 137.3L164.9 134.3L165.6 136.8L166.4 138.8L167.2 141.7L168 144.6L168.7 148.8L169.5 160.2L170.3 159.1L171.1 161.3L171.8 161.3L172.6 165L173.4 163.5L174.2 163.8L174.9 160.7L175.7 165.3L176.5 161.5L177.2 166.3L178 158.9L178.8 163.5L179.6 161.3L180.3 157.6L181.1 150.2L181.9 158.3L182.7 150.1L183.4 151.9L184.2 151.8L185 150.3L185.8 150.4L186.5 153.9L187.3 151.2L188.1 153.3L188.8 151.7L189.6 149.8L190.4 150.4L191.2 150.5L191.9 152L192.7 149.7L193.5 145.3L194.3 143.7L195 146L195.8 143.9L196.6 144L197.4 142.6L198.1 139.8L198.9 137.3L199.7 133.2L200.5 132.2L201.2 131.2L202 129.1L202.8 133.7L203.5 132L204.3 134.8L205.1 133.4L205.9 132.5L206.6 133L207.4 135.5L208.2 134.9L209 134.6L209.7 134.2L210.5 134.1L211.3 135.6L212.1 134.9L212.8 134.7L213.6 136.6L214.4 132.9L215.1 132.1L215.9 128.4L216.7 126.4L217.5 126.5L218.2 127.1L219 127.1L219.8 127L220.6 126.5L221.3 125.7L222.1 127.4L222.9 124.6L223.7 127.7L224.4 124.5L225.2 123.8L226 121.7L226.7 121.5L227.5 119L228.3 120.2L229.1 117.7L229.8 118.2L230.6 117.4L231.4 114.4L232.2 113.5L232.9 110.2L233.7 108.1L234.5 109.7L235.3 107.4L236 103.4L236.8 105.1L237.6 100.9L238.3 101.4L239.1 101.8L239.9 101.3L240.7 101.4L241.4 101.7L242.2 101.3L243 99.3L243.8 100.8L244.5 100.6L245.3 100.2L246.1 101.6L246.9 99.5L247.6 101.5L248.4 100.8L249.2 100.9L249.9 92.4L250.7 95.1L251.5 96.7L252.3 95.7L253 93.9L253.8 93.3L254.6 88.5L255.4 89.8L256.1 92.9L256.9 97.6L257.7 97.9L258.5 97.3L259.2 96.2L260 97.6L260.8 97.8L261.5 95L262.3 89.6L263.1 90.6L263.9 91.5L264.6 95.4L265.4 93.3L266.2 97.6L267 97.6L267.7 99.6L268.5 99.2L269.3 97.9L270.1 95.9L270.8 94.5L271.6 91.9L272.4 93.5L273.1 91.6L273.9 88.7L274.7 86.8L275.5 85.7L276.2 85.9L277 86L277.8 80.9L278.6 78.2L279.3 80.2L280.1 79.6L280.9 78.7L281.7 76.9L282.4 79.1L283.2 82.8L284 83.2L284.7 82L285.5 83.6L286.3 85.8L287.1 85.4L287.8 86.5L288.6 82.4L289.4 76.2L290.2 71.8L290.9 72L291.7 68.5L292.5 72.5L293.3 73L294 69L294.8 75.3L295.6 78.5L296.4 80.9L297.1 81.2L297.9 82.6L298.7 78L299.4 74.6L300.2 71.4L301 77.3L301.8 77.5L302.5 75.8L303.3 78.4L304.1 79.1L304.9 76L305.6 73.1L306.4 71.8L307.2 67.7L308 58.9L308.7 59.1L309.5 61.9L310.3 61.1L311 65.3L311.8 69.5L312.6 70.8L313.4 77.4L314.1 73.9L314.9 80.5L315.7 80.1L316.5 86.7L317.2 87.2L318 87.2L318.8 83.6L319.6 79.7L320.3 83.3L321.1 74.5L321.9 78.5L322.6 72.5L323.4 72.3L324.2 63.3L325 64.5L325.7 74L326.5 66.7L327.3 69.2L328.1 67.5L328.8 55.4L329.6 48.8L330.4 46.3L331.2 43L331.9 36.1L332.7 39.5L333.5 57.3L334.2 60.1L335 67.4L335.8 68.9L336.6 72.9L337.3 77.5L338.1 69L338.9 56L339.7 50.4L340.4 56.4L341.2 52.7L342 47.9L342.8 50.6L343.5 54.6L344.3 56L345.1 48.1L345.8 52.1L346.6 56.3L347.4 47.9L348.2 54.2L348.9 50L349.7 44L350.5 56.4L351.3 59.9L352 58.6L352.8 64.5L353.6 78L354.4 71.8L355.1 80.5L355.9 79.8L356.7 95.1L357.4 88.9L358.2 87.2L359 94.2L359.8 88.9L360.5 91.9L361.3 92.2L362.1 106.7L362.9 118L363.6 113.9L364.4 126L365.2 123.6L366 120.2L366.7 122.5L367.5 127.2L368.3 124.6L369 127.9L369.8 129.7L370.6 116L371.4 115.7L372.1 116.5L372.9 115.1L373.7 110.8L374.5 110.3L375.2 110.1L376 112.2L376.8 113.4L377.6 114.6L378.3 112.8L379.1 110.6L379.9 111.6L380.6 114.4L381.4 113.1L382.2 116.3L383 118.3L383.7 114.3L384.5 116.2L385.3 115L386.1 116.6L386.8 115L387.6 114.7L388.4 112.6L389.2 112.4L389.9 110.9L390.7 113.6L391.5 115.1L392.3 115.5L393 113.1L393.8 115.3L394.6 118.3L395.3 117L396.1 116.1L396.9 116.9L397.7 117.1L398.4 110.7L399.2 111.4L400 109.8L400.8 110L401.5 109.9L402.3 111.1L403.1 113.1L403.9 110.5L404.6 104.6L405.4 104.2L406.2 100.2L406.9 101.1L407.7 99.2L408.5 99L409.3 101.6L410 99.6L410.8 98.7L411.6 98.1L412.4 99.1L413.1 100.9L413.9 100.9L414.7 97.9L415.5 94.4L416.2 99L417 99.6L417.8 96L418.5 96L419.3 96.3L420.1 96.2L420.9 94.6L421.6 91.7L422.4 94.3L423.2 92.2L424 93.3L424.7 93.4L425.5 96.9L426.3 96.2L427.1 92.2L427.8 96.8L428.6 95.5L429.4 93.7L430.1 96.9L430.9 92.9L431.7 92.1L432.5 90.7L433.2 88.2L434 89L434.8 91.8L435.6 91.7L436.3 92.9L437.1 86.9L437.9 91.3L438.7 87.6L439.4 88.8L440.2 92.4L441 90.2L441.7 86L442.5 85.2L443.3 88.2L444.1 88.1L444.8 86.8L445.6 84.1L446.4 85.5L447.2 86L447.9 82.5L448.7 80.1L449.5 82.7L450.3 80.7L451 82.8L451.8 79.9L452.6 80.2L453.3 78.7L454.1 82.1L454.9 84.9L455.7 83.1L456.4 82.1L457.2 80.5L458 75.9L458.8 76.3L459.5 79.9L460.3 77.9L461.1 78.4L461.9 76.4L462.6 74.7L463.4 72.9L464.2 74.5L464.9 74.9L465.7 76.2L466.5 78.5L467.3 74.2L468 73.2L468.8 76.3L469.6 78.2L470.4 77.7L471.1 83.6L471.9 86.4L472.7 85.1L473.5 85.5L474.2 84L475 81.3L475.8 73.7L476.5 69.2L477.3 69.5L478.1 69.9L478.9 71.8L479.6 77L480.4 79.4L481.2 82.8L482 84.1L482.7 82.6L483.5 83L484.3 86.6L485.1 80.4L485.8 81L486.6 81.8L487.4 82.7L488.2 82.7L488.9 82.1L489.7 77.6L490.5 72L491.2 67.8L492 70.4L492.8 68.9L493.6 66.6L494.3 68L495.1 67.1L495.9 65.9L496.7 64.5L497.4 62.9L498.2 70.7L499 69L499.8 56.6L500.5 65L501.3 63.5L502.1 62.5L502.8 60.6L503.6 75.1L504.4 76.5L505.2 73.6L505.9 56.1L506.7 65L507.5 66.7L508.3 57.6L509 57.8L509.8 57.1L510.6 64.7L511.4 67.2L512.1 74.2L512.9 76.9L513.7 81.1L514.4 79.3L515.2 69.8L516 80L516.8 81.1L517.5 96.9L518.3 92.5L519.1 102.3L519.9 97.9L520.6 88.2L521.4 89.4L522.2 97.2L523 98.7L523.7 94.9L524.5 96.6L525.3 90.7L526 98.2L526.8 97.3L527.6 102.3L528.4 100.4L529.1 97.1L529.9 105.6L530.7 106.4L531.5 107.2L532.2 99.9L533 102.5L533.8 102.6L534.6 99.8L535.3 105.9L536.1 106.3L536.9 101.7L537.6 102.2L538.4 103.6L539.2 101.9L540 102.9L540.7 98L541.5 98.1L542.3 98.9L543.1 102.9L543.8 102L544.6 100L545.4 98.1L546.2 97.5L546.9 98.5L547.7 100.5L548.5 102.1L549.2 97.9L550 98.5L550.8 100.1L551.6 100L552.3 98.3L553.1 96.5L553.9 98.8L554.7 97.6L555.4 97.4L556.2 93.8L557 88.5L557.8 87.1L558.5 83.7L559.3 80.9L560.1 82L560.8 83.1L561.6 78.9L562.4 76.6L563.2 75.6L563.9 74.4L564.7 76.7L565.5 74L566.3 72.6L567 70.5L567.8 70.4L568.6 67L569.4 68.1L570.1 68.3L570.9 65.7L571.7 63.1L572.4 58.8L573.2 54L574 58L574.8 58.1L575.5 60.3L576.3 61.1L577.1 63L577.9 65.9L578.6 62.4L579.4 59.8L580.2 61.2L581 54.3L581.7 55.7L582.5 57.7L583.3 62.2L584.1 60.7L584.8 62.4L585.6 61.3L586.4 66.2L587.1 63.9L587.9 67.3L588.7 71L589.5 72.1L590.2 69.5L591 70.2L591.8 70.6L592.6 67.8L593.3 65.6L594.1 62.8L594.9 61.4L595.7 57.9L596.4 59.4L597.2 59.8L598 61L598.7 58L599.5 63.5L600.3 61.2L601.1 57.9L601.8 57.3L602.6 57.7L603.4 58.3L604.2 56.3L604.9 55.8L605.7 55.6L606.5 59.3L607.3 60.6L608 62.7L608.8 64.9L609.6 62.8L610.3 63.6L611.1 58.3L611.9 52.9L612.7 53.5L613.4 52.8L614.2 52.1L615 53.7L615.8 56.3L616.5 59.1L617.3 58.9L618.1 60.2L618.9 57.9L619.6 57.4L620.4 60.2L621.2 58.8L621.9 52L622.7 55.6L623.5 54.4L624.3 55.8L625 58.2L625.8 59.6L626.6 56.9L627.4 52.1L628.1 49.5L628.9 51.5L629.7 47.7L630.5 46.1L631.2 51.3L632 44.8"/><path class="ex" d="M45 219.8H142.4V255.3H185.8V219.8H315.7V255.3H373.7V219.8H503.6V255.3H538.4V219.8H632"/><rect class="fr" x="45.5" y="6.5" width="587" height="193"/><rect class="fr" x="45.5" y="210.5" width="587" height="71"/><path class="tk" d="M45.5 199v-4M45.5 6v4M45.5 281v-4M45.5 210v4M142.5 199v-4M142.5 6v4M142.5 281v-4M142.5 210v4M238.5 199v-4M238.5 6v4M238.5 281v-4M238.5 210v4M335.5 199v-4M335.5 6v4M335.5 281v-4M335.5 210v4M432.5 199v-4M432.5 6v4M432.5 281v-4M432.5 210v4M528.5 199v-4M528.5 6v4M528.5 281v-4M528.5 210v4M625.5 199v-4M625.5 6v4M625.5 281v-4M625.5 210v4M45 199.5h4M632 199.5h-4M45 151.5h4M632 151.5h-4M45 103.5h4M632 103.5h-4M45 54.5h4M632 54.5h-4M45 6.5h4M632 6.5h-4M45 274.5h4M632 274.5h-4M45 247.5h4M632 247.5h-4M45 220.5h4M632 220.5h-4"/><g class="lbl" font-size="12.5"><text x="45" y="298.5" text-anchor="middle">0</text><text x="141.7" y="298.5" text-anchor="middle">125</text><text x="238.3" y="298.5" text-anchor="middle">250</text><text x="335" y="298.5" text-anchor="middle">375</text><text x="431.7" y="298.5" text-anchor="middle">500</text><text x="528.4" y="298.5" text-anchor="middle">625</text><text x="625" y="298.5" text-anchor="middle">750</text><text x="40" y="203.3" text-anchor="end">80</text><text x="40" y="155" text-anchor="end">100</text><text x="40" y="106.8" text-anchor="end">120</text><text x="40" y="58.5" text-anchor="end">140</text><text x="40" y="10.3" text-anchor="end">160</text><text x="40" y="278.7" text-anchor="end">0</text><text x="40" y="251.4" text-anchor="end">0.5</text><text x="40" y="224.1" text-anchor="end">1</text><text class="al" x="338.5" y="317" text-anchor="middle">Trading day</text><text class="al" transform="translate(12 102.5) rotate(-90)" text-anchor="middle">Price index</text><text class="al" transform="translate(12 245.5) rotate(-90)" text-anchor="middle">Exposure</text></g></svg></div>
+        <figcaption id="fig1-cap">Figure 1: Schematic of regime-aware allocation. Shaded bands mark a turbulent regime; the dashed line is the overlay’s equity exposure. Illustrative only — not results.</figcaption>
+      </figure>
+    </section>
+
+    <section class="sub" id="p2" aria-labelledby="h-p2">
+      <h3 id="h-p2"><span class="sn">3.2</span><span>Earnings Event Study &amp; CAAR Analysis</span></h3>
+      <div class="meta"><span class="ctx">FRE 6883·<wbr>C++, Bootstrap, CAAR</span><span class="mats"><span class="mat-w">[<a class="mat" href="../public/6883-proj/fre6883-final-project.pdf" target="_blank" rel="noopener">PDF</a>]</span><span class="mat-w">[<a class="mat" href="https://github.com/FRE6883/fre6883-teamproject-fre6883_team2" target="_blank" rel="noopener">GitHub</a>]</span></span></div>
+      <p>Sector-neutral event study of how quarterly earnings announcements move <span class="nw">Russell 3000</span> stocks — Beat/Meet/Miss grouping, AAR &amp; CAAR with bootstrap sampling, EOD Historical Data API. Abnormal returns are measured against the market and cumulated over the event window,</p>
+      <div class="eq" id="eq2">
+        <div class="eq-body"><div class="sw2">
+          <div class="v-wide"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi></mrow><mi>t</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><munderover><mo>∑</mo><mrow><mi>τ</mi><mo>=</mo><mn>1</mn></mrow><mi>t</mi></munderover><msub><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi></mrow><mrow><mi>i</mi><mo separator="true">,</mo><mi>τ</mi></mrow></msub><mo separator="true">,</mo><mspace width="2em"/><msub><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi></mrow><mrow><mi>i</mi><mo separator="true">,</mo><mi>τ</mi></mrow></msub><mo>=</mo><msub><mi>R</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>τ</mi></mrow></msub><mo>−</mo><msub><mi>R</mi><mrow><mi>m</mi><mo separator="true">,</mo><mi>τ</mi></mrow></msub><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">\mathrm{CAAR}_t = \frac{1}{N}\sum_{i=1}^{N}\sum_{\tau=1}^{t}\mathrm{AR}_{i,\tau},\qquad \mathrm{AR}_{i,\tau}=R_{i,\tau}-R_{m,\tau},</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">CAAR</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:3.106em;vertical-align:-1.2777em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.109em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7806em;"><span style="top:-1.8829em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2671em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">AR</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:2em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">AR</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span></span></span></span></span></div>
+          <div class="v-narrow"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="center" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><msub><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi></mrow><mi>t</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><munderover><mo>∑</mo><mrow><mi>τ</mi><mo>=</mo><mn>1</mn></mrow><mi>t</mi></munderover><msub><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi></mrow><mrow><mi>i</mi><mo separator="true">,</mo><mi>τ</mi></mrow></msub><mo separator="true">,</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><msub><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi></mrow><mrow><mi>i</mi><mo separator="true">,</mo><mi>τ</mi></mrow></msub><mo>=</mo><msub><mi>R</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>τ</mi></mrow></msub><mo>−</mo><msub><mi>R</mi><mrow><mi>m</mi><mo separator="true">,</mo><mi>τ</mi></mrow></msub><mo separator="true">,</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered} \mathrm{CAAR}_t = \frac{1}{N}\sum_{i=1}^{N}\sum_{\tau=1}^{t}\mathrm{AR}_{i,\tau}, \\ \mathrm{AR}_{i,\tau}=R_{i,\tau}-R_{m,\tau}, \end{gathered}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:4.606em;vertical-align:-2.053em;"></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.553em;"><span style="top:-4.553em;"><span class="pstrut" style="height:3.8283em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathrm">CAAR</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.109em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7806em;"><span style="top:-1.8829em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2671em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">AR</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span></span></span><span style="top:-2.1353em;"><span class="pstrut" style="height:3.8283em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathrm">AR</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.053em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+        </div></div>
+        <span class="eq-no">(2)</span>
+      </div>
+      <p class="cont">where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">N</span></span></span></span> is the number of stocks in the bootstrap sample.</p>
+    </section>
+
+    <section class="sub" id="p3" aria-labelledby="h-p3">
+      <h3 id="h-p3"><span class="sn">3.3</span><span>GARCH Option Pricing &amp; IV Term Structure</span></h3>
+      <div class="meta"><span class="ctx">FRE 6083·<wbr>GARCH, Monte Carlo, Python</span><span class="mats"><span class="mat-w">[<a class="mat" href="../public/6083-proj/report.pdf" target="_blank" rel="noopener">Report</a>]</span><span class="mat-w">[<a class="mat" href="../public/6083-proj/Comparing%20IV%20termstructure%20from%20Black%20Scholes%20and%20Volatility%20sumulations%20using%20GARCH(1%2C1)%20(1).pptx" target="_blank" rel="noopener">Slides</a>]</span></span></div>
+      <p>Compared implied-volatility term structures from Black–Scholes vs GARCH(1,1) simulation on <span class="nw">S&amp;P 500</span> options, with the conditional variance of Bollerslev [<a class="cite" href="#ref2" aria-describedby="ref2">2</a>],</p>
+      <div class="eq" id="eq3">
+        <div class="eq-body"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msubsup><mi>σ</mi><mi>t</mi><mn>2</mn></msubsup><mo>=</mo><mi>ω</mi><mo>+</mo><mi>α</mi><mtext> </mtext><msubsup><mi>ε</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mn>2</mn></msubsup><mo>+</mo><mi>β</mi><mtext> </mtext><msubsup><mi>σ</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mn>2</mn></msubsup><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">\sigma_t^2=\omega+\alpha\,\varepsilon_{t-1}^2+\beta\,\sigma_{t-1}^2,</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.1111em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-2.453em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.1694em;vertical-align:-0.3053em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">ε</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-2.453em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3053em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.1694em;vertical-align:-0.3053em;"></span><span class="mord mathnormal" style="margin-right:0.0528em;">β</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-2.453em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3053em;"><span></span></span></span></span></span></span><span class="mpunct">,</span></span></span></span></span></div>
+        <span class="eq-no">(3)</span>
+      </div>
+      <p class="cont">where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0528em;">β</span></span></span></span> govern, respectively, the reaction of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>σ</mi><mi>t</mi><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">\sigma_t^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.0611em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-2.453em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span> to shocks and its persistence. 3D IV surfaces show BS overpricing deep OTM calls by up to 8.6%.</p>
+    </section>
+
+    <section class="sub" id="p4" aria-labelledby="h-p4">
+      <h3 id="h-p4"><span class="sn">3.4</span><span>Financial Risk Management — FRM Final</span></h3>
+      <div class="meta"><span class="ctx">FRE 6123·<wbr>VaR, CVaR, Stress Testing</span><span class="mats"><span class="mat-w">[<a class="mat" href="../public/6123-proj/FRM_Final%20Paper%20(2).pdf" target="_blank" rel="noopener">Paper</a>]</span><span class="mat-w">[<a class="mat" href="../public/6123-proj/FRM_Project_Report.pdf" target="_blank" rel="noopener">Report</a>]</span><span class="mat-w">[<a class="mat" href="../public/6123-proj/FRM_Final%20project.pptx" target="_blank" rel="noopener">Slides</a>]</span></span></div>
+      <p>VaR &amp; CVaR estimation, stress testing, and regulatory capital frameworks across market, credit, and operational risk exposures. For a loss <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span> at confidence level <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span>, the conditional value-at-risk is</p>
+      <div class="eq" id="eq4">
+        <div class="eq-body"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">V</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">R</mi></mrow><mi>α</mi></msub><mo stretchy="false">(</mo><mi>L</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="double-struck">E</mi><mrow><mo fence="true">[</mo><mtext> </mtext><mi>L</mi><mo>∣</mo><mi>L</mi><mo>≥</mo><msub><mrow><mi mathvariant="normal">V</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">R</mi></mrow><mi>α</mi></msub><mo stretchy="false">(</mo><mi>L</mi><mo stretchy="false">)</mo><mtext> </mtext><mo fence="true">]</mo></mrow><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">\mathrm{CVaR}_\alpha(L)=\mathbb{E}\left[\,L \mid L \ge \mathrm{VaR}_\alpha(L)\,\right].</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">CVaR</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">L</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathbb">E</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">[</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">VaR</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">L</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mclose delimcenter" style="top:0em;">]</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">.</span></span></span></span></span></div>
+        <span class="eq-no">(4)</span>
+      </div>
+    </section>
+
+    <section class="sub" id="p5" aria-labelledby="h-p5">
+      <h3 id="h-p5"><span class="sn">3.5</span><span>Quantitative Research — US Market Thesis</span></h3>
+      <div class="meta"><span class="ctx">Internship·<wbr>Python, Research</span><span class="mats"><span class="mat-w">[<a class="mat" href="../public/intern-proj/us_market_thesis.pdf" target="_blank" rel="noopener">Thesis</a>]</span></span></div>
+      <p>Applied research project from an industry internship: data pipeline construction, statistical modeling, and a full analytical write-up.</p>
+    </section>
+
+    <section class="sub" id="p6" aria-labelledby="h-p6">
+      <h3 id="h-p6"><span class="sn">3.6</span><span>Market Manipulation Detection in LOB Data</span></h3>
+      <div class="meta"><span class="ctx">FRE 7773·<wbr>Isolation Forest, LOB, Kaggle</span><span class="mats"><span class="mat-w">[<a class="mat" href="../public/7773-proj/7773-report.pdf" target="_blank" rel="noopener">Report</a>]</span></span></div>
+      <p>76 session-aware features over millisecond limit-order-book data; Isolation Forest [<a class="cite" href="#ref5" aria-describedby="ref5">5</a>] trained on normal samples flags spoofing, layering, and quote stuffing.</p>
+    </section>
+
+    <section class="sub" id="p7" aria-labelledby="h-p7">
+      <h3 id="h-p7"><span class="sn">3.7</span><span>AI-Assisted Treasury Analytics Validation</span></h3>
+      <div class="meta"><span class="ctx">Fixed Income·<wbr>YTM, PV01, Python</span><span class="mats"><span class="mat-w">[<a class="mat" href="../public/treasury-ai-proj/treasury-ai-comparison-report.pdf" target="_blank" rel="noopener">Report</a>]</span><span class="mat-w">[<a class="mat" href="../public/treasury-ai-proj/treasury-security-corrected.py" target="_blank" rel="noopener">Code</a>]</span></span></div>
+      <p>Reviewed GPT-5.5 &amp; Claude drafts against fixed-income pricing requirements, then built a corrected <span class="tt">USTreasurySecurity</span> class: 32nds quotes, act/act accrual, Newton-solved YTM, PV01, duration, convexity.</p>
+    </section>
+  </section>
+
+  <section class="sec" id="experience" data-sec="4" data-title="Professional Experience" data-short="Experience" aria-labelledby="h-exp">
+    <h2 id="h-exp"><span class="sn">4</span><span>Professional Experience</span></h2>
+    <div class="role">
+      <div class="role-h"><h3>China Securities Co., Ltd. (CSC)</h3><span class="when">Jul–Sep 2026</span></div>
+      <div class="role-m">FinTech Intern, Information Technology·<wbr>Beijing</div>
+      <ul class="itemize">
+        <li>Owned end-to-end backend development of an AI-assisted narrative generation feature for the firm’s AML system (Java, Spring Boot, MyBatis, MySQL).</li>
+        <li>Designed a submit / async-invoke / poll API chain joining 13 data-warehouse profile fields with due-diligence inputs, calling the firm’s internal LLM platform.</li>
+      </ul>
+      <p class="tools"><i>Tools:</i> Java, Spring Boot, MySQL, LLM Integration, AML.</p>
+    </div>
+    <div class="role">
+      <div class="role-h"><h3>Donghai Securities</h3><span class="when">Jun–Aug 2024</span></div>
+      <div class="role-m">Investment Department Intern·<wbr>Beijing</div>
+      <ul class="itemize">
+        <li>Macro / meso / micro market analysis; logistic regression forecasting CSI All Share Index trends over 10+ years of data, outperforming baseline benchmarks.</li>
+      </ul>
+      <p class="tools"><i>Tools:</i> Logistic Regression, CSI Index.</p>
+    </div>
+    <div class="role">
+      <div class="role-h"><h3>Green Fund</h3><span class="when">Jun–Sep 2023</span></div>
+      <div class="role-m">Summer Intern, Investment Department·<wbr>Tianjin</div>
+      <ul class="itemize">
+        <li>Analyzed 5-year yields of Chinese mid/long-term bond funds — 19.4% cumulative, 3.8% annual compound.</li>
+      </ul>
+      <p class="tools"><i>Tools:</i> Fixed Income, Yield Curve.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="skills" data-sec="5" data-title="Technical Stack" data-short="Stack" aria-labelledby="h-skills">
+    <h2 id="h-skills"><span class="sn">5</span><span>Technical Stack</span></h2>
+    <p><a class="ref" href="#tab2">Table 2</a> groups the tools by proficiency.</p>
+    <div class="tbl" id="tab2">
+      <table class="booktabs">
+        <caption>Table 2: Tools by proficiency.</caption>
+        <thead><tr><th scope="col">Level</th><th scope="col">Tools</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Expert</th><td>Python, Pandas, Java</td></tr>
+          <tr><th scope="row">Proficient</th><td>C++, SQL, R / Matlab</td></tr>
+          <tr><th scope="row">Libraries</th><td>NumPy, SciPy, Statsmodels, Matplotlib, Scikit-learn</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" id="contact" data-sec="6" data-title="Correspondence" data-short="Correspondence" aria-labelledby="h-contact">
+    <h2 id="h-contact"><span class="sn">6</span><span>Correspondence</span></h2>
+    <p>Correspondence concerning this document should be addressed to the author:</p>
+    <dl class="desc">
+      <dt>E-mail</dt>
+      <dd><a class="tt url" id="email" href="mailto:hl6593@nyu.edu">hl6593@nyu.edu</a><button type="button" class="annot" id="copy"><svg viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="3.5" width="6" height="6.5" rx=".5" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M2 7.5H1.5V1h6v.5" fill="none" stroke="currentColor" stroke-width="1.1"/></svg><span id="copy-label">Copy</span><span class="sr"> e-mail address</span></button></dd>
+      <dt>LinkedIn</dt>
+      <dd><a class="tt url" href="https://www.linkedin.com/in/haolin-liu-b73799299/" target="_blank" rel="noopener">linkedin.com/<wbr>in/<wbr>haolin-liu-b73799299</a></dd>
+      <dt>GitHub</dt>
+      <dd><a class="tt url" href="https://github.com/haolin122" target="_blank" rel="noopener">github.com/<wbr>haolin122</a></dd>
+      <dt>CV</dt>
+      <dd><a class="tt url" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener">Haolin_Alex_Liu_Resume.pdf</a> [<a class="cite" href="#ref7" aria-describedby="ref7">7</a>]</dd>
+    </dl>
+    <span class="sr" id="copy-status" role="status" aria-live="polite"></span>
+  </section>
+
+  <section class="sec refs" id="references" data-sec="" data-title="References" data-short="References" aria-labelledby="h-refs">
+    <h2 id="h-refs">References</h2>
+    <ol class="bib">
+      <li id="ref1"><span class="bl">[1]</span><span class="bx"><span class="nw">R. W. Hamming.</span> <i>Numerical Methods for Scientists and Engineers</i>. McGraw-Hill, 1962.</span></li>
+      <li id="ref2"><span class="bl">[2]</span><span class="bx"><span class="nw">T. Bollerslev.</span> Generalized autoregressive conditional heteroskedasticity. <i>Journal of Econometrics</i>, 31(3):307–327, 1986.</span></li>
+      <li id="ref3"><span class="bl">[3]</span><span class="bx"><span class="nw">J. D. Hamilton.</span> A new approach to the economic analysis of nonstationary time series and the business cycle. <i>Econometrica</i>, 57(2):357–384, 1989.</span></li>
+      <li id="ref4"><span class="bl">[4]</span><span class="bx"><span class="nw">A. Johansen,</span> <span class="nw">O. Ledoit,</span> and <span class="nw">D. Sornette.</span> Crashes as critical points. <i>International Journal of Theoretical and Applied Finance</i>, 3(2):219–255, 2000.</span></li>
+      <li id="ref5"><span class="bl">[5]</span><span class="bx"><span class="nw">F. T. Liu,</span> <span class="nw">K. M. Ting,</span> and <span class="nw">Z.-H. Zhou.</span> Isolation forest. In <i>Proc. 8th IEEE International Conference on Data Mining (ICDM)</i>, pages 413–422, 2008.</span></li>
+      <li id="ref6"><span class="bl">[6]</span><span class="bx"><span class="nw">P. Nystrup,</span> <span class="nw">E. Lindström,</span> and <span class="nw">H. Madsen.</span> Learning hidden Markov models with persistent states by penalizing jumps. <i>Expert Systems with Applications</i>, 150:113307, 2020.</span></li>
+      <li id="ref7"><span class="bl">[7]</span><span class="bx"><span class="nw">H. Liu.</span> Curriculum vitae, 2026. [<a class="url" href="../public/Haolin_Alex_Liu_Resume.pdf" target="_blank" rel="noopener">PDF</a>]</span></li>
+    </ol>
+  </section>
+
+  <footer class="foot">
+    <div class="footnotes">
+      <hr>
+      <ol>
+        <li id="fn0"><span class="fm">∗</span><span class="fx">Chinese name: <span class="cjk" lang="zh-Hans">刘昊霖</span> (Liú Hàolín).</span></li>
+        <li id="fn1"><span class="fm">1</span><span class="fx">Links open in a new tab. Reports, papers and the thesis are PDF files; slides are PowerPoint (<span class="tt">.pptx</span>) files; [Code] is Python source (<span class="tt">.py</span>).</span></li>
+      </ol>
+    </div>
+    <div class="folio"><span>© 2026 Haolin (Alex) Liu</span><span class="pg">1</span><span class="r">New York, NY</span></div>
+  </footer>
+</article>
+</main>
+
+<script>
+/* Figure 1 — schematic of regime-aware allocation.
+   Deterministic: a seeded PRNG (mulberry32) drives a geometric random walk whose drift and
+   volatility switch inside fixed "turbulent" windows. Two panels share the x-axis:
+   price (top) and the defensive overlay's equity exposure (bottom, dashed). */
+function paperFigure(W, seed) {
+  var N = 760;
+  var a = (seed === undefined ? 20260926 : seed) >>> 0;
+  function rand() {
+    a = (a + 0x6D2B79F5) >>> 0;
+    var t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+  function gauss() {
+    var u = 1 - rand(), v = rand();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+  var bands = [[0.16, 0.235], [0.455, 0.555], [0.775, 0.835]].map(function (b) {
+    return [Math.round(b[0] * (N - 1)), Math.round(b[1] * (N - 1))];
+  });
+  function turbulent(t) {
+    for (var i = 0; i < bands.length; i++) if (t >= bands[i][0] && t <= bands[i][1]) return true;
+    return false;
+  }
+  var p = [100], e = [], t;
+  for (t = 1; t < N; t++) {
+    var tb = turbulent(t), mu = tb ? -0.0027 : 0.00062, sd = tb ? 0.0195 : 0.0082;
+    p.push(p[t - 1] * Math.exp(mu - 0.5 * sd * sd + sd * gauss()));
+  }
+  /* overlay reacts with a short detection lag and re-risks a few days after calm returns */
+  for (t = 0; t < N; t++) {
+    var cut = false;
+    for (var i = 0; i < bands.length; i++) if (t >= bands[i][0] + 5 && t <= bands[i][1] + 3) cut = true;
+    e.push(cut ? 0.35 : 1);
+  }
+  if (!W) return { p: p, e: e, bands: bands };
+
+  /* ---- layout (viewBox units = CSS px, so type stays at its true size) ---- */
+  var narrow = W < 480;
+  var fs = narrow ? 11 : 12.5;
+  var H = Math.round(Math.max(narrow ? 250 : 0, Math.min(340, W * 0.5)));
+  var ml = Math.round(fs * 3.6), mr = 8, mt = 6, mb = Math.round(fs * 3.1), gap = Math.round(fs * 0.9);
+  var x0 = ml, x1 = W - mr;
+  var avail = H - mt - mb - gap;
+  var h2 = Math.round(avail * 0.27), h1 = avail - h2;
+  var y0 = mt, y1 = mt + h1;                 /* price panel   */
+  var z0 = y1 + gap, z1 = z0 + h2;           /* exposure panel */
+
+  var pmin = Math.min.apply(null, p), pmax = Math.max.apply(null, p);
+  var step = 20, lo = Math.floor((pmin - 4) / 10) * 10, hi = Math.ceil((pmax + 6) / 10) * 10;
+  function X(i) { return x0 + (i / (N - 1)) * (x1 - x0); }
+  function Y(v) { return y1 - ((v - lo) / (hi - lo)) * (y1 - y0); }
+  function Z(v) { return z1 - ((v + 0.12) / 1.3) * (z1 - z0); }
+  function r(v) { return Math.round(v * 10) / 10; }
+  function h(v) { return Math.round(v) + 0.5; } /* crisp 1px strokes */
+
+  var s = [];
+  s.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="fig1-cap" focusable="false">');
+  s.push('<defs><clipPath id="fig1-c1"><rect x="' + x0 + '" y="' + y0 + '" width="' + (x1 - x0) + '" height="' + (y1 - y0) + '"/></clipPath></defs>');
+  /* turbulent bands, both panels */
+  bands.forEach(function (b) {
+    var bx = r(X(b[0])), bw = r(X(b[1]) - X(b[0]));
+    s.push('<rect class="band" x="' + bx + '" y="' + y0 + '" width="' + bw + '" height="' + (y1 - y0) + '"/>');
+    s.push('<rect class="band" x="' + bx + '" y="' + z0 + '" width="' + bw + '" height="' + (z1 - z0) + '"/>');
+  });
+  /* price path */
+  var d = 'M' + r(X(0)) + ' ' + r(Y(p[0]));
+  for (t = 1; t < N; t++) d += 'L' + r(X(t)) + ' ' + r(Y(p[t]));
+  s.push('<path class="px" clip-path="url(#fig1-c1)" d="' + d + '"/>');
+  /* exposure (step line, dashed) */
+  var q = 'M' + r(X(0)) + ' ' + r(Z(e[0]));
+  for (t = 1; t < N; t++) {
+    if (e[t] !== e[t - 1]) q += 'H' + r(X(t)) + 'V' + r(Z(e[t]));
+  }
+  q += 'H' + r(X(N - 1));
+  s.push('<path class="ex" d="' + q + '"/>');
+
+  /* frames + ticks (pgfplots style: box axes, inward ticks mirrored on the opposite side) */
+  var tl = 4;
+  var fr = function (ya, yb) {
+    return '<rect class="fr" x="' + h(x0) + '" y="' + h(ya) + '" width="' + (Math.round(x1) - Math.round(x0)) + '" height="' + (Math.round(yb) - Math.round(ya)) + '"/>';
+  };
+  s.push(fr(y0, y1), fr(z0, z1));
+  var tk = '';
+  var xt = narrow ? [0, 250, 500, 750] : [0, 125, 250, 375, 500, 625, 750];
+  xt.forEach(function (v) {
+    var x = h(X(v));
+    tk += 'M' + x + ' ' + Math.round(y1) + 'v-' + tl + 'M' + x + ' ' + Math.round(y0) + 'v' + tl;
+    tk += 'M' + x + ' ' + Math.round(z1) + 'v-' + tl + 'M' + x + ' ' + Math.round(z0) + 'v' + tl;
+  });
+  var yt = [];
+  for (var v = Math.ceil(lo / step) * step; v <= hi; v += step) yt.push(v);
+  yt.forEach(function (v) {
+    var y = h(Y(v));
+    tk += 'M' + Math.round(x0) + ' ' + y + 'h' + tl + 'M' + Math.round(x1) + ' ' + y + 'h-' + tl;
+  });
+  [0, 0.5, 1].forEach(function (v) {
+    var y = h(Z(v));
+    tk += 'M' + Math.round(x0) + ' ' + y + 'h' + tl + 'M' + Math.round(x1) + ' ' + y + 'h-' + tl;
+  });
+  s.push('<path class="tk" d="' + tk + '"/>');
+
+  /* tick labels */
+  var lab = '';
+  xt.forEach(function (v) {
+    lab += '<text x="' + r(X(v)) + '" y="' + r(z1 + fs + 5) + '" text-anchor="middle">' + v + '</text>';
+  });
+  yt.forEach(function (v) {
+    lab += '<text x="' + (x0 - 5) + '" y="' + r(Y(v) + fs * 0.34) + '" text-anchor="end">' + v + '</text>';
+  });
+  [[0, '0'], [0.5, '0.5'], [1, '1']].forEach(function (k) {
+    lab += '<text x="' + (x0 - 5) + '" y="' + r(Z(k[0]) + fs * 0.34) + '" text-anchor="end">' + k[1] + '</text>';
+  });
+  /* axis labels */
+  var ax = Math.round(fs * 0.95);
+  lab += '<text class="al" x="' + r((x0 + x1) / 2) + '" y="' + (H - 3) + '" text-anchor="middle">Trading day</text>';
+  lab += '<text class="al" transform="translate(' + ax + ' ' + r((y0 + y1) / 2) + ') rotate(-90)" text-anchor="middle">Price index</text>';
+  lab += '<text class="al" transform="translate(' + ax + ' ' + r((z0 + z1) / 2) + ') rotate(-90)" text-anchor="middle">' + (narrow ? 'Exp.' : 'Exposure') + '</text>';
+  s.push('<g class="lbl" font-size="' + fs + '">' + lab + '</g>');
+  s.push('</svg>');
+  return s.join('');
+}
+(function () {
+  'use strict';
+  var d = document;
+
+  /* Figure 1: redraw at the container's true width so labels stay at their set size */
+  var plot = d.getElementById('fig1-plot'), lastW = 0;
+  function draw() {
+    var w = Math.round(plot.clientWidth);
+    if (!w || w === lastW) return;
+    lastW = w;
+    try { plot.innerHTML = paperFigure(w, 9619); } catch (e) { /* static fallback stays */ }
+  }
+  draw();
+  if ('ResizeObserver' in window) new ResizeObserver(draw).observe(plot);
+  else window.addEventListener('resize', draw);
+
+  /* Live section indicator (styling only) + outline state */
+  var outline = d.getElementById('outline');
+  var indN = d.getElementById('ind-n'), indSep = d.getElementById('ind-sep');
+  var indL = d.getElementById('ind-long'), indS = d.getElementById('ind-short');
+  var links = outline.querySelectorAll('.outline-panel a');
+  var current = null;
+  function setActive(sec) {
+    if (sec === current) return;
+    current = sec;
+    var n = sec.getAttribute('data-sec');
+    indN.textContent = n ? '§ ' + n : '';
+    indSep.hidden = !n;
+    indL.textContent = sec.getAttribute('data-title');
+    indS.textContent = sec.getAttribute('data-short') || sec.getAttribute('data-title');
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].getAttribute('href') === '#' + sec.id) links[i].setAttribute('aria-current', 'location');
+      else links[i].removeAttribute('aria-current');
+    }
+  }
+  var secs = Array.prototype.slice.call(d.querySelectorAll('[data-sec]'));
+  var inBand = [];
+  setActive(secs[0]);
+  if ('IntersectionObserver' in window) {
+    var barH = d.querySelector('.toolbar').offsetHeight;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { inBand[secs.indexOf(en.target)] = en.isIntersecting; });
+      for (var i = secs.length - 1; i >= 0; i--) if (inBand[i]) { setActive(secs[i]); break; }
+    }, { rootMargin: '-' + (barH + 1) + 'px 0px -75% 0px' });
+    secs.forEach(function (s) { io.observe(s); });
+  }
+
+  /* Outline popover: close on selection, outside click, Escape */
+  outline.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('.outline-panel a')) outline.open = false;
+  });
+  d.addEventListener('click', function (e) {
+    if (outline.open && !outline.contains(e.target)) outline.open = false;
+  });
+  d.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      hideTip();
+      if (outline.open) { outline.open = false; outline.querySelector('summary').focus(); }
+    }
+  });
+
+  /* Citation and footnote previews (visual; the targets are also linked and described) */
+  var tip = d.createElement('div');
+  tip.className = 'tip';
+  tip.setAttribute('aria-hidden', 'true');
+  d.body.appendChild(tip);
+  var tipFor = null;
+  function showTip(a) {
+    var id = (a.getAttribute('href') || '').slice(1), src = id && d.getElementById(id);
+    if (!src) return;
+    var lab = src.querySelector('.bl, .fm'), body = src.querySelector('.bx, .fx');
+    if (!body) return;
+    var clone = body.cloneNode(true), inner = clone.querySelectorAll('a');
+    for (var k = 0; k < inner.length; k++) {
+      var s = d.createElement('span');
+      s.textContent = inner[k].textContent;
+      inner[k].parentNode.replaceChild(s, inner[k]);
+    }
+    tip.innerHTML = '';
+    if (lab) {
+      var l = d.createElement('span');
+      l.className = 'tl';
+      l.textContent = lab.textContent;
+      tip.appendChild(l);
+    }
+    while (clone.firstChild) tip.appendChild(clone.firstChild);
+    tipFor = a;
+    tip.style.left = '0px'; tip.style.top = '0px';
+    var r = a.getBoundingClientRect(), vw = d.documentElement.clientWidth;
+    var tw = tip.offsetWidth, th = tip.offsetHeight;
+    var left = Math.max(8, Math.min(r.left + r.width / 2 - tw / 2, vw - tw - 8));
+    var top = r.top - th - 10;
+    var bar = d.querySelector('.toolbar').getBoundingClientRect().bottom;
+    if (top < bar + 8) top = r.bottom + 10;
+    tip.style.left = Math.round(left) + 'px';
+    tip.style.top = Math.round(top) + 'px';
+    tip.classList.add('on');
+  }
+  function hideTip() { tipFor = null; tip.classList.remove('on'); }
+  var sel = 'a.cite, a[data-tip]';
+  d.addEventListener('pointerover', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    var a = e.target.closest && e.target.closest(sel);
+    if (a && a !== tipFor) showTip(a);
+  });
+  d.addEventListener('pointerout', function (e) {
+    var a = e.target.closest && e.target.closest(sel);
+    if (a && a === tipFor && !a.contains(e.relatedTarget)) hideTip();
+  });
+  d.addEventListener('focusin', function (e) {
+    var a = e.target.closest && e.target.closest(sel), fv = false;
+    try { fv = a && a.matches(':focus-visible'); } catch (err) { fv = !!a; }
+    if (a && fv) showTip(a); else hideTip();
+  });
+  d.addEventListener('focusout', function (e) { if (e.target === tipFor) hideTip(); });
+  window.addEventListener('scroll', function () { if (tipFor) hideTip(); }, { passive: true });
+
+  /* Copy e-mail */
+  var btn = d.getElementById('copy'), label = d.getElementById('copy-label');
+  var email = d.getElementById('email'), status = d.getElementById('copy-status'), timer;
+  function report(copied) {
+    label.textContent = copied ? 'Copied' : 'Selected';
+    status.textContent = copied ? 'E-mail address copied to the clipboard.' : 'E-mail address selected; press Ctrl+C or Command+C to copy.';
+    clearTimeout(timer);
+    timer = setTimeout(function () { label.textContent = 'Copy'; }, 2000);
+  }
+  function selectEmail() {
+    try {
+      var range = d.createRange(), s = window.getSelection();
+      range.selectNodeContents(email);
+      s.removeAllRanges();
+      s.addRange(range);
+    } catch (err) { /* nothing else to do */ }
+    report(false);
+  }
+  btn.addEventListener('click', function () {
+    var addr = email.textContent.trim();
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr).then(function () { report(true); }).catch(selectEmail);
+      } else {
+        selectEmail();
+      }
+    } catch (err) {
+      selectEmail();
+    }
+  });
+})();
+</script>
+</body>
+</html>
