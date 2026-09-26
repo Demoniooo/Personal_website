@@ -1,61 +1,285 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design Previews — 5 种风格</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio Redesign Previews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Schibsted+Grotesk:wght@500;600;700&display=swap">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; background: #101216; color: #E8ECF4; min-height: 100vh; padding: 60px 30px; }
-  .head { max-width: 1000px; margin: 0 auto 44px; }
-  h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
-  .head p { color: #8B93A7; margin-top: 10px; font-size: 15px; }
-  .grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-  a.tile { display: block; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); text-decoration: none; color: inherit; transition: transform .2s, border-color .2s; }
-  a.tile:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.35); }
-  .thumb { height: 150px; display: flex; align-items: center; justify-content: center; font-weight: 900; letter-spacing: -0.02em; }
-  .meta { padding: 18px 22px; background: #191C22; }
-  .meta b { font-size: 17px; display: block; }
-  .meta span { font-size: 13px; color: #8B93A7; display: block; margin-top: 5px; line-height: 1.5; }
+  :root {
+    --bg: #F1F1EE;
+    --surface: #FFFFFF;
+    --text: #171716;
+    --muted: #5C5C57;
+    --line: #DCDCD6;
+    --chip: #E9E9E4;
+    --frame: #D2D2CB;
+    --focus: #2F5BD3;
+    --shadow: 0 1px 2px rgba(20, 20, 18, .06), 0 10px 30px rgba(20, 20, 18, .07);
+    --sans: "Schibsted Grotesk", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+    --cjk: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+    --mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #121211;
+      --surface: #1B1B1A;
+      --text: #ECECE8;
+      --muted: #A3A39D;
+      --line: #2E2E2B;
+      --chip: #262624;
+      --frame: #3A3A36;
+      --focus: #8FA9FF;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .35);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #121211;
+    --surface: #1B1B1A;
+    --text: #ECECE8;
+    --muted: #A3A39D;
+    --line: #2E2E2B;
+    --chip: #262624;
+    --frame: #3A3A36;
+    --focus: #8FA9FF;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .35);
+  }
 
-  .th1 { background: #fff; color: #0A0A0A; font-family: "Helvetica Neue", sans-serif; font-size: 34px; text-transform: uppercase; }
-  .th1 i { color: #E10600; font-style: normal; }
-  .th2 { background: #0B0E11; color: #FFB000; font-family: "SF Mono", Menlo, monospace; font-size: 20px; }
-  .th2::after { content: "_"; animation: bl 1s step-end infinite; } @keyframes bl { 50% { opacity: 0; } }
-  .th3 { background: #F7F2E9; color: #1C1810; font-family: Georgia, serif; font-size: 30px; font-weight: 400; font-style: italic; }
-  .th4 { background: #FFD93D; color: #111; font-size: 30px; text-transform: uppercase; }
-  .th4 i { font-style: normal; background: #FF6FB5; border: 3px solid #111; box-shadow: 4px 4px 0 #111; padding: 2px 12px; transform: rotate(-2deg); display: inline-block; }
-  .th5 { background: radial-gradient(circle at 30% 30%, #8B7CF7 0%, transparent 55%), radial-gradient(circle at 75% 70%, #3EDCC0 0%, transparent 55%), #07090F; color: #fff; font-size: 26px; }
-  .th5 i { font-style: normal; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(8px); border-radius: 14px; padding: 10px 22px; }
-  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.65 var(--cjk);
+    -webkit-font-smoothing: antialiased;
+    padding-inline: 20px;
+    padding-block: 56px 72px;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; }
+
+  header.intro { display: grid; gap: 14px; max-width: 720px; margin-bottom: 12px; }
+  .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font: 700 clamp(28px, 4.2vw, 42px)/1.15 var(--sans); letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+  .intro p { margin: 0; color: var(--muted); font-size: 16px; }
+  .intro p b { color: var(--text); font-weight: 600; }
+
+  .design {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    overflow: hidden;
+  }
+  .info { padding: 30px 32px; display: flex; flex-direction: column; gap: 16px; }
+  .id-row { display: flex; align-items: baseline; gap: 12px; }
+  .num { font: 500 13px/1 var(--mono); color: var(--muted); letter-spacing: .04em; }
+  h2 { margin: 0; font: 700 26px/1.2 var(--sans); letter-spacing: -.015em; }
+  h2 small { font: 500 16px/1 var(--cjk); color: var(--muted); letter-spacing: 0; margin-left: 8px; }
+  .desc { margin: 0; font-size: 15px; }
+  .traits { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .traits li { background: var(--chip); border-radius: 999px; padding: 3px 10px; font-size: 12.5px; color: var(--text); }
+  .spec { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; font-size: 13px; align-items: center; }
+  .spec dt { font: 500 11px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .spec dd { margin: 0; color: var(--text); }
+  .swatches { display: flex; gap: 5px; }
+  .swatches span { width: 20px; height: 20px; border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(128, 128, 128, .35); }
+  .open {
+    margin-top: auto;
+    align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 42px; padding: 0 18px;
+    border-radius: 10px;
+    background: var(--text); color: var(--bg);
+    font: 600 14px/1 var(--sans);
+    text-decoration: none;
+    transition: transform .15s ease;
+  }
+  .open:hover { transform: translateX(2px); }
+  .open svg { width: 12px; height: 12px; }
+
+  .shots {
+    position: relative;
+    display: block;
+    padding: 28px 88px 44px 28px;
+    background: var(--chip);
+    text-decoration: none;
+    min-height: 100%;
+  }
+  .desk {
+    display: block;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--frame);
+    box-shadow: var(--shadow);
+    background: var(--surface);
+    transition: transform .25s ease;
+  }
+  .desk .bar { display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-bottom: 1px solid var(--frame); font: 400 11px/1 var(--mono); color: var(--muted); }
+  .desk .bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--frame); }
+  .desk .bar span { margin-left: 6px; }
+  .desk img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .phone {
+    position: absolute; right: 22px; bottom: 22px;
+    width: 30%; max-width: 176px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 5px solid #1C1C1B;
+    box-shadow: var(--shadow);
+    background: #1C1C1B;
+    transition: transform .25s ease;
+  }
+  .phone img { display: block; width: 100%; height: auto; aspect-ratio: 390 / 844; object-fit: cover; object-position: top; }
+  @media (hover: hover) {
+    .shots:hover .desk { transform: translateY(-3px); }
+    .shots:hover .phone { transform: translateY(-6px); }
+  }
+
+  .round1 { background: transparent; border: 1px dashed var(--line); border-radius: 18px; padding: 24px 28px; display: grid; gap: 12px; }
+  .round1 h2 { font-size: 18px; }
+  .round1 p { margin: 0; color: var(--muted); font-size: 14px; }
+  .round1 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .round1 a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 13.5px; text-decoration: none; background: var(--surface); }
+  .round1 a:hover { border-color: var(--muted); }
+  .round1 .now { font: 500 11px/1 var(--mono); letter-spacing: .04em; color: var(--muted); margin-left: 8px; }
+
+  footer.next { color: var(--muted); font-size: 14px; max-width: 720px; }
+  footer.next p { margin: 0 0 6px; }
+  code { font: 400 13px/1 var(--mono); background: var(--chip); padding: 2px 6px; border-radius: 5px; }
+
+  @media (max-width: 880px) {
+    .design { grid-template-columns: 1fr; }
+    .shots { order: -1; padding: 20px 84px 34px 20px; }
+    .info { padding: 24px 22px 26px; }
+    .phone { right: 16px; bottom: 16px; width: 27%; }
+  }
+  @media (max-width: 480px) {
+    body { padding-block: 36px 56px; padding-inline: 16px; }
+    h2 { font-size: 22px; }
+    .shots { padding: 16px 64px 28px 16px; }
+    .phone { border-width: 4px; border-radius: 14px; width: 30%; right: 12px; bottom: 12px; }
+    .desk .bar { height: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .desk, .phone, .open { transition: none; }
+  }
 </style>
 </head>
 <body>
-  <div class="head">
-    <h1>个人网站 · 5 种风格预览</h1>
-    <p>点击任意卡片查看完整页面(所有版本都用你的真实简历内容,含 PDF 链接)。选中喜欢的告诉我,我再把它做成正式的 React 版本。</p>
-  </div>
-  <div class="grid">
-    <a class="tile" href="01-swiss.html">
-      <div class="thumb th1">Swiss<i>.</i></div>
-      <div class="meta"><b>01 · Swiss International 瑞士国际主义</b><span>白底大字排版、红色点缀、严格网格与分割线。经典、极简、专业感强。</span></div>
+<main class="wrap">
+  <header class="intro">
+    <div class="eyebrow">Haolin Liu · Portfolio redesign · Round 2</div>
+    <h1>个人网站 · 第二轮 5 种新风格</h1>
+    <p>和第一轮（Swiss / Terminal / Editorial / Brutalist / Aurora）完全不同的 5 个方向。每个都是<b>完整的网页</b>，用的是你网站上的真实内容和项目 PDF，电脑和手机都已适配。</p>
+    <p>点缩略图或按钮打开完整页面。选好后告诉我<b>编号（06–10）</b>，我把它做成正式的 React 版本；也可以混搭，比如「06 的布局 + 10 的印章」。</p>
+  </header>
+
+  <article class="design" id="d06">
+    <a class="shots" href="06-bento.html" aria-label="打开 06 Bento 完整页面">
+      <span class="desk"><span class="bar"><i></i><i></i><i></i><span>06-bento.html</span></span><img src="thumbs/06-desk.webp" alt="06 Bento 桌面端截图" width="1200" height="750" loading="lazy"></span>
+      <span class="phone"><img src="thumbs/06-phone.webp" alt="06 Bento 手机端截图" width="390" height="844" loading="lazy"></span>
     </a>
-    <a class="tile" href="02-terminal.html">
-      <div class="thumb th2">$ whoami</div>
-      <div class="meta"><b>02 · Quant Terminal 量化终端</b><span>Bloomberg 终端风:等宽字体、琥珀色状态栏、滚动 ticker、项目做成 order book 表格。最贴合量化身份。</span></div>
+    <div class="info">
+      <div class="id-row"><span class="num">06</span><h2>Bento<small>便当格</small></h2></div>
+      <p class="desc">所有信息装进一格格圆角卡片，像发布会的总结页：姓名、学校、项目、经历、联系方式一屏扫完。主色是 NYU 紫（UW 的校色也是紫），配实时纽约时间和学业进度条。</p>
+      <ul class="traits"><li>浅色</li><li>模块网格</li><li>信息密度高</li><li>最稳妥</li></ul>
+      <dl class="spec">
+        <dt>配色</dt><dd class="swatches"><span style="background:#57068C"></span><span style="background:#F1EAF8"></span><span style="background:#ECEAF1"></span><span style="background:#17131F"></span><span style="background:#FF6B3D"></span></dd>
+        <dt>字体</dt><dd>Bricolage Grotesque · Instrument Sans · JetBrains Mono</dd>
+      </dl>
+      <a class="open" href="06-bento.html">打开 06 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 6h9M6.5 2.5 10 6l-3.5 3.5"/></svg></a>
+    </div>
+  </article>
+
+  <article class="design" id="d07">
+    <a class="shots" href="07-surface.html" aria-label="打开 07 Vol Surface 完整页面">
+      <span class="desk"><span class="bar"><i></i><i></i><i></i><span>07-surface.html</span></span><img src="thumbs/07-desk.webp" alt="07 Vol Surface 桌面端截图" width="1200" height="750" loading="lazy"></span>
+      <span class="phone"><img src="thumbs/07-phone.webp" alt="07 Vol Surface 手机端截图" width="390" height="844" loading="lazy"></span>
     </a>
-    <a class="tile" href="03-editorial.html">
-      <div class="thumb th3">The Quarterly Review</div>
-      <div class="meta"><b>03 · Editorial 杂志报刊</b><span>米色纸感、衬线字体、报头 + 分栏 + 首字下沉,项目写成"文章标题"。优雅、学术、有叙事感。</span></div>
+    <div class="info">
+      <div class="id-row"><span class="num">07</span><h2>Vol Surface<small>波动率曲面</small></h2></div>
+      <p class="desc">首屏是一个实时旋转的 3D 隐含波动率曲面，用 matplotlib 的 viridis 配色。鼠标停在某个项目上，曲面会变形成对应的形状（期限结构、偏度、状态切换）。界面本身只用黑白灰，颜色只留给「数据」。</p>
+      <ul class="traits"><li>深色</li><li>左右分栏</li><li>交互最强</li><li>最「量化」</li></ul>
+      <dl class="spec">
+        <dt>配色</dt><dd class="swatches"><span style="background:#0B0D11"></span><span style="background:#E6E9EF"></span><span style="background:#440154"></span><span style="background:#21918C"></span><span style="background:#FDE725"></span></dd>
+        <dt>字体</dt><dd>Geist · Geist Mono</dd>
+      </dl>
+      <a class="open" href="07-surface.html">打开 07 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 6h9M6.5 2.5 10 6l-3.5 3.5"/></svg></a>
+    </div>
+  </article>
+
+  <article class="design" id="d08">
+    <a class="shots" href="08-paper.html" aria-label="打开 08 Preprint 完整页面">
+      <span class="desk"><span class="bar"><i></i><i></i><i></i><span>08-paper.html</span></span><img src="thumbs/08-desk.webp" alt="08 Preprint 桌面端截图" width="1200" height="750" loading="lazy"></span>
+      <span class="phone"><img src="thumbs/08-phone.webp" alt="08 Preprint 手机端截图" width="390" height="844" loading="lazy"></span>
     </a>
-    <a class="tile" href="04-brutalist.html">
-      <div class="thumb th4"><i>Bold!</i></div>
-      <div class="meta"><b>04 · Neo-Brutalism 新粗野主义</b><span>粗黑描边、硬阴影、高饱和色块、贴纸元素。年轻、大胆、记忆点最强。</span></div>
+    <div class="info">
+      <div class="id-row"><span class="num">08</span><h2>Preprint<small>论文预印本</small></h2></div>
+      <p class="desc">整个网站排成一篇量化金融论文：摘要、关键词、JEL 分类号、编号章节、真实公式（LPPLS、CAAR、GARCH、CVaR）、booktabs 表格、图注和参考文献，外面套一个 PDF 阅读器。正宗 LaTeX 字体。</p>
+      <ul class="traits"><li>白纸</li><li>学术</li><li>一本正经的幽默</li><li>最有梗</li></ul>
+      <dl class="spec">
+        <dt>配色</dt><dd class="swatches"><span style="background:#FFFFFF"></span><span style="background:#111111"></span><span style="background:#9E1B32"></span><span style="background:#1B6E3A"></span><span style="background:#1F4FB8"></span></dd>
+        <dt>字体</dt><dd>Latin Modern（LaTeX 默认字体）· KaTeX 公式</dd>
+      </dl>
+      <a class="open" href="08-paper.html">打开 08 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 6h9M6.5 2.5 10 6l-3.5 3.5"/></svg></a>
+    </div>
+  </article>
+
+  <article class="design" id="d09">
+    <a class="shots" href="09-blueprint.html" aria-label="打开 09 Blueprint 完整页面">
+      <span class="desk"><span class="bar"><i></i><i></i><i></i><span>09-blueprint.html</span></span><img src="thumbs/09-desk.webp" alt="09 Blueprint 桌面端截图" width="1200" height="750" loading="lazy"></span>
+      <span class="phone"><img src="thumbs/09-phone.webp" alt="09 Blueprint 手机端截图" width="390" height="844" loading="lazy"></span>
     </a>
-    <a class="tile" href="05-aurora.html">
-      <div class="thumb th5"><i>Aurora Glass</i></div>
-      <div class="meta"><b>05 · Aurora Glass 极光玻璃</b><span>深色渐变光晕背景 + 毛玻璃卡片 + 渐变文字,带动效。现代 SaaS / 科技感。</span></div>
+    <div class="info">
+      <div class="id-row"><span class="num">09</span><h2>Blueprint<small>工程蓝图</small></h2></div>
+      <p class="desc">把 Financial Engineering 当真：蓝图纸和网格、尺寸标注、引线编号、图纸标题栏。项目做成「零件清单」，三段实习做成「修订记录」Rev A → C。</p>
+      <ul class="traits"><li>蓝底</li><li>工程制图</li><li>大胆</li><li>记忆点最强</li></ul>
+      <dl class="spec">
+        <dt>配色</dt><dd class="swatches"><span style="background:#0E3A78"></span><span style="background:#0A2F63"></span><span style="background:#EAF2FF"></span><span style="background:#A9C1E8"></span><span style="background:#FF7A66"></span></dd>
+        <dt>字体</dt><dd>Barlow Condensed · Barlow · IBM Plex Mono · Caveat</dd>
+      </dl>
+      <a class="open" href="09-blueprint.html">打开 09 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 6h9M6.5 2.5 10 6l-3.5 3.5"/></svg></a>
+    </div>
+  </article>
+
+  <article class="design" id="d10">
+    <a class="shots" href="10-ink.html" aria-label="打开 10 Ink &amp; Seal 完整页面">
+      <span class="desk"><span class="bar"><i></i><i></i><i></i><span>10-ink.html</span></span><img src="thumbs/10-desk.webp" alt="10 Ink &amp; Seal 桌面端截图" width="1200" height="750" loading="lazy"></span>
+      <span class="phone"><img src="thumbs/10-phone.webp" alt="10 Ink &amp; Seal 手机端截图" width="390" height="844" loading="lazy"></span>
     </a>
-  </div>
+    <div class="info">
+      <div class="id-row"><span class="num">10</span><h2>Ink &amp; Seal<small>水墨印章</small></h2></div>
+      <p class="desc">新中式留白：竖排毛笔「刘昊霖」加朱红印章「刘昊霖印」，下面一抹水墨远山。章节用银行支票上的大写数字「壹贰叁肆伍」，项目用天干「甲乙丙丁」编号。</p>
+      <ul class="traits"><li>浅色</li><li>东方留白</li><li>中英双语</li><li>个人辨识度最高</li></ul>
+      <dl class="spec">
+        <dt>配色</dt><dd class="swatches"><span style="background:#F3F4F1"></span><span style="background:#1B1B1A"></span><span style="background:#B8262B"></span><span style="background:#9FB5AE"></span><span style="background:#7C7F7A"></span></dd>
+        <dt>字体</dt><dd>马善政毛笔楷书 · Noto Serif SC · Cormorant Garamond · Noto Sans</dd>
+      </dl>
+      <a class="open" href="10-ink.html">打开 10 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 6h9M6.5 2.5 10 6l-3.5 3.5"/></svg></a>
+    </div>
+  </article>
+
+  <section class="round1" aria-labelledby="r1">
+    <h2 id="r1">第一轮（8 月）</h2>
+    <p>留着做对比。当前线上网站用的是 01 Swiss。</p>
+    <ul>
+      <li><a href="01-swiss.html">01 Swiss<span class="now">当前线上</span></a></li>
+      <li><a href="02-terminal.html">02 Quant Terminal</a></li>
+      <li><a href="03-editorial.html">03 Editorial</a></li>
+      <li><a href="04-brutalist.html">04 Neo-Brutalism</a></li>
+      <li><a href="05-aurora.html">05 Aurora Glass</a></li>
+    </ul>
+  </section>
+
+  <footer class="next">
+    <p>预览文件都在仓库的 <code>design-previews/</code> 目录里，可以直接用浏览器打开。</p>
+  </footer>
+</main>
 </body>
 </html>
