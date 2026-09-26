@@ -213,6 +213,9 @@ button{font:inherit;color:inherit}
 .tb dd a.hand-rev:hover span{text-decoration:underline;text-decoration-color:var(--redline);text-decoration-thickness:1px;text-underline-offset:3px}
 
 /* hero, wide container: one-line name, splayed leaders, title block in the corner */
+@container hero (min-width:520px){
+  .cta .tab{flex:none;padding:0 24px}
+}
 @container hero (min-width:680px){
   .assy{--S:clamp(56px,calc((100cqi - 84px) / 6.8),148px);--lh:1;--D:26px;margin-top:64px;padding-right:80px}
   .nm-a,.nm-b{display:inline}
@@ -237,13 +240,12 @@ button{font:inherit;color:inherit}
   .hero-copy{padding-bottom:52px}
   .tagline{font-size:21px}
   .cta{margin-top:28px;gap:12px}
-  .cta .tab{flex:none;padding:0 24px}
   .tb{margin:0 calc(-1 * var(--pad)) 0 0;border-left:2px solid var(--line);grid-template-columns:repeat(6,minmax(0,1fr));grid-template-areas:"proj proj proj proj dwg dwg" "ttl ttl ttl ttl ttl ttl" "drw drw sch sch loc loc" "con con con con scl scl" "dat dat sht sht rev rev"}
 }
 
 /* ---------- general notes + system diagram ---------- */
 .about-g{display:grid;gap:56px}
-@media (min-width:1080px){.about-g{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:72px}}
+@media (min-width:1240px){.about-g{grid-template-columns:minmax(0,4fr) minmax(0,6fr);gap:56px}}
 .uos{margin-bottom:22px;font:400 11px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--line-dim)}
 .notes{display:grid;gap:24px}
 .notes li{display:grid;grid-template-columns:34px minmax(0,1fr);align-items:baseline}
@@ -259,7 +261,7 @@ button{font:inherit;color:inherit}
 .flow{display:flex;flex-direction:column;align-items:stretch}
 .blk{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:62px;padding:16px 12px 14px;border:1px solid var(--line);background:rgba(10,47,99,.72);text-align:center}
 .blk-i{position:absolute;top:5px;left:6px;font:400 9.5px/1 var(--f-mono);letter-spacing:.06em;color:var(--line-dim)}
-.blk-n{font:600 15px/1.15 var(--f-cond);letter-spacing:.1em;text-transform:uppercase}
+.blk-n{font:600 15px/1.15 var(--f-cond);letter-spacing:.08em;text-transform:uppercase}
 .blk-s{margin-top:5px;font:400 10.5px/1.3 var(--f-mono);letter-spacing:.02em;white-space:nowrap;text-transform:uppercase;color:var(--line-dim)}
 .grp{border-style:dashed;padding:22px 10px 10px}
 .grp-l{display:flex;gap:6px;width:100%;margin-top:10px}
@@ -276,7 +278,8 @@ button{font:inherit;color:inherit}
   .blk{flex:1 1 0;min-width:0;min-height:88px;padding:18px 8px 12px}
   .grp{flex:1.5 1 0;padding:24px 8px 8px}
   .grp-l{flex-direction:column}
-  .arr{flex:0 0 22px;width:auto;height:1px}
+  .arr{flex:0 0 20px;width:auto;height:1px}
+  .blk-n{font-size:14px;letter-spacing:.07em}
   .arr::after{left:auto;right:0;top:-3px;bottom:auto;width:12px;height:7px;clip-path:polygon(100% 50%,0 0,0 100%)}
 }
 
@@ -399,6 +402,13 @@ td.c-date{white-space:nowrap}
   .rev-t td.c-date,.rev-t td.c-loc{padding-top:10px;line-height:1.3}
   .rev-t .c-rdesc{padding:18px 16px 20px}
 }
+@media (min-width:700px) and (max-width:1079px){
+  .bom-t tr{grid-template-columns:auto auto minmax(0,1fr) minmax(0,236px);grid-template-rows:auto auto 1fr;grid-template-areas:"item pn ref ref" "desc desc desc mat" "desc desc desc docs"}
+  .bom-t .c-desc{padding:18px 20px 22px 16px}
+  .bom-t .c-mat,.bom-t .c-docs{display:block;margin:0;padding:16px 16px 14px;border-top:0;border-left:1px solid var(--line-3)}
+  .bom-t .c-docs{border-top:1px solid var(--line-3);padding-bottom:18px}
+  .bom-t .c-mat::before,.bom-t .c-docs::before{margin:0 0 8px}
+}
 @media (max-width:479px){
   .bom-t td.c-ref,.rev-t td.c-loc{padding-left:12px;padding-right:12px}
   .bom-t .c-pn{padding-left:12px;padding-right:12px}
@@ -418,7 +428,7 @@ td.c-date{white-space:nowrap}
 .spec-l li:last-child{border-bottom:0}
 .spec-l small{font:500 15px/1 var(--f-cond);letter-spacing:.06em;color:var(--line-dim)}
 .spec-l .ix{font:400 11px/1 var(--f-mono);letter-spacing:.06em;color:var(--line-dim)}
-@media (min-width:900px){
+@media (min-width:700px){
   .specs{grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
   .spec+.spec{border-left:0}
   .spec-l{min-height:calc(5 * 56px);background:repeating-linear-gradient(to bottom,transparent 0 55px,var(--line-3) 55px 56px)}
